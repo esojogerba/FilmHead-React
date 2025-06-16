@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./components/Navbar";
+import CallToAction from "./components/CallToAction";
 
 const App = () => {
     return (
@@ -11,17 +12,7 @@ const App = () => {
             </div>
 
             <main>
-                <section className="cta">
-                    <h1 className="cta-heading">Nothing To Watch?</h1>
-                    <h1 className="cta-heading">Not Anymore!</h1>
-                    <p className="cta-p">
-                        Keep track of your media backlog so that you always have
-                        something to scratch your entertainment itch.
-                    </p>
-                    <button className="btn cta-btn" id="new-account-btn">
-                        Create An Account
-                    </button>
-                </section>
+                <CallToAction />
                 <div className="container home-bg-circles">
                     <section className="features">
                         <div className="features-columns">
