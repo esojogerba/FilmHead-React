@@ -233,31 +233,31 @@ ul {
 /* Keyframes to change background images at each step */
 @keyframes spinner-frames {
     0% {
-        background-image: url("/assets/images/spinner/frame1.png");
+        background-image: url("assets/images/spinner/frame1.png");
     }
     12.5% {
-        background-image: url("/assets/images/spinner/frame2.png");
+        background-image: url("assets/images/spinner/frame2.png");
     }
     25% {
-        background-image: url("/assets/images/spinner/frame3.png");
+        background-image: url("assets/images/spinner/frame3.png");
     }
     37.5% {
-        background-image: url("/assets/images/spinner/frame4.png");
+        background-image: url("assets/images/spinner/frame4.png");
     }
     50% {
-        background-image: url("/assets/images/spinner/frame5.png");
+        background-image: url("assets/images/spinner/frame5.png");
     }
     62.5% {
-        background-image: url("/assets/images/spinner/frame6.png");
+        background-image: url("assets/images/spinner/frame6.png");
     }
     75% {
-        background-image: url("/assets/images/spinner/frame7.png");
+        background-image: url("assets/images/spinner/frame7.png");
     }
     87.5% {
-        background-image: url("/assets/images/spinner/frame8.png");
+        background-image: url("assets/images/spinner/frame8.png");
     }
     100% {
-        background-image: url("/assets/images/spinner/frame1.png");
+        background-image: url("assets/images/spinner/frame1.png");
     } /* Loop back */
 }
 
@@ -281,7 +281,7 @@ ul {
 }
 
 .poster-box {
-    background-image: url(/assets/images/no-image.svg);
+    background-image: url(assets/images/no-image.svg);
     background-size: 50px;
     text-align: center;
     font-weight: var(--fw-bold);
@@ -289,7 +289,7 @@ ul {
 }
 
 .video-card {
-    background-image: url("../images/video-icon.svg");
+    background-image: url("assets/images/video-icon.svg");
     background-size: 100px;
     aspect-ratio: 16 / 9;
     flex-shrink: 0;
@@ -575,7 +575,7 @@ h4 {
     width: 100%;
     max-width: 240px;
     max-height: 32px;
-    background: var(--clr-black-500) url("/assets/images/search-icon-white.svg")
+    background: var(--clr-black-500) url("assets/images/search-icon-white.svg")
         no-repeat 20px;
     background-position: left;
     background-position-x: 4px;
@@ -629,7 +629,7 @@ h4 {
         display: block;
         z-index: 9999;
         background-color: transparent;
-        background-image: url(/assets/images/icon-hamburger.svg);
+        background-image: url(assets/images/icon-hamburger.svg);
         background-repeat: no-repeat;
         background-position: center;
         border: 0;
@@ -638,7 +638,7 @@ h4 {
     }
 
     .mobile-nav-toggle[aria-expanded="true"] {
-        background-image: url(/assets/images/icon-close.svg);
+        background-image: url(assets/images/icon-close.svg);
     }
 
     .nav-links,
@@ -696,7 +696,7 @@ h4 {
         max-height: 40px;
         width: 80%;
         background: var(--clr-black-500)
-            url("/assets/images/search-icon-white.svg") no-repeat 10px;
+            url("assets/images/search-icon-white.svg") no-repeat 10px;
         background-size: 30px;
         font-size: var(--fs-20);
         margin-block: 1rem;
@@ -2046,7 +2046,7 @@ h4 {
 .backlog-search-field {
     width: 100%;
     height: 70px;
-    background: var(--clr-black-500) url("/assets/images/search-icon-white.svg")
+    background: var(--clr-black-500) url("assets/images/search-icon-white.svg")
         no-repeat 20px;
     background-position: left;
     background-position-x: 20px;
@@ -2070,7 +2070,7 @@ h4 {
 @media (max-width: 60em) {
     .backlog-search-field {
         background: var(--clr-black-500)
-            url("/assets/images/search-icon-white.svg") no-repeat 10px;
+            url("assets/images/search-icon-white.svg") no-repeat 10px;
         background-size: 30px;
         font-size: var(--fs-24);
         padding: 4px 8px 4px 50px;
@@ -2394,7 +2394,7 @@ h4 {
     width: 100%;
     max-width: 500px;
     max-height: 45px;
-    background: var(--clr-black-900) url("/assets/images/search-icon-white.svg")
+    background: var(--clr-black-900) url("assets/images/search-icon-white.svg")
         no-repeat 20px;
     background-position: left;
     background-position-x: 4px;
@@ -3154,7 +3154,7 @@ h4 {
 
 @media (max-width: 60rem) {
     .mobile-bg-img {
-        background-image: url(../images/VHS.svg);
+        background-image: url(assets/images/VHS.svg);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
