@@ -30,7 +30,7 @@ const App = () => {
                                                 className="material-icon"
                                                 id="movies&shows-svg"
                                             >
-                                                <use xlinkHref="assets/images/icons.svg#shows" />
+                                                <use xlinkHref="/assets/images/icons.svg#shows" />
                                             </svg>
                                         </div>
                                         <h3 className="features-card-title">
@@ -47,7 +47,7 @@ const App = () => {
                                                 className="material-icon"
                                                 id="folders-svg"
                                             >
-                                                <use xlinkHref="assets/images/icons.svg#folders" />
+                                                <use xlinkHref="/assets/images/icons.svg#folders" />
                                             </svg>
                                         </div>
                                         <h3 className="features-card-title">
