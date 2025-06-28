@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import CallToAction from "./components/CallToAction";
 import Features from "./components/Features";
+import Footer from "./components/Footer";
 
 const App = () => {
     return (
@@ -20,6 +21,8 @@ const App = () => {
                 <div className="pop-up-overlay" />
                 <div className="pop-up-overlay second-overlay" />
             </main>
+
+            <Footer />
         </>
     );
 };
