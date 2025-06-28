@@ -575,8 +575,8 @@ h4 {
     width: 100%;
     max-width: 240px;
     max-height: 32px;
-    background: var(--clr-black-500) url("assets/images/search-icon-white.svg")
-        no-repeat 20px;
+    background: var(--clr-black-500)
+        url("../public/assets/images/search-icon-white.svg") no-repeat 20px;
     background-position: left;
     background-position-x: 4px;
     color: var(--clr-white-900);

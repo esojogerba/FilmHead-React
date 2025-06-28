@@ -48,7 +48,7 @@ const Navbar = () => {
                     })`,
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
-                    backgroundSize: "contain", // optional but helps with scaling
+                    backgroundSize: "contain",
                     border: "none",
                     backgroundColor: "transparent",
                     width: "2rem",
