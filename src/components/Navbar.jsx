@@ -4,6 +4,8 @@ import logo from "../assets/images/FilmHead-logo.png";
 import hamburgerIcon from "../assets/images/icon-hamburger.svg";
 import closeIcon from "../assets/images/icon-close.svg";
 
+// TODO: Fix NavLinks "to" to match RC2024.
+
 const Navbar = () => {
     const [navVisible, setNavVisible] = useState(false);
 

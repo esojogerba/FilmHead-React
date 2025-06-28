@@ -4,6 +4,8 @@ import CallToAction from "./components/CallToAction";
 import Features from "./components/Features";
 import Footer from "./components/Footer";
 
+// TODO: Fix router to match RC2024.
+
 const App = () => {
     return (
         <>
