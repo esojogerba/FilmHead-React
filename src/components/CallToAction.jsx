@@ -1,5 +1,7 @@
 import React from "react";
 
+// TODO: add routing to create an account button that leads to sign up page.
+
 const CallToAction = () => {
     return (
         <section className="cta">
