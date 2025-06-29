@@ -899,6 +899,7 @@ h4 {
     background-position: center;
     background-repeat: no-repeat;
     background-position-y: bottom;
+    background-position-x: 56%;
     width: 100%;
     height: 800px;
     text-align: center;
@@ -933,6 +934,7 @@ h4 {
     .cta {
         margin-top: 5rem;
         height: 500px;
+        background-position-x: 52%;
     }
 }
 
