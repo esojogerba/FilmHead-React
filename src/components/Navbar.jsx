@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import navbarLogo from "../assets/images/filmhead-nav-logo.svg";
 import logo from "../assets/images/FilmHead-logo.png";
 import hamburgerIcon from "../assets/images/icon-hamburger.svg";
@@ -16,19 +17,19 @@ const Navbar = () => {
     return (
         <header className="container primary-header">
             <div>
-                <a href="index.html" className="desktop-nav-logo">
+                <Link to="" className="desktop-nav-logo">
                     <img
                         src={navbarLogo}
                         alt="FilmHead logo"
                         id="nav-logo-img"
                     />
-                </a>
+                </Link>
             </div>
 
             <div>
-                <a href="index.html" className="mobile-nav-logo">
+                <Link to="" className="mobile-nav-logo">
                     <img src={logo} alt="FilmHead logo" id="nav-logo-img" />
-                </a>
+                </Link>
             </div>
 
             <div className="search-box-mobile">
@@ -64,13 +65,13 @@ const Navbar = () => {
             <nav className="nav-links" id="nav-links" data-visible={navVisible}>
                 <ul role="list" className="nav-links-left">
                     <li>
-                        <a href="/html/movies.html">Movies</a>
+                        <Link to="movies">Movies</Link>
                     </li>
                     <li>
-                        <a href="/html/shows.html">Shows</a>
+                        <Link to="shows">Shows</Link>
                     </li>
                     <li>
-                        <a href="/html/backlog.html">Backlog</a>
+                        <Link to="backlog">Backlog</Link>
                     </li>
                 </ul>
                 <ul role="list" className="nav-links-right">
@@ -82,12 +83,12 @@ const Navbar = () => {
                         />
                     </li>
                     <li>
-                        <a href="/html/sign-up.html" id="nav-link-sign-up">
+                        <Link to="sign-up" id="nav-link-sign-up">
                             Sign Up
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/html/log-in.html">Log In</a>
+                        <Link to="log-in">Log In</Link>
                     </li>
                 </ul>
             </nav>
