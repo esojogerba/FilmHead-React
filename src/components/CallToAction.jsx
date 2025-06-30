@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // TODO: add routing to create an account button that leads to sign up page.
 
@@ -11,9 +12,9 @@ const CallToAction = () => {
                 Keep track of your media backlog so that you always have
                 something to scratch your entertainment itch.
             </p>
-            <button className="btn cta-btn" id="new-account-btn">
+            <Link to="sign-up" className="btn cta-btn" id="new-account-btn">
                 Create An Account
-            </button>
+            </Link>
         </section>
     );
 };
