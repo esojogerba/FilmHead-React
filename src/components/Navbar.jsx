@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import navbarLogo from "../assets/images/filmhead-nav-logo.svg";
 import logo from "../assets/images/FilmHead-logo.png";
 import hamburgerIcon from "../assets/images/icon-hamburger.svg";
@@ -9,10 +9,15 @@ import closeIcon from "../assets/images/icon-close.svg";
 
 const Navbar = () => {
     const [navVisible, setNavVisible] = useState(false);
+    const location = useLocation();
 
     const toggleNav = () => {
         setNavVisible((prev) => !prev);
     };
+
+    useEffect(() => {
+        setNavVisible(false); // Close nav on route change
+    }, [location.pathname]);
 
     return (
         <header className="container primary-header">
