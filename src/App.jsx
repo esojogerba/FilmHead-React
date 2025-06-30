@@ -1,32 +1,25 @@
 import React from "react";
-import Navbar from "./components/Navbar";
-import CallToAction from "./components/CallToAction";
-import Features from "./components/Features";
-import Footer from "./components/Footer";
+import {
+    Route,
+    createBrowserRouter,
+    createRoutesFromElements,
+    RouterProvider,
+} from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import HomePage from "./pages/HomePage";
 
 // TODO: Fix router to match RC2024.
 
+const router = createBrowserRouter(
+    createRoutesFromElements(
+        <Route path="/" element={<MainLayout />}>
+            <Route index element={<HomePage />} />
+        </Route>
+    )
+);
+
 const App = () => {
-    return (
-        <>
-            <Navbar />
-
-            <div className="transition transition-1">
-                <div className="spinner" />
-            </div>
-
-            <main>
-                <CallToAction />
-
-                <Features />
-
-                <div className="pop-up-overlay" />
-                <div className="pop-up-overlay second-overlay" />
-            </main>
-
-            <Footer />
-        </>
-    );
+    return <RouterProvider router={router} />;
 };
 
 export default App;
