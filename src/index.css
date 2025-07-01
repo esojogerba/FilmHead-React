@@ -530,9 +530,9 @@ h4 {
 }
 
 .nav-links-left li a:hover,
-.nav-links-left li a:focus,
+.nav-links-left li a:focus-visible,
 .nav-links-right li a:hover,
-.nav-links-right li a:focus {
+.nav-links-right li a:focus-visible {
     color: var(--clr-primary);
 }
 
