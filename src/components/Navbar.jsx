@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import navbarLogo from "../assets/images/filmhead-nav-logo.svg";
 import logo from "../assets/images/FilmHead-logo.png";
 import hamburgerIcon from "../assets/images/icon-hamburger.svg";
@@ -13,8 +13,16 @@ const Navbar = () => {
         setNavVisible((prev) => !prev);
     };
 
+    const linkClass = ({ isActive }) => (isActive ? "current-page" : "");
+
     useEffect(() => {
-        setNavVisible(false); // Close nav on route change
+        setNavVisible(false);
+        window.scrollTo(0, 0);
+
+        // Remove focus from any active element (like nav links)
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
     }, [location.pathname]);
 
     return (
@@ -68,13 +76,19 @@ const Navbar = () => {
             <nav className="nav-links" id="nav-links" data-visible={navVisible}>
                 <ul role="list" className="nav-links-left">
                     <li>
-                        <Link to="movies">Movies</Link>
+                        <NavLink to="movies" className={linkClass}>
+                            Movies
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to="shows">Shows</Link>
+                        <NavLink to="shows" className={linkClass}>
+                            Shows
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to="backlog">Backlog</Link>
+                        <NavLink to="backlog" className={linkClass}>
+                            Backlog
+                        </NavLink>
                     </li>
                 </ul>
                 <ul role="list" className="nav-links-right">
@@ -91,7 +105,9 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="log-in">Log In</Link>
+                        <NavLink to="log-in" className={linkClass}>
+                            Log In
+                        </NavLink>
                     </li>
                 </ul>
             </nav>
