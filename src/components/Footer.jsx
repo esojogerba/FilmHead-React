@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import footerLogo from "../assets/images/filmhead-footer-logo.svg";
 import tmdLogo from "../assets/images/tmdb-logo.svg";
 
-// TODO: add routing to footer logo back to homepage
-
 const Footer = () => {
     return (
         <footer>
