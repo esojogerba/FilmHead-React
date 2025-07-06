@@ -28,10 +28,10 @@ const MovieHeroSliderItem = ({ index, movie, imageBaseURL, genres }) => {
                     </div>
                 </div>
                 <p className="banner-genre">
-                    {genres.asString(movie.genre_ids)}
+                    {genres?.asString?.(movie.genre_ids) || ""}
                 </p>
                 <div className="banner-buttons">
-                    <a className="btn" href="movie-detials.html" onclick="">
+                    <a className="btn" href="movie-details.html" onclick="">
                         Details
                     </a>
                     <a

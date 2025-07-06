@@ -12,7 +12,7 @@ import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 
 const MovieHeroSlider = () => {
     const [movies, setMovies] = useState([]);
-    const [genres, setGenres] = useState([]);
+    const [genres, setGenres] = useState({});
 
     useEffect(() => {
         const fetchMovies = async () => {
