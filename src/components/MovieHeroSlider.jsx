@@ -1,8 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import MovieHeroSliderItem from "./MovieHeroSliderItem";
-import bannerImg from "../assets/images/Blade Runner Banner.png";
-import posterImg from "../assets/images/Blade Runner Poster.png";
+import HeroSliderControl from "./HeroSliderControl";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 
 // TODO: API integration
@@ -80,46 +79,7 @@ const MovieHeroSlider = () => {
                     />
                 ))}
             </div>
-            <div className="banner-control-row">
-                <div className="banner-control-inner">
-                    <button className="banner-control-item poster-box active">
-                        <img
-                            src={posterImg}
-                            alt="Blade Runner"
-                            loading="lazy"
-                            draggable="false"
-                            className="img-cover"
-                        />
-                    </button>
-                    <button className="banner-control-item poster-box">
-                        <img
-                            src={posterImg}
-                            alt="Blade Runner"
-                            loading="lazy"
-                            draggable="false"
-                            className="img-cover"
-                        />
-                    </button>
-                    <button className="banner-control-item poster-box">
-                        <img
-                            src={posterImg}
-                            alt="Blade Runner"
-                            loading="lazy"
-                            draggable="false"
-                            className="img-cover"
-                        />
-                    </button>
-                    <button className="banner-control-item poster-box">
-                        <img
-                            src={posterImg}
-                            alt="Blade Runner"
-                            loading="lazy"
-                            draggable="false"
-                            className="img-cover"
-                        />
-                    </button>
-                </div>
-            </div>
+            <HeroSliderControl />
         </section>
     );
 };
