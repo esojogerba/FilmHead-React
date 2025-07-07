@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 import MovieHeroSliderItem from "./MovieHeroSliderItem";
 import HeroSliderControl from "./HeroSliderControl";
-import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 
 // TODO: API integration
 // TODO: slider timer
