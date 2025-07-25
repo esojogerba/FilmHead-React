@@ -4,11 +4,17 @@ import posterImg from "../assets/images/Blade Runner Poster.png";
 
 // TODO: Fix onClick for buttons
 
-const MovieHeroSliderItem = ({ index, movie, imageBaseURL, genres }) => {
+const MovieHeroSliderItem = ({
+    index,
+    movie,
+    imageBaseURL,
+    genres,
+    isActive,
+}) => {
     return (
         <div
             className={
-                index === 0 ? "banner-slider-item active" : "banner-slider-item"
+                isActive ? "banner-slider-item active" : "banner-slider-item"
             }
         >
             <img
