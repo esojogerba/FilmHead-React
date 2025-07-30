@@ -2,7 +2,8 @@ import React from "react";
 import bannerImg from "../assets/images/Blade Runner Banner.png";
 import posterImg from "../assets/images/Blade Runner Poster.png";
 
-// TODO: Fix onClick for buttons
+// TODO: Implement details button
+// TODO: Implement add button
 
 const MovieHeroSliderItem = ({
     index,
