@@ -1,35 +1,15 @@
 import React from "react";
 import bannerImg from "../assets/images/Blade Runner Banner.png";
 import posterImg from "../assets/images/Blade Runner Poster.png";
-import dropdownArrow from "../assets/images/dropdown-arrow.png";
 import MovieHeroSlider from "../components/MovieHeroSlider";
+import MediaPageHeader from "../components/MediaPageHeader";
 
 const MoviesPage = () => {
     return (
         <article page-content="">
             <MovieHeroSlider />
             <article className="container">
-                <section className="media-page-header">
-                    <h1 className="media-page-title">Movies</h1>
-                    <div className="genre-dropdown">
-                        <button
-                            onclick="toggleDropdown()"
-                            className="dropdown-btn"
-                        >
-                            <span>Genres</span>
-                            <img src={dropdownArrow} />
-                        </button>
-                        <div id="movies-dropdown" className="dropdown-menu">
-                            <a href="#">Science Fiction</a>
-                            <a href="#">Genre 2</a>
-                            <a href="#">Genre 3</a>
-                            <a href="#">Genre 3</a>
-                            <a href="#">Genre 3</a>
-                            <a href="#">Genre 3</a>
-                            <a href="#">Genre 3</a>
-                        </div>
-                    </div>
-                </section>
+                <MediaPageHeader />
                 <section className="media-scroll">
                     <div className="media-scroll-title-wrapper">
                         <h3 className="media-scroll-title">Trending</h3>
