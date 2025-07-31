@@ -50,7 +50,7 @@ const MoviesPage = () => {
         <article page-content="">
             <MovieHeroSlider genres={genres} />
             <article className="container">
-                <MediaPageHeader />
+                <MediaPageHeader title="Movies" genres={genres} />
                 <section className="media-scroll">
                     <div className="media-scroll-title-wrapper">
                         <h3 className="media-scroll-title">Trending</h3>
