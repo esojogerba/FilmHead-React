@@ -1516,7 +1516,7 @@ h4 {
     font-weight: var(--fw-regular);
     outline: 2px solid var(--clr-primary);
     border-radius: 6px;
-    padding: 2px 4px;
+    padding: 1px 4px;
 }
 
 .view-more-link:hover,
