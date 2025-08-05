@@ -36,7 +36,6 @@ const MoviesPage = () => {
                 for (const { id, name } of data.genres) {
                     genreList[id] = name;
                 }
-                console.log(genreList);
                 setGenres(genreList);
             } catch (error) {
                 console.log("Error fetching data", data);

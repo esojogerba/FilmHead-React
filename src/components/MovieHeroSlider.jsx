@@ -21,7 +21,6 @@ const MovieHeroSlider = ({ genres }) => {
             try {
                 const res = await fetch(apiUrl);
                 const data = await res.json();
-                console.log(data);
                 setMovies(data.results);
             } catch (error) {
                 console.log("Error fetching data", data);
