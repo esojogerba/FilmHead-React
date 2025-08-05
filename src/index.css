@@ -1511,13 +1511,18 @@ h4 {
 
 .view-more-link {
     color: var(--clr-primary);
-    font-size: var(--fs-20);
-    font-weight: var(--fw-bold);
+    text-decoration: none;
+    font-size: var(--fs-16);
+    font-weight: var(--fw-regular);
+    outline: 2px solid var(--clr-primary);
+    border-radius: 6px;
+    padding: 2px 4px;
 }
 
 .view-more-link:hover,
 .view-more-link:focus {
     color: var(--clr-black-200);
+    background-color: var(--clr-primary);
 }
 
 @media (max-width: 38rem) {
@@ -1535,7 +1540,7 @@ h4 {
     }
 
     .view-more-link {
-        font-size: var(--fs-16);
+        font-size: var(--fs-14);
     }
 }
 
