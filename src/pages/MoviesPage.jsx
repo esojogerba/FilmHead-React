@@ -8,6 +8,7 @@ import MediaPageHeader from "../components/MediaPageHeader";
 
 const MoviesPage = () => {
     const [genres, setGenres] = useState({});
+    const [heroMovies, setHeroMovies] = useState([]);
 
     useEffect(() => {
         // Fetch all genres. Example: [ { "id": "123", "name": "Action" } ]
@@ -45,9 +46,24 @@ const MoviesPage = () => {
         fetchGenres();
     }, []);
 
+    useEffect(() => {
+        const fetchMovies = async () => {
+            const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=1`;
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+                setHeroMovies(data.results);
+            } catch (error) {
+                console.log("Error fetching data", data);
+            }
+        };
+
+        fetchMovies();
+    }, []);
+
     return (
         <article page-content="">
-            <MovieHeroSlider genres={genres} />
+            <MovieHeroSlider genres={genres} movies={heroMovies} />
             <article className="container">
                 <MediaPageHeader title="Movies" genres={genres} />
                 <section className="media-scroll">

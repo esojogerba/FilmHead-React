@@ -9,26 +9,9 @@ import HeroSliderControl from "./HeroSliderControl";
 // TODO: Routing to details page
 // TODO: add to folder pop up integration
 
-const MovieHeroSlider = ({ genres }) => {
-    const [movies, setMovies] = useState([]);
-
+const MovieHeroSlider = ({ genres, movies }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const intervalRef = useRef(null);
-
-    useEffect(() => {
-        const fetchMovies = async () => {
-            const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=1`;
-            try {
-                const res = await fetch(apiUrl);
-                const data = await res.json();
-                setMovies(data.results);
-            } catch (error) {
-                console.log("Error fetching data", data);
-            }
-        };
-
-        fetchMovies();
-    }, []);
 
     const startAutoSlide = () => {
         clearInterval(intervalRef.current);
