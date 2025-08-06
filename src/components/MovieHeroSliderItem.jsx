@@ -20,9 +20,9 @@ const MovieHeroSliderItem = ({
         >
             <img
                 src={`${imageBaseURL}w1280${movie.backdrop_path}`}
-                alt="{title}"
+                alt={movie.title}
                 className="img-cover"
-                title="${title}"
+                title={movie.title}
                 loading={index === 0 ? "eager" : "lazy"}
             />
 
