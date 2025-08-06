@@ -15,6 +15,7 @@ const MoviesPage = () => {
     const [upcomingMovies, setUpcomingMovies] = useState([]);
     const [trendingMovies, setTrendingMovies] = useState([]);
     const [topMovies, setTopMovies] = useState([]);
+    const [genreMovies, setGenreMovies] = useState([]);
 
     useEffect(() => {
         // Fetch all genres. Example: [ { "id": "123", "name": "Action" } ]
@@ -116,6 +117,42 @@ const MoviesPage = () => {
         fetchTopMovies();
     }, []);
 
+    // Genre movies
+    useEffect(() => {
+        const fetchGenreMovies = async () => {
+            const results = [];
+
+            // Check that genres is defined and is an object
+            if (!genres || typeof genres !== "object") return;
+
+            const genreEntries = Object.entries(genres).filter(
+                ([key]) => key !== "asString"
+            );
+
+            for (const [genreId, genreName] of genreEntries) {
+                const apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&include_adult=false&page=1&with_origin_country=US&with_genres=${genreId}`;
+
+                try {
+                    const res = await fetch(apiUrl);
+                    const data = await res.json();
+
+                    results.push({
+                        genreId,
+                        genreName,
+                        movies: data.results || [], // Default to empty array
+                    });
+                } catch (error) {
+                    console.error("Error fetching genre:", genreName, error);
+                }
+            }
+            console.log(results);
+
+            setGenreMovies(results);
+        };
+
+        fetchGenreMovies();
+    }, [genres]);
+
     return (
         <article page-content="">
             <MovieHeroSlider genres={genres} movies={heroMovies} />
@@ -136,6 +173,13 @@ const MoviesPage = () => {
                     media={topMovies}
                     genres={genres}
                 />
+                {genreMovies.map(({ genreId, genreName, movies }) => (
+                    <MediaScroll
+                        title={genreName}
+                        media={movies}
+                        genres={genres}
+                    />
+                ))}
             </article>
         </article>
     );
