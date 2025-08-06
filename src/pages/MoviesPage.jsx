@@ -9,6 +9,9 @@ import MediaPageHeader from "../components/MediaPageHeader";
 const MoviesPage = () => {
     const [genres, setGenres] = useState({});
     const [heroMovies, setHeroMovies] = useState([]);
+    const [upcomingMovies, setUpcomingMovies] = useState([]);
+    const [trendingMovies, setTrendingMovies] = useState([]);
+    const [topMovies, setTopMovies] = useState([]);
 
     useEffect(() => {
         // Fetch all genres. Example: [ { "id": "123", "name": "Action" } ]
@@ -46,8 +49,9 @@ const MoviesPage = () => {
         fetchGenres();
     }, []);
 
+    // Hero section movies
     useEffect(() => {
-        const fetchMovies = async () => {
+        const fetchHeroMovies = async () => {
             const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=1`;
             try {
                 const res = await fetch(apiUrl);
@@ -58,7 +62,24 @@ const MoviesPage = () => {
             }
         };
 
-        fetchMovies();
+        fetchHeroMovies();
+    }, []);
+
+    // Upcoming movies
+    useEffect(() => {
+        const fetchUpcomingMovies = async () => {
+            const apiUrl = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&page=1`;
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+                console.log(data.results);
+                setUpcomingMovies(data.results);
+            } catch (error) {
+                console.log("Error fetching data", data);
+            }
+        };
+
+        fetchUpcomingMovies();
     }, []);
 
     return (
