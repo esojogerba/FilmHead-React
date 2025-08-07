@@ -145,7 +145,6 @@ const MoviesPage = () => {
                     console.error("Error fetching genre:", genreName, error);
                 }
             }
-            console.log(results);
 
             setGenreMovies(results);
         };
