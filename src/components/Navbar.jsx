@@ -81,7 +81,7 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="shows" className={linkClass}>
+                        <NavLink to="details" className={linkClass}>
                             Shows
                         </NavLink>
                     </li>
