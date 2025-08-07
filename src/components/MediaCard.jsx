@@ -16,7 +16,7 @@ const MediaCard = ({ mediaData, type, genres }) => {
                                 ? imageBaseURL + "w342" + mediaData.poster_path
                                 : "#"
                         }
-                        alt="Blade Runner"
+                        alt={mediaData.title}
                         className="img-cover"
                         loading="lazy"
                         onError={(e) => (e.target.style.display = "none")}
