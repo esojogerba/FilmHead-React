@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 
 // TODO: implement movie details link route
@@ -38,7 +39,12 @@ const MediaCard = ({ mediaData, type, genres }) => {
                 <p className="media-card-genres">
                     {genres?.asString?.(mediaData.genre_ids) || ""}
                 </p>
-                <a href="" className="card-btn" title="" onclick="" />
+                <Link
+                    to={`/details/movie/${mediaData.id}`}
+                    className="card-btn"
+                    title=""
+                    onclick=""
+                ></Link>
             </div>
         );
     } else {
