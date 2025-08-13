@@ -1,6 +1,5 @@
 import React from "react";
-import bannerImg from "../assets/images/Blade Runner Banner.png";
-import posterImg from "../assets/images/Blade Runner Poster.png";
+import { Link } from "react-router-dom";
 
 // TODO: Implement details button
 // TODO: Implement add button
@@ -38,9 +37,13 @@ const MovieHeroSliderItem = ({
                     {genres?.asString?.(movie.genre_ids) || ""}
                 </p>
                 <div className="banner-buttons">
-                    <a className="btn" href="movie-details.html" onclick="">
+                    <Link
+                        to={`/details/movie/${movie.id}`}
+                        className="btn"
+                        onclick=""
+                    >
                         Details
-                    </a>
+                    </Link>
                     <a
                         className="btn-icon"
                         href=""
