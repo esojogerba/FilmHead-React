@@ -1,10 +1,29 @@
 import React from "react";
+import { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import bannerImg from "../assets/images/Blade Runner Banner.png";
 import posterImg from "../assets/images/Blade Runner Poster.png";
 import starIcon from "../assets/images/star-icon.svg";
 import huluLogo from "../assets/images/hulu-logo.jpg";
 
+// TODO: determine media type and use appropriate fetch url
+// TODO: inject media data into page
+// TODO: split page in to components and pass in movie data if necessary
+// TODO: functions for:
+
 const DetailsPage = () => {
+    const { type, id } = useParams();
+    const [media, setMedia] = useState(null);
+
+    useEffect(() => {
+        const fetchMedia = async () => {
+            console.log(type);
+            console.log(id);
+        };
+
+        fetchMedia();
+    }, []);
+
     return (
         <main>
             <article page-content="">
