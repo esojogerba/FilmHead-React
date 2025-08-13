@@ -20,7 +20,7 @@ const App = () => {
             <Route path="/" element={<MainLayout />}>
                 <Route index element={<HomePage />} />
                 <Route path="movies" element={<MoviesPage />} />
-                <Route path="details" element={<DetailsPage />} />
+                <Route path="details/:type/:id" element={<DetailsPage />} />
             </Route>
         ),
         { basename }
