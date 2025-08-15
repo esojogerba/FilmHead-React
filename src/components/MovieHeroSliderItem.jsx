@@ -40,14 +40,14 @@ const MovieHeroSliderItem = ({
                     <Link
                         to={`/details/movie/${movie.id}`}
                         className="btn"
-                        onclick=""
+                        onClick={() => null}
                     >
                         Details
                     </Link>
                     <a
                         className="btn-icon"
                         href=""
-                        onclick=""
+                        onClick={() => null}
                         id="banner-add-btn"
                     >
                         <svg className="material-icon" id="add-svg">
