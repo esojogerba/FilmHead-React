@@ -21,6 +21,9 @@ const DetailsPage = () => {
         release_date: "",
         backdrop_path: null,
         poster_path: null,
+        releases: {
+            countries: [{ certification: null }],
+        },
         genres: [],
     });
 
@@ -84,6 +87,8 @@ const DetailsPage = () => {
 
         fetchData();
     }, [type, id]);
+
+    console.log(media);
 
     // Calculates hours in runtime.
     const calcRuntimeHours = function (runtime) {
@@ -154,7 +159,7 @@ const DetailsPage = () => {
                                     <span>Add to Folder</span>
                                     <svg
                                         className="material-icon"
-                                        id="card-add-svg"
+                                        id="details-add-svg"
                                     >
                                         <use xlinkHref="./assets/images/icons.svg#add-icon" />
                                     </svg>
@@ -174,7 +179,8 @@ const DetailsPage = () => {
                                             {calcRuntimeMinutes(media.runtime)}
                                         </div>
                                         <div className="meta-item card-badge">
-                                            R
+                                            {media?.releases?.countries?.[0]
+                                                ?.certification || ""}
                                         </div>
                                         <div className="meta-item">
                                             <img
@@ -183,21 +189,16 @@ const DetailsPage = () => {
                                                 height={20}
                                                 alt="Rating"
                                             />
-                                            <span>7.9</span>
+                                            <span>
+                                                {media.vote_average.toFixed(1)}
+                                            </span>
                                         </div>
                                     </div>
                                     <p className="details-genre">
                                         {getGenres(media.genres)}
                                     </p>
                                 </div>
-                                <p className="details-text">
-                                    In the smog-choked dystopian Los Angeles of
-                                    2019, blade runner Rick Deckard is called
-                                    out of retirement to terminate a quartet of
-                                    replicants who have escaped to Earth seeking
-                                    their creator for a way to extend their
-                                    short life spans.
-                                </p>
+                                <p className="details-text">{media.overview}</p>
                                 <div className="details-cast">
                                     <p className="cast-title">Starring</p>
                                     <p className="cast-body">
