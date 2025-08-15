@@ -43,7 +43,7 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     to={`/details/movie/${mediaData.id}`}
                     className="card-btn"
                     title=""
-                    onclick=""
+                    onClick={() => null}
                 ></Link>
             </div>
         );
@@ -73,7 +73,7 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     <div className="card-badge"></div>
                 </div>
                 <p className="media-card-genres"></p>
-                <a href="" className="card-btn" title="" onclick="" />
+                <a href="" className="card-btn" title="" onClick={() => null} />
             </div>
         );
     }
