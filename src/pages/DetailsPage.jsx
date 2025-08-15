@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 import bannerImg from "../assets/images/Blade Runner Banner.png";
 import posterImg from "../assets/images/Blade Runner Poster.png";
 import starIcon from "../assets/images/star-icon.svg";
@@ -13,12 +14,72 @@ import huluLogo from "../assets/images/hulu-logo.jpg";
 
 const DetailsPage = () => {
     const { type, id } = useParams();
+    const [genres, setGenres] = useState({});
     const [media, setMedia] = useState(null);
+
+    // Fetch genres
+    useEffect(() => {
+        // Fetch all genres. Example: [ { "id": "123", "name": "Action" } ]
+        // Then change genre format to {123: "Action"}
+        const genreList = {
+            // Assign correct genre string to each genre_id provided. Example: [23 , 43] = "Action, Romance".
+            asString(genreIdList) {
+                // Will hold list of genre strings.
+                let newGenreList = [];
+
+                for (const genreId of genreIdList) {
+                    // If current genreId exists in genreList, push it to newGenreList.
+                    // this == genreList
+                    this[genreId] && newGenreList.push(this[genreId]);
+                }
+                return newGenreList.join(" · ");
+            },
+        };
+
+        const fetchGenres = async () => {
+            let apiUrl = ``;
+
+            if (type === "movie") {
+                apiUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
+            } else if (type === "show") {
+                apiUrl = `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}`;
+            }
+
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+
+                for (const { id, name } of data.genres) {
+                    genreList[id] = name;
+                }
+                setGenres(genreList);
+            } catch (error) {
+                console.log("Error fetching data", data);
+            }
+        };
+
+        fetchGenres();
+    }, []);
 
     useEffect(() => {
         const fetchMedia = async () => {
-            console.log(type);
-            console.log(id);
+            let apiUrl = ``;
+
+            if (type === "movie") {
+                apiUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&append_to_response=casts,videos,images,releases`;
+            } else if (type === "show") {
+                apiUrl = `https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&append_to_response=credits,videos,images,content_ratings`;
+            }
+
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+
+                console.log(data);
+                setMedia(data.results);
+            } catch (error) {
+                console.log("Error fetching data", data);
+            }
         };
 
         fetchMedia();
