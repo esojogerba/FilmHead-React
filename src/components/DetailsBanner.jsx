@@ -47,6 +47,18 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
         return newCastList.join(", ");
     };
 
+    const getDirectors = function (crewList) {
+        //  Gets the directors from the crewList
+        const directors = crewList.filter(({ job }) => job === "Director");
+
+        const directorList = [];
+
+        // Pushes all the names of the directors into directorList.
+        for (const { name } of directors) directorList.push(name);
+
+        return directorList.join(", ");
+    };
+
     return (
         <section className="banner details-banner">
             <div
@@ -124,7 +136,9 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
                     </div>
                     <div className="details-director">
                         <p className="director-title">Directed By</p>
-                        <p className="director-body">Ridley Scott</p>
+                        <p className="director-body">
+                            {getDirectors(media?.casts?.crew)}
+                        </p>
                     </div>
                 </div>
             </div>
