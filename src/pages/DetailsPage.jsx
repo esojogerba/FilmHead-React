@@ -25,6 +25,7 @@ const DetailsPage = () => {
         },
         genres: [],
         vote_average: 0,
+        casts: { cast: null, crew: null },
     });
 
     // Fetch genres

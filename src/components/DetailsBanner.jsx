@@ -32,6 +32,21 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
         return newGenreList.join(" · ");
     };
 
+    // Returns the movie's cast list separated by a ','.
+    // Ten cast members is the max length of the list.
+    const getCasts = function (castList) {
+        const newCastList = [];
+
+        // Pushes cast names into newCastList.
+        // A maximum of 10 names can be pushed.
+        for (let i = 0, len = castList.length; i < len && i < 10; i++) {
+            const { name } = castList[i];
+            newCastList.push(name);
+        }
+
+        return newCastList.join(", ");
+    };
+
     return (
         <section className="banner details-banner">
             <div
@@ -104,9 +119,7 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
                     <div className="details-cast">
                         <p className="cast-title">Starring</p>
                         <p className="cast-body">
-                            Harrison Ford, Rutger Hauer, Sean Young, Edward
-                            James Olmos, M. Emmet Walsh, Daryl Hannah, William
-                            Sanderson, Brion James, Joe Turkel, Joanna Cassidy
+                            {getCasts(media?.casts?.cast)}
                         </p>
                     </div>
                     <div className="details-director">
