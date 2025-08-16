@@ -158,22 +158,26 @@ const MoviesPage = () => {
             <article className="container">
                 <MediaPageHeader title="Movies" genres={genres} />
                 <MediaScroll
+                    key={100}
                     title="Upcoming"
                     media={upcomingMovies}
                     genres={genres}
                 />
                 <MediaScroll
+                    key={200}
                     title="Trending This Week"
                     media={trendingMovies}
                     genres={genres}
                 />
                 <MediaScroll
+                    key={300}
                     title="Top Rated"
                     media={topMovies}
                     genres={genres}
                 />
                 {genreMovies.map(({ genreId, genreName, movies }) => (
                     <MediaScroll
+                        key={genreId}
                         title={genreName}
                         media={movies}
                         genres={genres}
