@@ -289,7 +289,7 @@ const DetailsPage = () => {
                                                 className="material-icon"
                                                 id="card-add-svg"
                                             >
-                                                <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
                                             </svg>
                                         </a>
                                     </figure>
@@ -333,7 +333,7 @@ const DetailsPage = () => {
                                                 className="material-icon"
                                                 id="card-add-svg"
                                             >
-                                                <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
                                             </svg>
                                         </a>
                                     </figure>
@@ -377,7 +377,7 @@ const DetailsPage = () => {
                                                 className="material-icon"
                                                 id="card-add-svg"
                                             >
-                                                <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
                                             </svg>
                                         </a>
                                     </figure>
@@ -421,7 +421,7 @@ const DetailsPage = () => {
                                                 className="material-icon"
                                                 id="card-add-svg"
                                             >
-                                                <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
                                             </svg>
                                         </a>
                                     </figure>
@@ -465,7 +465,7 @@ const DetailsPage = () => {
                                                 className="material-icon"
                                                 id="card-add-svg"
                                             >
-                                                <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
                                             </svg>
                                         </a>
                                     </figure>
@@ -509,7 +509,7 @@ const DetailsPage = () => {
                                                 className="material-icon"
                                                 id="card-add-svg"
                                             >
-                                                <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
                                             </svg>
                                         </a>
                                     </figure>
@@ -553,7 +553,7 @@ const DetailsPage = () => {
                                                 className="material-icon"
                                                 id="card-add-svg"
                                             >
-                                                <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
                                             </svg>
                                         </a>
                                     </figure>

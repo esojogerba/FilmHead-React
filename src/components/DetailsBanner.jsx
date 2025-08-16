@@ -91,7 +91,7 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
                     >
                         <span>Add to Folder</span>
                         <svg className="material-icon" id="details-add-svg">
-                            <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                            <use xlinkHref="/assets/images/icons.svg#add-icon" />
                         </svg>
                     </a>
                 </div>
