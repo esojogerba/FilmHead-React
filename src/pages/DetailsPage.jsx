@@ -5,6 +5,7 @@ import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 import posterImg from "../assets/images/Blade Runner Poster.png";
 import huluLogo from "../assets/images/hulu-logo.jpg";
 import DetailsBanner from "../components/DetailsBanner";
+import DetailsTrailers from "../components/DetailsTrailers";
 
 // TODO: determine media type and use appropriate fetch url
 // TODO: inject media data into page
@@ -26,6 +27,7 @@ const DetailsPage = () => {
         genres: [],
         vote_average: 0,
         casts: { cast: [], crew: [] },
+        videos: { results: [] },
     });
 
     // Fetch genres
@@ -89,8 +91,6 @@ const DetailsPage = () => {
         fetchData();
     }, [type, id]);
 
-    console.log(media);
-
     return (
         <main>
             {media && (
@@ -102,6 +102,8 @@ const DetailsPage = () => {
                         media={media}
                         imageBaseURL={imageBaseURL}
                     />
+                    {/* Trailers & Clips */}
+                    <DetailsTrailers media={media} />
                     {/* Available On */}
                     <section className="media-scroll container">
                         <div className="media-scroll-title-wrapper">
@@ -174,90 +176,6 @@ const DetailsPage = () => {
                                 <h4 className="watch-header">
                                     Not Available in US
                                 </h4>
-                            </div>
-                        </div>
-                    </section>
-                    {/* Trailers & Clips */}
-                    <section className="media-scroll container">
-                        <div className="media-scroll-title-wrapper">
-                            <h3 className="media-scroll-title">
-                                Trailers &amp; Clips
-                            </h3>
-                        </div>
-                        <div className="media-slider-list">
-                            <div className="slider-list-inner">
-                                <div className="video-card">
-                                    <iframe
-                                        width={500}
-                                        height={294}
-                                        src={null}
-                                        frameBorder={0}
-                                        allowFullScreen={1}
-                                        title="Blade Runner Trailer"
-                                        className="img-cover"
-                                        loading="lazy"
-                                    />
-                                </div>
-                                <div className="video-card">
-                                    <iframe
-                                        width={500}
-                                        height={294}
-                                        src={null}
-                                        frameBorder={0}
-                                        allowFullScreen={1}
-                                        title="Blade Runner Trailer"
-                                        className="img-cover"
-                                        loading="lazy"
-                                    />
-                                </div>
-                                <div className="video-card">
-                                    <iframe
-                                        width={500}
-                                        height={294}
-                                        src={null}
-                                        frameBorder={0}
-                                        allowFullScreen={1}
-                                        title="Blade Runner Trailer"
-                                        className="img-cover"
-                                        loading="lazy"
-                                    />
-                                </div>
-                                <div className="video-card">
-                                    <iframe
-                                        width={500}
-                                        height={294}
-                                        src={null}
-                                        frameBorder={0}
-                                        allowFullScreen={1}
-                                        title="Blade Runner Trailer"
-                                        className="img-cover"
-                                        loading="lazy"
-                                    />
-                                </div>
-                                <div className="video-card">
-                                    <iframe
-                                        width={500}
-                                        height={294}
-                                        src={null}
-                                        frameBorder={0}
-                                        allowFullScreen={1}
-                                        title="Blade Runner Trailer"
-                                        className="img-cover"
-                                        loading="lazy"
-                                    />
-                                </div>
-                                <div className="video-card">
-                                    <iframe
-                                        width={500}
-                                        height={294}
-                                        src={null}
-                                        frameBorder={0}
-                                        allowFullScreen={1}
-                                        title="Blade Runner Trailer"
-                                        className="img-cover"
-                                        loading="lazy"
-                                    />
-                                </div>
                             </div>
                         </div>
                     </section>
