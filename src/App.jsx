@@ -9,6 +9,7 @@ import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import MoviesPage from "./pages/MoviesPage";
 import DetailsPage from "./pages/DetailsPage";
+import ShowsPage from "./pages/ShowsPage";
 
 // TODO: Fix router to match RC2024.
 
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/" element={<MainLayout />}>
                 <Route index element={<HomePage />} />
                 <Route path="movies" element={<MoviesPage />} />
+                <Route path="shows" element={<ShowsPage />} />
                 <Route path="details/:type/:id" element={<DetailsPage />} />
             </Route>
         ),
