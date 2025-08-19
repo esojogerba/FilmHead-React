@@ -4,6 +4,7 @@ import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 
 const ShowsPage = () => {
     const [genres, setGenres] = useState({});
+    const [heroShows, setHeroShows] = useState([]);
 
     useEffect(() => {
         // Fetch all genres. Example: [ { "id": "123", "name": "Action" } ]
@@ -41,7 +42,24 @@ const ShowsPage = () => {
         fetchGenres();
     }, []);
 
+    // Hero section shows
+    useEffect(() => {
+        const fetchHeroShows = async () => {
+            const apiUrl = `https://api.themoviedb.org/3/trending/tv/day?api_key=${API_KEY}`;
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+                setHeroShows(data.results);
+            } catch (error) {
+                console.log("Error fetching data", data);
+            }
+        };
+
+        fetchHeroShows();
+    }, []);
+
     console.log(genres);
+    console.log(heroShows);
 
     return <div>ShowsPage</div>;
 };
