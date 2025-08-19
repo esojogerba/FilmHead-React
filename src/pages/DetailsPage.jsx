@@ -7,6 +7,7 @@ import posterImg from "../assets/images/Blade Runner Poster.png";
 import DetailsBanner from "../components/DetailsBanner";
 import DetailsTrailers from "../components/DetailsTrailers";
 import AvailableOn from "../components/AvailableOn";
+import MediaScroll from "../components/MediaScroll";
 
 // TODO: determine media type and use appropriate fetch url
 // TODO: inject media data into page
@@ -31,6 +32,7 @@ const DetailsPage = () => {
         videos: { results: [] },
     });
     const [availableOn, setAvailableOn] = useState([{ US: null }]);
+    const [suggestions, setSuggestions] = useState([]);
 
     // Fetch genres
     useEffect(() => {
@@ -105,6 +107,23 @@ const DetailsPage = () => {
             } catch (error) {
                 console.log("Error fetching data", data);
             }
+
+            apiUrl = ``;
+
+            if (type === "movie") {
+                apiUrl = `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${API_KEY}&page=1`;
+            } else if (type === "show") {
+                apiUrl = `https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${API_KEY}&page=1`;
+            }
+
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+
+                setSuggestions(data.results);
+            } catch (error) {
+                console.log("Error fetching data", data);
+            }
         };
 
         fetchData();
@@ -129,328 +148,12 @@ const DetailsPage = () => {
                         imageBaseURL={imageBaseURL}
                     />
                     {/* You May Also Like */}
-                    <section className="media-scroll container">
-                        <div className="media-scroll-title-wrapper">
-                            <h3 className="media-scroll-title">
-                                You May Also Like
-                            </h3>
-                            <a href="" className="view-more-link">
-                                View More
-                            </a>
-                        </div>
-                        <div className="media-slider-list">
-                            <div className="slider-list-inner">
-                                <div className="media-card">
-                                    <figure className="poster-box card-poster">
-                                        <img
-                                            src={posterImg}
-                                            alt="Blade Runner"
-                                            className="img-cover"
-                                            loading="lazy"
-                                        />
-                                        <a
-                                            href=""
-                                            className="media-card-add-btn"
-                                        >
-                                            <svg
-                                                className="material-icon"
-                                                id="card-add-svg"
-                                            >
-                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
-                                            </svg>
-                                        </a>
-                                    </figure>
-                                    <h4 className="media-card-title">
-                                        Blade Runner
-                                    </h4>
-                                    <div className="meta-list media-card-meta">
-                                        <div className="meta-list">
-                                            <div className="meta-item">
-                                                1982
-                                            </div>
-                                            <div className="meta-item">
-                                                1hr 58min
-                                            </div>
-                                        </div>
-                                        <div className="card-badge">R</div>
-                                    </div>
-                                    <p className="media-card-genres">
-                                        Science Fiction · Drama · Thriller
-                                    </p>
-                                    <a
-                                        href=""
-                                        className="card-btn"
-                                        title=""
-                                        onClick={() => null}
-                                    />
-                                </div>
-                                <div className="media-card">
-                                    <figure className="poster-box card-poster">
-                                        <img
-                                            src={posterImg}
-                                            alt="Blade Runner"
-                                            className="img-cover"
-                                            loading="lazy"
-                                        />
-                                        <a
-                                            href=""
-                                            className="media-card-add-btn"
-                                        >
-                                            <svg
-                                                className="material-icon"
-                                                id="card-add-svg"
-                                            >
-                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
-                                            </svg>
-                                        </a>
-                                    </figure>
-                                    <h4 className="media-card-title">
-                                        Blade Runner
-                                    </h4>
-                                    <div className="meta-list media-card-meta">
-                                        <div className="meta-list">
-                                            <div className="meta-item">
-                                                1982
-                                            </div>
-                                            <div className="meta-item">
-                                                1hr 58min
-                                            </div>
-                                        </div>
-                                        <div className="card-badge">R</div>
-                                    </div>
-                                    <p className="media-card-genres">
-                                        Science Fiction · Drama · Thriller
-                                    </p>
-                                    <a
-                                        href=""
-                                        className="card-btn"
-                                        title=""
-                                        onClick={() => null}
-                                    />
-                                </div>
-                                <div className="media-card">
-                                    <figure className="poster-box card-poster">
-                                        <img
-                                            src={posterImg}
-                                            alt="Blade Runner"
-                                            className="img-cover"
-                                            loading="lazy"
-                                        />
-                                        <a
-                                            href=""
-                                            className="media-card-add-btn"
-                                        >
-                                            <svg
-                                                className="material-icon"
-                                                id="card-add-svg"
-                                            >
-                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
-                                            </svg>
-                                        </a>
-                                    </figure>
-                                    <h4 className="media-card-title">
-                                        Blade Runner
-                                    </h4>
-                                    <div className="meta-list media-card-meta">
-                                        <div className="meta-list">
-                                            <div className="meta-item">
-                                                1982
-                                            </div>
-                                            <div className="meta-item">
-                                                1hr 58min
-                                            </div>
-                                        </div>
-                                        <div className="card-badge">R</div>
-                                    </div>
-                                    <p className="media-card-genres">
-                                        Science Fiction · Drama · Thriller
-                                    </p>
-                                    <a
-                                        href=""
-                                        className="card-btn"
-                                        title=""
-                                        onClick={() => null}
-                                    />
-                                </div>
-                                <div className="media-card">
-                                    <figure className="poster-box card-poster">
-                                        <img
-                                            src={posterImg}
-                                            alt="Blade Runner"
-                                            className="img-cover"
-                                            loading="lazy"
-                                        />
-                                        <a
-                                            href=""
-                                            className="media-card-add-btn"
-                                        >
-                                            <svg
-                                                className="material-icon"
-                                                id="card-add-svg"
-                                            >
-                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
-                                            </svg>
-                                        </a>
-                                    </figure>
-                                    <h4 className="media-card-title">
-                                        Blade Runner
-                                    </h4>
-                                    <div className="meta-list media-card-meta">
-                                        <div className="meta-list">
-                                            <div className="meta-item">
-                                                1982
-                                            </div>
-                                            <div className="meta-item">
-                                                1hr 58min
-                                            </div>
-                                        </div>
-                                        <div className="card-badge">R</div>
-                                    </div>
-                                    <p className="media-card-genres">
-                                        Science Fiction · Drama · Thriller
-                                    </p>
-                                    <a
-                                        href=""
-                                        className="card-btn"
-                                        title=""
-                                        onClick={() => null}
-                                    />
-                                </div>
-                                <div className="media-card">
-                                    <figure className="poster-box card-poster">
-                                        <img
-                                            src={posterImg}
-                                            alt="Blade Runner"
-                                            className="img-cover"
-                                            loading="lazy"
-                                        />
-                                        <a
-                                            href=""
-                                            className="media-card-add-btn"
-                                        >
-                                            <svg
-                                                className="material-icon"
-                                                id="card-add-svg"
-                                            >
-                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
-                                            </svg>
-                                        </a>
-                                    </figure>
-                                    <h4 className="media-card-title">
-                                        Blade Runner
-                                    </h4>
-                                    <div className="meta-list media-card-meta">
-                                        <div className="meta-list">
-                                            <div className="meta-item">
-                                                1982
-                                            </div>
-                                            <div className="meta-item">
-                                                1hr 58min
-                                            </div>
-                                        </div>
-                                        <div className="card-badge">R</div>
-                                    </div>
-                                    <p className="media-card-genres">
-                                        Science Fiction · Drama · Thriller
-                                    </p>
-                                    <a
-                                        href=""
-                                        className="card-btn"
-                                        title=""
-                                        onClick={() => null}
-                                    />
-                                </div>
-                                <div className="media-card">
-                                    <figure className="poster-box card-poster">
-                                        <img
-                                            src={posterImg}
-                                            alt="Blade Runner"
-                                            className="img-cover"
-                                            loading="lazy"
-                                        />
-                                        <a
-                                            href=""
-                                            className="media-card-add-btn"
-                                        >
-                                            <svg
-                                                className="material-icon"
-                                                id="card-add-svg"
-                                            >
-                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
-                                            </svg>
-                                        </a>
-                                    </figure>
-                                    <h4 className="media-card-title">
-                                        Blade Runner
-                                    </h4>
-                                    <div className="meta-list media-card-meta">
-                                        <div className="meta-list">
-                                            <div className="meta-item">
-                                                1982
-                                            </div>
-                                            <div className="meta-item">
-                                                1hr 58min
-                                            </div>
-                                        </div>
-                                        <div className="card-badge">R</div>
-                                    </div>
-                                    <p className="media-card-genres">
-                                        Science Fiction · Drama · Thriller
-                                    </p>
-                                    <a
-                                        href=""
-                                        className="card-btn"
-                                        title=""
-                                        onClick={() => null}
-                                    />
-                                </div>
-                                <div className="media-card">
-                                    <figure className="poster-box card-poster">
-                                        <img
-                                            src={posterImg}
-                                            alt="Blade Runner"
-                                            className="img-cover"
-                                            loading="lazy"
-                                        />
-                                        <a
-                                            href=""
-                                            className="media-card-add-btn"
-                                        >
-                                            <svg
-                                                className="material-icon"
-                                                id="card-add-svg"
-                                            >
-                                                <use xlinkHref="/assets/images/icons.svg#add-icon" />
-                                            </svg>
-                                        </a>
-                                    </figure>
-                                    <h4 className="media-card-title">
-                                        Blade Runner
-                                    </h4>
-                                    <div className="meta-list media-card-meta">
-                                        <div className="meta-list">
-                                            <div className="meta-item">
-                                                1982
-                                            </div>
-                                            <div className="meta-item">
-                                                1hr 58min
-                                            </div>
-                                        </div>
-                                        <div className="card-badge">R</div>
-                                    </div>
-                                    <p className="media-card-genres">
-                                        Science Fiction · Drama · Thriller
-                                    </p>
-                                    <a
-                                        href=""
-                                        className="card-btn"
-                                        title=""
-                                        onClick={() => null}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    <MediaScroll
+                        title="You May Also Like"
+                        media={suggestions}
+                        genres={genres}
+                        type={type}
+                    />
                 </article>
             )}
         </main>
