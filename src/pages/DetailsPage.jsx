@@ -30,6 +30,7 @@ const DetailsPage = () => {
         casts: { cast: [], crew: [] },
         videos: { results: [] },
     });
+    const [availableOn, setAvailableOn] = useState([{ US: null }]);
 
     // Fetch genres
     useEffect(() => {
@@ -87,6 +88,23 @@ const DetailsPage = () => {
             } catch (error) {
                 console.log("Error fetching data", data);
             }
+
+            apiUrl = ``;
+
+            if (type === "movie") {
+                apiUrl = `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${API_KEY}`;
+            } else if (type === "show") {
+                apiUrl = `https://api.themoviedb.org/3/tv/${id}/watch/providers?api_key=${API_KEY}`;
+            }
+
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+
+                setAvailableOn(data.results);
+            } catch (error) {
+                console.log("Error fetching data", data);
+            }
         };
 
         fetchData();
@@ -106,7 +124,10 @@ const DetailsPage = () => {
                     {/* Trailers & Clips */}
                     <DetailsTrailers media={media} />
                     {/* Available On */}
-                    <AvailableOn />
+                    <AvailableOn
+                        availableOn={availableOn}
+                        imageBaseURL={imageBaseURL}
+                    />
                     {/* You May Also Like */}
                     <section className="media-scroll container">
                         <div className="media-scroll-title-wrapper">
