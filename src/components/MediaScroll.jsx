@@ -3,7 +3,7 @@ import MediaCard from "./MediaCard";
 
 // TODO: implement view more link
 
-const MediaScroll = ({ title, media, genres }) => {
+const MediaScroll = ({ title, media, genres, type }) => {
     return (
         <section className="media-scroll">
             <div className="media-scroll-title-wrapper">
@@ -14,12 +14,12 @@ const MediaScroll = ({ title, media, genres }) => {
             </div>
             <div className="media-slider-list">
                 <div className="slider-list-inner">
-                    {media.map((movie, i) => (
+                    {media.map((item, i) => (
                         <MediaCard
-                            mediaData={movie}
-                            type="movie"
+                            mediaData={item}
+                            type={type}
                             genres={genres}
-                            key={movie.id}
+                            key={item.id}
                         />
                     ))}
                 </div>

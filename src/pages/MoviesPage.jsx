@@ -162,18 +162,21 @@ const MoviesPage = () => {
                     title="Upcoming"
                     media={upcomingMovies}
                     genres={genres}
+                    type={"movie"}
                 />
                 <MediaScroll
                     key={200}
                     title="Trending This Week"
                     media={trendingMovies}
                     genres={genres}
+                    type={"movie"}
                 />
                 <MediaScroll
                     key={300}
                     title="Top Rated"
                     media={topMovies}
                     genres={genres}
+                    type={"movie"}
                 />
                 {genreMovies.map(({ genreId, genreName, movies }) => (
                     <MediaScroll
@@ -181,6 +184,7 @@ const MoviesPage = () => {
                         title={genreName}
                         media={movies}
                         genres={genres}
+                        type={"movie"}
                     />
                 ))}
             </article>
