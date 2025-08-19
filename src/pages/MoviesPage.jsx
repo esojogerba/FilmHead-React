@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
-import bannerImg from "../assets/images/Blade Runner Banner.png";
-import posterImg from "../assets/images/Blade Runner Poster.png";
 import MovieHeroSlider from "../components/MovieHeroSlider";
 import MediaPageHeader from "../components/MediaPageHeader";
 import MediaScroll from "../components/MediaScroll";
