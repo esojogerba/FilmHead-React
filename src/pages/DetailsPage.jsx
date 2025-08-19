@@ -3,9 +3,10 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 import posterImg from "../assets/images/Blade Runner Poster.png";
-import huluLogo from "../assets/images/hulu-logo.jpg";
+
 import DetailsBanner from "../components/DetailsBanner";
 import DetailsTrailers from "../components/DetailsTrailers";
+import AvailableOn from "../components/AvailableOn";
 
 // TODO: determine media type and use appropriate fetch url
 // TODO: inject media data into page
@@ -105,80 +106,7 @@ const DetailsPage = () => {
                     {/* Trailers & Clips */}
                     <DetailsTrailers media={media} />
                     {/* Available On */}
-                    <section className="media-scroll container">
-                        <div className="media-scroll-title-wrapper">
-                            <h3 className="media-scroll-title">
-                                Available On (US)
-                            </h3>
-                        </div>
-                        <div className="media-slider-list">
-                            <div className="slider-list-inner watch-col">
-                                <div className="watch-stream-col">
-                                    <h4 className="watch-header">Stream</h4>
-                                    <div className="watch-platforms-row">
-                                        <img
-                                            className="watch-logo"
-                                            src={huluLogo}
-                                            alt="Hulu"
-                                        />
-                                        <img
-                                            className="watch-logo"
-                                            src={huluLogo}
-                                            alt="Hulu"
-                                        />
-                                        <img
-                                            className="watch-logo"
-                                            src={huluLogo}
-                                            alt="Hulu"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="watch-rent-col">
-                                    <h4 className="watch-header">Rent</h4>
-                                    <div className="watch-platforms-row">
-                                        <img
-                                            className="watch-logo"
-                                            src={huluLogo}
-                                            alt="Hulu"
-                                        />
-                                        <img
-                                            className="watch-logo"
-                                            src={huluLogo}
-                                            alt="Hulu"
-                                        />
-                                        <img
-                                            className="watch-logo"
-                                            src={huluLogo}
-                                            alt="Hulu"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="watch-buy-col">
-                                    <h4 className="watch-header">Buy</h4>
-                                    <div className="watch-platforms-row">
-                                        <img
-                                            className="watch-logo"
-                                            src={huluLogo}
-                                            alt="Hulu"
-                                        />
-                                        <img
-                                            className="watch-logo"
-                                            src={huluLogo}
-                                            alt="Hulu"
-                                        />
-                                        <img
-                                            className="watch-logo"
-                                            src={huluLogo}
-                                            alt="Hulu"
-                                        />
-                                    </div>
-                                </div>
-                                <h4 className="watch-header">
-                                    Not Available in US
-                                </h4>
-                            </div>
-                        </div>
-                    </section>
+                    <AvailableOn />
                     {/* You May Also Like */}
                     <section className="media-scroll container">
                         <div className="media-scroll-title-wrapper">
