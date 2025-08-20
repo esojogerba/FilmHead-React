@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
-import MovieHeroSliderItem from "./MovieHeroSliderItem";
+import MediaHeroSliderItem from "./MediaHeroSliderItem";
 import HeroSliderControl from "./HeroSliderControl";
 
 // TODO: API integration
@@ -9,24 +9,24 @@ import HeroSliderControl from "./HeroSliderControl";
 // TODO: Routing to details page
 // TODO: add to folder pop up integration
 
-const MovieHeroSlider = ({ genres, movies }) => {
+const MediaHeroSlider = ({ genres, mediaList, type }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const intervalRef = useRef(null);
 
     const startAutoSlide = () => {
         clearInterval(intervalRef.current);
         intervalRef.current = setInterval(() => {
-            setActiveIndex((prevIndex) => (prevIndex + 1) % movies.length);
+            setActiveIndex((prevIndex) => (prevIndex + 1) % mediaList.length);
         }, 10000);
     };
 
     useEffect(() => {
-        if (movies.length > 0) {
+        if (mediaList.length > 0) {
             startAutoSlide();
         }
 
         return () => clearInterval(intervalRef.current);
-    }, [movies]);
+    }, [mediaList]);
 
     const handleControlClick = (index) => {
         setActiveIndex(index);
@@ -36,25 +36,27 @@ const MovieHeroSlider = ({ genres, movies }) => {
     return (
         <section className="banner">
             <div className="banner-slider-row">
-                {movies.map((movie, i) => (
-                    <MovieHeroSliderItem
-                        key={movie.id}
+                {mediaList.map((media, i) => (
+                    <MediaHeroSliderItem
+                        key={media.id}
                         index={i}
-                        movie={movie}
+                        media={media}
                         imageBaseURL={imageBaseURL}
                         genres={genres}
                         isActive={i === activeIndex}
+                        type={type}
                     />
                 ))}
             </div>
             <HeroSliderControl
-                movies={movies}
+                mediaList={mediaList}
                 imageBaseURL={imageBaseURL}
                 activeIndex={activeIndex}
+                type={type}
                 handleControlClick={handleControlClick}
             />
         </section>
     );
 };
 
-export default MovieHeroSlider;
+export default MediaHeroSlider;
