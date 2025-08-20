@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
-import MovieHeroSlider from "../components/MovieHeroSlider";
+import MediaHeroSlider from "../components/MediaHeroSlider";
 import MediaPageHeader from "../components/MediaPageHeader";
 import MediaScroll from "../components/MediaScroll";
 
@@ -152,7 +152,11 @@ const MoviesPage = () => {
 
     return (
         <article page-content="">
-            <MovieHeroSlider genres={genres} movies={heroMovies} />
+            <MediaHeroSlider
+                genres={genres}
+                mediaList={heroMovies}
+                type="movie"
+            />
             <article className="container">
                 <MediaPageHeader title="Movies" genres={genres} />
                 <MediaScroll
