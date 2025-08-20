@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
+import MediaHeroSlider from "../components/MediaHeroSlider";
 
 const ShowsPage = () => {
     const [genres, setGenres] = useState({});
@@ -58,10 +59,9 @@ const ShowsPage = () => {
         fetchHeroShows();
     }, []);
 
-    console.log(genres);
-    console.log(heroShows);
-
-    return <div>ShowsPage</div>;
+    return (
+        <MediaHeroSlider genres={genres} mediaList={heroShows} type="show" />
+    );
 };
 
 export default ShowsPage;
