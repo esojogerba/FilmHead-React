@@ -148,12 +148,14 @@ const DetailsPage = () => {
                         imageBaseURL={imageBaseURL}
                     />
                     {/* You May Also Like */}
-                    <MediaScroll
-                        title="You May Also Like"
-                        media={suggestions}
-                        genres={genres}
-                        type={type}
-                    />
+                    <div className="container">
+                        <MediaScroll
+                            title="You May Also Like"
+                            media={suggestions}
+                            genres={genres}
+                            type={type}
+                        />
+                    </div>
                 </article>
             )}
         </main>
