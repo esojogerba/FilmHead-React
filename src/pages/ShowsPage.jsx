@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 import MediaHeroSlider from "../components/MediaHeroSlider";
 import MediaPageHeader from "../components/MediaPageHeader";
+import MediaScroll from "../components/MediaScroll";
 
 const ShowsPage = () => {
     const [genres, setGenres] = useState({});
@@ -87,6 +88,14 @@ const ShowsPage = () => {
 
             <article className="container">
                 <MediaPageHeader title="Shows" genres={genres} />
+
+                <MediaScroll
+                    key={100}
+                    title="Trending This Week"
+                    media={trendingShows}
+                    genres={genres}
+                    type={"show"}
+                />
             </article>
         </article>
     );
