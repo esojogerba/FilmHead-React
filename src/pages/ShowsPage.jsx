@@ -7,6 +7,7 @@ import MediaPageHeader from "../components/MediaPageHeader";
 const ShowsPage = () => {
     const [genres, setGenres] = useState({});
     const [heroShows, setHeroShows] = useState([]);
+    const [trendingShows, setTrendingShows] = useState([]);
 
     useEffect(() => {
         // Fetch all genres. Example: [ { "id": "123", "name": "Action" } ]
@@ -58,6 +59,22 @@ const ShowsPage = () => {
         };
 
         fetchHeroShows();
+    }, []);
+
+    // Trending shows
+    useEffect(() => {
+        const fetchTrendingShows = async () => {
+            const apiUrl = `https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}&timezone=America/Edmonton&page=1`;
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+                setTrendingShows(data.results);
+            } catch (error) {
+                console.log("Error fetching data", data);
+            }
+        };
+
+        fetchTrendingShows();
     }, []);
 
     return (
