@@ -47,6 +47,46 @@ const MediaCard = ({ mediaData, type, genres }) => {
                 ></Link>
             </div>
         );
+    } else if (type === "show") {
+        return (
+            <div className="media-card">
+                <figure className="poster-box card-poster">
+                    <img
+                        src={
+                            mediaData.poster_path != null
+                                ? imageBaseURL + "w342" + mediaData.poster_path
+                                : "#"
+                        }
+                        alt={mediaData.name}
+                        className="img-cover"
+                        loading="lazy"
+                        onError={(e) => (e.target.style.display = "none")}
+                    />
+                    <a href="" className="media-card-add-btn">
+                        <svg className="material-icon" id="card-add-svg">
+                            <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                        </svg>
+                    </a>
+                </figure>
+                <h4 className="media-card-title">{mediaData.name}</h4>
+                <div className="meta-list media-card-meta">
+                    <div className="meta-list">
+                        <div className="meta-item">
+                            {mediaData.first_air_date.split("-")[0]}
+                        </div>
+                    </div>
+                </div>
+                <p className="media-card-genres">
+                    {genres?.asString?.(mediaData.genre_ids) || ""}
+                </p>
+                <Link
+                    to={`/details/show/${mediaData.id}`}
+                    className="card-btn"
+                    title=""
+                    onClick={() => null}
+                ></Link>
+            </div>
+        );
     } else {
         return (
             <div className="media-card">
