@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 import MediaHeroSlider from "../components/MediaHeroSlider";
+import MediaPageHeader from "../components/MediaPageHeader";
 
 const ShowsPage = () => {
     const [genres, setGenres] = useState({});
@@ -60,7 +61,17 @@ const ShowsPage = () => {
     }, []);
 
     return (
-        <MediaHeroSlider genres={genres} mediaList={heroShows} type="show" />
+        <article page-content="">
+            <MediaHeroSlider
+                genres={genres}
+                mediaList={heroShows}
+                type="show"
+            />
+
+            <article className="container">
+                <MediaPageHeader title="Shows" genres={genres} />
+            </article>
+        </article>
     );
 };
 
