@@ -21,14 +21,23 @@ const DetailsPage = () => {
         title: "",
         name: "",
         release_date: "",
+        first_air_date: "",
+        number_of_episodes: 0,
+        number_of_seasons: 0,
         backdrop_path: null,
         poster_path: null,
         releases: {
             countries: [{ certification: null }],
         },
+        content_ratings: {
+            results: [{ rating: null }],
+        },
         genres: [],
+        overview: "",
         vote_average: 0,
         casts: { cast: [], crew: [] },
+        credits: { cast: [] },
+        created_by: [],
         videos: { results: [] },
     });
     const [availableOn, setAvailableOn] = useState([{ US: null }]);
@@ -56,6 +65,7 @@ const DetailsPage = () => {
         const fetchData = async () => {
             let apiUrl = ``;
 
+            // Get genres
             if (type === "movie") {
                 apiUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
             } else if (type === "show") {
@@ -76,6 +86,7 @@ const DetailsPage = () => {
 
             apiUrl = ``;
 
+            // Get media data
             if (type === "movie") {
                 apiUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&append_to_response=casts,videos,images,releases`;
             } else if (type === "show") {
@@ -93,6 +104,7 @@ const DetailsPage = () => {
 
             apiUrl = ``;
 
+            // Get watch provider data
             if (type === "movie") {
                 apiUrl = `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${API_KEY}`;
             } else if (type === "show") {
@@ -110,6 +122,7 @@ const DetailsPage = () => {
 
             apiUrl = ``;
 
+            // Get suggestions data
             if (type === "movie") {
                 apiUrl = `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${API_KEY}&page=1`;
             } else if (type === "show") {
