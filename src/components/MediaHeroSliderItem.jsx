@@ -87,7 +87,7 @@ const MediaHeroSliderItem = ({
                         {genres?.asString?.(media.genre_ids) || ""}
                     </p>
                     <div className="banner-buttons">
-                        <Link to={`/details/movie/${media.id}`} className="btn">
+                        <Link to={`/details/show/${media.id}`} className="btn">
                             Details
                         </Link>
                         <a
