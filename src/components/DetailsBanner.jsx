@@ -246,12 +246,16 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
                                 {getCasts(media?.credits?.cast)}
                             </p>
                         </div>
-                        <div className="details-director">
-                            <p className="director-title">Directed By</p>
-                            <p className="director-body">
-                                {getCreators(media?.created_by)}
-                            </p>
-                        </div>
+                        {media?.created_by.length != 0 ? (
+                            <div className="details-director">
+                                <p className="director-title">Created By</p>
+                                <p className="director-body">
+                                    {getCreators(media?.created_by)}
+                                </p>
+                            </div>
+                        ) : (
+                            ""
+                        )}
                     </div>
                 </div>
             </section>
