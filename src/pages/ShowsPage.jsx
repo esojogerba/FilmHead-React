@@ -11,6 +11,7 @@ const ShowsPage = () => {
     const [trendingShows, setTrendingShows] = useState([]);
     const [airingToday, setAiringToday] = useState([]);
     const [topRated, setTopRated] = useState([]);
+    const [genreShows, setGenreShows] = useState([]);
 
     useEffect(() => {
         // Fetch all genres. Example: [ { "id": "123", "name": "Action" } ]
@@ -112,6 +113,41 @@ const ShowsPage = () => {
         fetchTopRated();
     }, []);
 
+    // Genre shows
+    useEffect(() => {
+        const fetchGenreShows = async () => {
+            const results = [];
+
+            // Check that genres is defined and is an object
+            if (!genres || typeof genres !== "object") return;
+
+            const genreEntries = Object.entries(genres).filter(
+                ([key]) => key !== "asString"
+            );
+
+            for (const [genreId, genreName] of genreEntries) {
+                const apiUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&sort_by=popularity.desc&include_adult=false&page=1&with_origin_country=US&with_genres=${genreId}`;
+
+                try {
+                    const res = await fetch(apiUrl);
+                    const data = await res.json();
+
+                    results.push({
+                        genreId,
+                        genreName,
+                        shows: data.results || [], // Default to empty array
+                    });
+                } catch (error) {
+                    console.error("Error fetching genre:", genreName, error);
+                }
+            }
+
+            setGenreShows(results);
+        };
+
+        fetchGenreShows();
+    }, [genres]);
+
     return (
         <article page-content="">
             <MediaHeroSlider
@@ -146,6 +182,16 @@ const ShowsPage = () => {
                     genres={genres}
                     type={"show"}
                 />
+
+                {genreShows.map(({ genreId, genreName, shows }) => (
+                    <MediaScroll
+                        key={genreId}
+                        title={genreName}
+                        media={shows}
+                        genres={genres}
+                        type={"show"}
+                    />
+                ))}
             </article>
         </article>
     );
