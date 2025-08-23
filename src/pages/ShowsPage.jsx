@@ -10,6 +10,7 @@ const ShowsPage = () => {
     const [heroShows, setHeroShows] = useState([]);
     const [trendingShows, setTrendingShows] = useState([]);
     const [airingToday, setAiringToday] = useState([]);
+    const [topRated, setTopRated] = useState([]);
 
     useEffect(() => {
         // Fetch all genres. Example: [ { "id": "123", "name": "Action" } ]
@@ -95,6 +96,22 @@ const ShowsPage = () => {
         fetchAiringToday();
     }, []);
 
+    // Top rated
+    useEffect(() => {
+        const fetchTopRated = async () => {
+            const apiUrl = `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&timezone=America/Edmonton&page=1`;
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+                setTopRated(data.results);
+            } catch (error) {
+                console.log("Error fetching data", data);
+            }
+        };
+
+        fetchTopRated();
+    }, []);
+
     return (
         <article page-content="">
             <MediaHeroSlider
@@ -118,6 +135,14 @@ const ShowsPage = () => {
                     key={200}
                     title="Airing Today"
                     media={airingToday}
+                    genres={genres}
+                    type={"show"}
+                />
+
+                <MediaScroll
+                    key={300}
+                    title="Top Rated"
+                    media={topRated}
                     genres={genres}
                     type={"show"}
                 />
