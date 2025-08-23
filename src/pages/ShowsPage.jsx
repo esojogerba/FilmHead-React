@@ -9,6 +9,7 @@ const ShowsPage = () => {
     const [genres, setGenres] = useState({});
     const [heroShows, setHeroShows] = useState([]);
     const [trendingShows, setTrendingShows] = useState([]);
+    const [airingToday, setAiringToday] = useState([]);
 
     useEffect(() => {
         // Fetch all genres. Example: [ { "id": "123", "name": "Action" } ]
@@ -78,6 +79,22 @@ const ShowsPage = () => {
         fetchTrendingShows();
     }, []);
 
+    // Airing today
+    useEffect(() => {
+        const fetchAiringToday = async () => {
+            const apiUrl = `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}&timezone=America/Edmonton&page=1`;
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+                setAiringToday(data.results);
+            } catch (error) {
+                console.log("Error fetching data", data);
+            }
+        };
+
+        fetchAiringToday();
+    }, []);
+
     return (
         <article page-content="">
             <MediaHeroSlider
@@ -93,6 +110,14 @@ const ShowsPage = () => {
                     key={100}
                     title="Trending This Week"
                     media={trendingShows}
+                    genres={genres}
+                    type={"show"}
+                />
+
+                <MediaScroll
+                    key={200}
+                    title="Airing Today"
+                    media={airingToday}
                     genres={genres}
                     type={"show"}
                 />
