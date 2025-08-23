@@ -239,13 +239,20 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
                                 {getGenres(media.genres)}
                             </p>
                         </div>
+
                         <p className="details-text">{media.overview}</p>
-                        <div className="details-cast">
-                            <p className="cast-title">Starring</p>
-                            <p className="cast-body">
-                                {getCasts(media?.credits?.cast)}
-                            </p>
-                        </div>
+
+                        {media?.credits?.cast.length != 0 ? (
+                            <div className="details-cast">
+                                <p className="cast-title">Starring</p>
+                                <p className="cast-body">
+                                    {getCasts(media?.credits?.cast)}
+                                </p>
+                            </div>
+                        ) : (
+                            ""
+                        )}
+
                         {media?.created_by.length != 0 ? (
                             <div className="details-director">
                                 <p className="director-title">Created By</p>
