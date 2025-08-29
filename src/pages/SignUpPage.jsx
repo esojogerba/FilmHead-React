@@ -22,7 +22,7 @@ const SignUpPage = () => {
                                             id="username"
                                             name="username"
                                             autoComplete="off"
-                                            required=""
+                                            required
                                         />
                                         <label htmlFor="username">
                                             Username
@@ -34,7 +34,7 @@ const SignUpPage = () => {
                                             id="pw"
                                             name="pw"
                                             autoComplete="off"
-                                            required=""
+                                            required
                                         />
                                         <label htmlFor="pw">Password</label>
                                     </div>
@@ -44,7 +44,7 @@ const SignUpPage = () => {
                                             id="confirm-pw"
                                             name="confirm-pw"
                                             autoComplete="off"
-                                            required=""
+                                            required
                                         />
                                         <label htmlFor="confirm-pw">
                                             Confirm Password
