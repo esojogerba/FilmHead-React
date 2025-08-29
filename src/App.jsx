@@ -12,8 +12,6 @@ import DetailsPage from "./pages/DetailsPage";
 import ShowsPage from "./pages/ShowsPage";
 import SignUpPage from "./pages/SignUpPage";
 
-// TODO: Fix router to match RC2024.
-
 const App = () => {
     const basename = import.meta.env.PROD ? "/FilmHead-React" : "/";
 
