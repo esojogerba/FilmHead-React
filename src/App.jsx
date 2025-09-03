@@ -11,6 +11,7 @@ import MoviesPage from "./pages/MoviesPage";
 import DetailsPage from "./pages/DetailsPage";
 import ShowsPage from "./pages/ShowsPage";
 import SignUpPage from "./pages/SignUpPage";
+import LogInPage from "./pages/LogInPage";
 
 const App = () => {
     const basename = import.meta.env.PROD ? "/FilmHead-React" : "/";
@@ -23,6 +24,7 @@ const App = () => {
                 <Route path="shows" element={<ShowsPage />} />
                 <Route path="details/:type/:id" element={<DetailsPage />} />
                 <Route path="sign-up" element={<SignUpPage />} />
+                <Route path="log-in" element={<LogInPage />} />
             </Route>
         ),
         { basename }
