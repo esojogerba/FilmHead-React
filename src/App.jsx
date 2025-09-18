@@ -12,6 +12,7 @@ import DetailsPage from "./pages/DetailsPage";
 import ShowsPage from "./pages/ShowsPage";
 import SignUpPage from "./pages/SignUpPage";
 import LogInPage from "./pages/LogInPage";
+import MediaGridPage from "./pages/MediaGridPage";
 
 const App = () => {
     const basename = import.meta.env.PROD ? "/FilmHead-React" : "/";
@@ -25,6 +26,7 @@ const App = () => {
                 <Route path="details/:type/:id" element={<DetailsPage />} />
                 <Route path="sign-up" element={<SignUpPage />} />
                 <Route path="log-in" element={<LogInPage />} />
+                <Route path="backlog" element={<MediaGridPage />} />
             </Route>
         ),
         { basename }
