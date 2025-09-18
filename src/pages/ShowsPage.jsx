@@ -149,51 +149,53 @@ const ShowsPage = () => {
     }, [genres]);
 
     return (
-        <article page-content="">
-            <MediaHeroSlider
-                genres={genres}
-                mediaList={heroShows}
-                type="show"
-            />
-
-            <article className="container">
-                <MediaPageHeader title="Shows" genres={genres} />
-
-                <MediaScroll
-                    key={100}
-                    title="Trending This Week"
-                    media={trendingShows}
+        <main>
+            <article page-content="">
+                <MediaHeroSlider
                     genres={genres}
-                    type={"show"}
+                    mediaList={heroShows}
+                    type="show"
                 />
 
-                <MediaScroll
-                    key={200}
-                    title="Airing Today"
-                    media={airingToday}
-                    genres={genres}
-                    type={"show"}
-                />
+                <article className="container">
+                    <MediaPageHeader title="Shows" genres={genres} />
 
-                <MediaScroll
-                    key={300}
-                    title="Top Rated"
-                    media={topRated}
-                    genres={genres}
-                    type={"show"}
-                />
-
-                {genreShows.map(({ genreId, genreName, shows }) => (
                     <MediaScroll
-                        key={genreId}
-                        title={genreName}
-                        media={shows}
+                        key={100}
+                        title="Trending This Week"
+                        media={trendingShows}
                         genres={genres}
                         type={"show"}
                     />
-                ))}
+
+                    <MediaScroll
+                        key={200}
+                        title="Airing Today"
+                        media={airingToday}
+                        genres={genres}
+                        type={"show"}
+                    />
+
+                    <MediaScroll
+                        key={300}
+                        title="Top Rated"
+                        media={topRated}
+                        genres={genres}
+                        type={"show"}
+                    />
+
+                    {genreShows.map(({ genreId, genreName, shows }) => (
+                        <MediaScroll
+                            key={genreId}
+                            title={genreName}
+                            media={shows}
+                            genres={genres}
+                            type={"show"}
+                        />
+                    ))}
+                </article>
             </article>
-        </article>
+        </main>
     );
 };
 

@@ -151,46 +151,48 @@ const MoviesPage = () => {
     }, [genres]);
 
     return (
-        <article page-content="">
-            <MediaHeroSlider
-                genres={genres}
-                mediaList={heroMovies}
-                type="movie"
-            />
-            <article className="container">
-                <MediaPageHeader title="Movies" genres={genres} />
-                <MediaScroll
-                    key={100}
-                    title="Upcoming"
-                    media={upcomingMovies}
+        <main>
+            <article page-content="">
+                <MediaHeroSlider
                     genres={genres}
-                    type={"movie"}
+                    mediaList={heroMovies}
+                    type="movie"
                 />
-                <MediaScroll
-                    key={200}
-                    title="Trending This Week"
-                    media={trendingMovies}
-                    genres={genres}
-                    type={"movie"}
-                />
-                <MediaScroll
-                    key={300}
-                    title="Top Rated"
-                    media={topMovies}
-                    genres={genres}
-                    type={"movie"}
-                />
-                {genreMovies.map(({ genreId, genreName, movies }) => (
+                <article className="container">
+                    <MediaPageHeader title="Movies" genres={genres} />
                     <MediaScroll
-                        key={genreId}
-                        title={genreName}
-                        media={movies}
+                        key={100}
+                        title="Upcoming"
+                        media={upcomingMovies}
                         genres={genres}
                         type={"movie"}
                     />
-                ))}
+                    <MediaScroll
+                        key={200}
+                        title="Trending This Week"
+                        media={trendingMovies}
+                        genres={genres}
+                        type={"movie"}
+                    />
+                    <MediaScroll
+                        key={300}
+                        title="Top Rated"
+                        media={topMovies}
+                        genres={genres}
+                        type={"movie"}
+                    />
+                    {genreMovies.map(({ genreId, genreName, movies }) => (
+                        <MediaScroll
+                            key={genreId}
+                            title={genreName}
+                            media={movies}
+                            genres={genres}
+                            type={"movie"}
+                        />
+                    ))}
+                </article>
             </article>
-        </article>
+        </main>
     );
 };
 
