@@ -1,14 +1,28 @@
 import React from "react";
 import MediaCard from "./MediaCard";
+import { useNavigate } from "react-router-dom";
 
 // TODO: implement view more link
 
-const MediaScroll = ({ title, media, genres, type }) => {
+const MediaScroll = ({ title, media, genres, type, urlParam }) => {
+    const navigate = useNavigate();
+
+    const handleViewMore = (e) => {
+        e.preventDefault();
+        const config = { title, mediaType: type, listType: "list", urlParam };
+        const listName = title.toLowerCase().replace(/\s+/g, "");
+
+        // Save to localStorage for refresh persistence
+        localStorage.setItem("mediaGridConfig", JSON.stringify(config));
+
+        navigate(`/${type + "s"}/gridlist/${listName}`, { state: config });
+    };
+
     return (
         <section className="media-scroll">
             <div className="media-scroll-title-wrapper">
                 <h3 className="media-scroll-title">{title}</h3>
-                <a href="" className="view-more-link">
+                <a href="" className="view-more-link" onClick={handleViewMore}>
                     View More
                 </a>
             </div>
