@@ -39,7 +39,7 @@ const MediaGridPage = () => {
         <main>
             <article page-content="">
                 <section className="media-grid container">
-                    <GridHeader />
+                    <GridHeader title={config.title} type={config.mediaType} />
 
                     <GridList />
                 </section>
