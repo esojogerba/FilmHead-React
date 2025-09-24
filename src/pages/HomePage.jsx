@@ -1,25 +1,54 @@
-import React from "react";
-import Navbar from "../components/Navbar";
+import React, { useState, useEffect } from "react";
 import CallToAction from "../components/CallToAction";
 import Features from "../components/Features";
-import Footer from "../components/Footer";
+import LoadingOverlay from "../components/LoadingOverlay"; // the spinner overlay we made earlier
 
 const HomePage = () => {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Get all images on the page
+        const images = document.querySelectorAll("img");
+        let loadedCount = 0;
+
+        if (images.length === 0) {
+            setLoading(false);
+            return;
+        }
+
+        const handleImageLoad = () => {
+            loadedCount++;
+            if (loadedCount === images.length) {
+                setLoading(false);
+            }
+        };
+
+        images.forEach((img) => {
+            if (img.complete) {
+                handleImageLoad();
+            } else {
+                img.addEventListener("load", handleImageLoad);
+                img.addEventListener("error", handleImageLoad); // in case an image fails
+            }
+        });
+
+        return () => {
+            images.forEach((img) => {
+                img.removeEventListener("load", handleImageLoad);
+                img.removeEventListener("error", handleImageLoad);
+            });
+        };
+    }, []);
+
+    if (loading) return <LoadingOverlay />;
+
     return (
-        <>
-            <div className="transition transition-1">
-                <div className="spinner" />
-            </div>
-
-            <main>
-                <CallToAction />
-
-                <Features />
-
-                <div className="pop-up-overlay" />
-                <div className="pop-up-overlay second-overlay" />
-            </main>
-        </>
+        <main>
+            <CallToAction />
+            <Features />
+            <div className="pop-up-overlay" />
+            <div className="pop-up-overlay second-overlay" />
+        </main>
     );
 };
 
