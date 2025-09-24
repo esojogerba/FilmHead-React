@@ -159,7 +159,11 @@ const MoviesPage = () => {
                     type="movie"
                 />
                 <article className="container">
-                    <MediaPageHeader title="Movies" genres={genres} />
+                    <MediaPageHeader
+                        title="Movies"
+                        genres={genres}
+                        type="movie"
+                    />
                     <MediaScroll
                         key={100}
                         title="Upcoming"
@@ -167,6 +171,7 @@ const MoviesPage = () => {
                         genres={genres}
                         type={"movie"}
                         urlParam={"/movie/upcoming"}
+                        listType={"list"}
                     />
                     <MediaScroll
                         key={200}
@@ -175,6 +180,7 @@ const MoviesPage = () => {
                         genres={genres}
                         type={"movie"}
                         urlParam={"/trending/movie/week"}
+                        listType={"list"}
                     />
                     <MediaScroll
                         key={300}
@@ -183,6 +189,7 @@ const MoviesPage = () => {
                         genres={genres}
                         type={"movie"}
                         urlParam={"/movie/top_rated"}
+                        listType={"list"}
                     />
                     {genreMovies.map(({ genreId, genreName, movies }) => (
                         <MediaScroll
@@ -192,6 +199,7 @@ const MoviesPage = () => {
                             genres={genres}
                             type={"movie"}
                             urlParam={`with_genres=${genreId}`}
+                            listType={"genre"}
                         />
                     ))}
                 </article>
