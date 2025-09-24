@@ -1,9 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import screening from "../assets/images/screening.svg";
 import bgCircle1 from "../assets/images/bg-circle-1.png";
 import bgCircle2 from "../assets/images/bg-circle-2.png";
+import LoadingOverlay from "../components/LoadingOverlay"; // ✅ reuse your overlay
 
 const SignUpPage = () => {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const images = document.querySelectorAll("img");
+        let loadedCount = 0;
+
+        if (images.length === 0) {
+            setLoading(false);
+            return;
+        }
+
+        const handleImageLoad = () => {
+            loadedCount++;
+            if (loadedCount === images.length) {
+                setLoading(false);
+            }
+        };
+
+        images.forEach((img) => {
+            if (img.complete) {
+                handleImageLoad();
+            } else {
+                img.addEventListener("load", handleImageLoad);
+                img.addEventListener("error", handleImageLoad);
+            }
+        });
+
+        return () => {
+            images.forEach((img) => {
+                img.removeEventListener("load", handleImageLoad);
+                img.removeEventListener("error", handleImageLoad);
+            });
+        };
+    }, []);
+
+    if (loading) return <LoadingOverlay />;
+
     return (
         <main className="mobile-bg-img | padding-bottom-900-mobile">
             <section className="account-page text-center-sm-only margin-bottom-500">
