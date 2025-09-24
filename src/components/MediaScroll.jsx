@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 // TODO: implement view more link
 
-const MediaScroll = ({ title, media, genres, type, urlParam }) => {
+const MediaScroll = ({ title, media, genres, type, urlParam, listType }) => {
     const navigate = useNavigate();
 
+    // Navigate to MediaGridPage
     const handleViewMore = (e) => {
         e.preventDefault();
-        const config = { title, mediaType: type, listType: "list", urlParam };
+        const config = { title, mediaType: type, listType: listType, urlParam };
         const listName = title.toLowerCase().replace(/\s+/g, "");
 
         // Save to localStorage for refresh persistence
