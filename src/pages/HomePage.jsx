@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CallToAction from "../components/CallToAction";
 import Features from "../components/Features";
-import LoadingOverlay from "../components/LoadingOverlay"; // the spinner overlay we made earlier
+import LoadingOverlay from "../components/LoadingOverlay";
 
 const HomePage = () => {
     const [loading, setLoading] = useState(true);

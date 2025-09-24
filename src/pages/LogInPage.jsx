@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import screening from "../assets/images/screening.svg";
 import bgCircle1 from "../assets/images/bg-circle-1.png";
 import bgCircle2 from "../assets/images/bg-circle-2.png";
-import LoadingOverlay from "../components/LoadingOverlay"; // <-- same overlay component
+import LoadingOverlay from "../components/LoadingOverlay";
 
 const LogInPage = () => {
     const [loading, setLoading] = useState(true);
