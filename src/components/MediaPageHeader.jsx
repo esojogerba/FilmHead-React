@@ -1,12 +1,12 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import dropdownArrow from "../assets/images/dropdown-arrow.png";
+import DropdownGenreLink from "./DropdownGenreLink";
 
-// TODO: make it reusable, pass in title and genre list
-// TODO: implement drop down
 // TODO: make links work with routing
 
-const MediaPageHeader = ({ title, genres }) => {
+const MediaPageHeader = ({ title, genres, type }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -46,9 +46,12 @@ const MediaPageHeader = ({ title, genres }) => {
                     {Object.entries(genres)
                         .filter(([key]) => key !== "asString")
                         .map(([id, name]) => (
-                            <a key={id} href={`/genre/${id}`}>
-                                {name}
-                            </a>
+                            <DropdownGenreLink
+                                key={id}
+                                id={id}
+                                name={name}
+                                type={type}
+                            />
                         ))}
                 </div>
             </div>
