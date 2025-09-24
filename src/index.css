@@ -485,6 +485,38 @@ h4 {
 }
 
 /* =======================
+  Loading Spinner
+ ======================= */
+
+.loading-overlay {
+    position: fixed;
+    top: 60px; /* adjust to your navbar height */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px); /* subtract navbar height */
+    background-color: hsl(0, 0%, 8%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* sits above content */
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.1);
+    border-top-color: hsl(242, 76%, 63%);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =======================
   Navbar
  ======================= */
 
