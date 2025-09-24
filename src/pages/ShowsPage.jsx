@@ -166,6 +166,7 @@ const ShowsPage = () => {
                         media={trendingShows}
                         genres={genres}
                         type={"show"}
+                        urlParam={"/trending/tv/week"}
                     />
 
                     <MediaScroll
@@ -174,6 +175,7 @@ const ShowsPage = () => {
                         media={airingToday}
                         genres={genres}
                         type={"show"}
+                        urlParam={"/tv/airing_today"}
                     />
 
                     <MediaScroll
@@ -182,6 +184,7 @@ const ShowsPage = () => {
                         media={topRated}
                         genres={genres}
                         type={"show"}
+                        urlParam={"/tv/top_rated"}
                     />
 
                     {genreShows.map(({ genreId, genreName, shows }) => (
@@ -191,6 +194,7 @@ const ShowsPage = () => {
                             media={shows}
                             genres={genres}
                             type={"show"}
+                            urlParam={`with_genres=${genreId}`}
                         />
                     ))}
                 </article>
