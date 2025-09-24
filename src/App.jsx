@@ -26,7 +26,10 @@ const App = () => {
                 <Route path="details/:type/:id" element={<DetailsPage />} />
                 <Route path="sign-up" element={<SignUpPage />} />
                 <Route path="log-in" element={<LogInPage />} />
-                <Route path="backlog" element={<MediaGridPage />} />
+                <Route
+                    path=":type/gridlist/:list"
+                    element={<MediaGridPage />}
+                />
             </Route>
         ),
         { basename }
