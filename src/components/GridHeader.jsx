@@ -1,7 +1,8 @@
 import React from "react";
 import searchIcon from "../assets/images/search-icon-white.svg";
 
-const GridHeader = () => {
+const GridHeader = ({ title, type }) => {
+    const mediaType = type + "s";
     return (
         <div className="grid-header">
             <img
@@ -10,7 +11,10 @@ const GridHeader = () => {
                 className="material-icon"
                 id="grid-search-svg"
             />
-            <h1 className="grid-title">Science Fiction · Movies</h1>
+            <h1 className="grid-title">
+                {title} ·{" "}
+                {mediaType.charAt(0).toUpperCase() + mediaType.slice(1)}
+            </h1>
         </div>
     );
 };
