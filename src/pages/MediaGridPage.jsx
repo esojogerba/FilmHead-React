@@ -103,6 +103,8 @@ const MediaGridPage = () => {
                             mediaList={mediaList}
                             type={config.mediaType}
                         />
+
+                        <button className="btn load-more">Load More</button>
                     </section>
                 </article>
             )}
