@@ -2,46 +2,19 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
-import posterImg from "../assets/images/Blade Runner Poster.png";
-
+import LoadingOverlay from "../components/LoadingOverlay";
 import DetailsBanner from "../components/DetailsBanner";
 import DetailsTrailers from "../components/DetailsTrailers";
 import AvailableOn from "../components/AvailableOn";
 import MediaScroll from "../components/MediaScroll";
 
-// TODO: determine media type and use appropriate fetch url
-// TODO: inject media data into page
-// TODO: split page in to components and pass in movie data if necessary
-// TODO: functions for:
-
 const DetailsPage = () => {
     const { type, id } = useParams();
     const [genres, setGenres] = useState({});
-    const [media, setMedia] = useState({
-        title: "",
-        name: "",
-        release_date: "",
-        first_air_date: "",
-        number_of_episodes: 0,
-        number_of_seasons: 0,
-        backdrop_path: null,
-        poster_path: null,
-        releases: {
-            countries: [{ certification: null }],
-        },
-        content_ratings: {
-            results: [{ rating: null }],
-        },
-        genres: [],
-        overview: "",
-        vote_average: 0,
-        casts: { cast: [], crew: [] },
-        credits: { cast: [] },
-        created_by: [],
-        videos: { results: [] },
-    });
-    const [availableOn, setAvailableOn] = useState([{ US: null }]);
+    const [media, setMedia] = useState(null);
+    const [availableOn, setAvailableOn] = useState({});
     const [suggestions, setSuggestions] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // Fetch genres
     useEffect(() => {
@@ -63,84 +36,61 @@ const DetailsPage = () => {
         };
 
         const fetchData = async () => {
-            let apiUrl = ``;
-
-            // Get genres
-            if (type === "movie") {
-                apiUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
-            } else if (type === "show") {
-                apiUrl = `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}`;
-            }
-
+            setLoading(true);
             try {
-                const res = await fetch(apiUrl);
-                const data = await res.json();
+                // Build URLs based on type
+                const genreUrl =
+                    type === "movie"
+                        ? `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
+                        : `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}`;
 
-                for (const { id, name } of data.genres) {
-                    genreList[id] = name;
+                const mediaUrl =
+                    type === "movie"
+                        ? `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&append_to_response=casts,videos,images,releases`
+                        : `https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&append_to_response=credits,videos,images,content_ratings`;
+
+                const providersUrl =
+                    type === "movie"
+                        ? `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${API_KEY}`
+                        : `https://api.themoviedb.org/3/tv/${id}/watch/providers?api_key=${API_KEY}`;
+
+                const suggestionsUrl =
+                    type === "movie"
+                        ? `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${API_KEY}&page=1`
+                        : `https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${API_KEY}&page=1`;
+
+                // Fetch in parallel
+                const [genresRes, mediaRes, providersRes, suggestionsRes] =
+                    await Promise.all([
+                        fetch(genreUrl).then((r) => r.json()),
+                        fetch(mediaUrl).then((r) => r.json()),
+                        fetch(providersUrl).then((r) => r.json()),
+                        fetch(suggestionsUrl).then((r) => r.json()),
+                    ]);
+
+                // Process genres
+                if (genresRes.genres) {
+                    for (const { id, name } of genresRes.genres) {
+                        genreList[id] = name;
+                    }
+                    setGenres(genreList);
                 }
-                setGenres(genreList);
+
+                // Set states
+                setMedia(mediaRes || {});
+                setAvailableOn(providersRes.results || {});
+                setSuggestions(suggestionsRes.results || []);
             } catch (error) {
-                console.log("Error fetching data", data);
-            }
-
-            apiUrl = ``;
-
-            // Get media data
-            if (type === "movie") {
-                apiUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&append_to_response=casts,videos,images,releases`;
-            } else if (type === "show") {
-                apiUrl = `https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&append_to_response=credits,videos,images,content_ratings`;
-            }
-
-            try {
-                const res = await fetch(apiUrl);
-                const data = await res.json();
-
-                setMedia(data);
-            } catch (error) {
-                console.log("Error fetching data", data);
-            }
-
-            apiUrl = ``;
-
-            // Get watch provider data
-            if (type === "movie") {
-                apiUrl = `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${API_KEY}`;
-            } else if (type === "show") {
-                apiUrl = `https://api.themoviedb.org/3/tv/${id}/watch/providers?api_key=${API_KEY}`;
-            }
-
-            try {
-                const res = await fetch(apiUrl);
-                const data = await res.json();
-
-                setAvailableOn(data.results);
-            } catch (error) {
-                console.log("Error fetching data", data);
-            }
-
-            apiUrl = ``;
-
-            // Get suggestions data
-            if (type === "movie") {
-                apiUrl = `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${API_KEY}&page=1`;
-            } else if (type === "show") {
-                apiUrl = `https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${API_KEY}&page=1`;
-            }
-
-            try {
-                const res = await fetch(apiUrl);
-                const data = await res.json();
-
-                setSuggestions(data.results);
-            } catch (error) {
-                console.log("Error fetching data", data);
+                console.error("Error fetching details data:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchData();
     }, [type, id]);
+
+    if (loading) return <LoadingOverlay />;
 
     return (
         <main>
@@ -153,14 +103,17 @@ const DetailsPage = () => {
                         media={media}
                         imageBaseURL={imageBaseURL}
                     />
+
                     {/* Trailers & Clips */}
                     <DetailsTrailers media={media} />
+
                     {/* Available On */}
                     <AvailableOn
                         availableOn={availableOn}
                         imageBaseURL={imageBaseURL}
                     />
-                    {/* You May Also Like */}
+
+                    {/* Suggestions */}
                     <div className="container">
                         <MediaScroll
                             title="You May Also Like"
