@@ -4,10 +4,12 @@ import navbarLogo from "../assets/images/filmhead-nav-logo.svg";
 import logo from "../assets/images/FilmHead-logo.png";
 import hamburgerIcon from "../assets/images/icon-hamburger.svg";
 import closeIcon from "../assets/images/icon-close.svg";
+import { useSearch } from "../contexts/SearchContext";
 
 const Navbar = () => {
     const [navVisible, setNavVisible] = useState(false);
     const location = useLocation();
+    const { query, handleSearchInput } = useSearch();
 
     const toggleNav = () => {
         setNavVisible((prev) => !prev);
@@ -48,6 +50,8 @@ const Navbar = () => {
                     className="search-field"
                     type="search"
                     placeholder="Search..."
+                    value={query}
+                    onChange={(event) => handleSearchInput(event.target.value)}
                 />
             </div>
 
@@ -97,6 +101,10 @@ const Navbar = () => {
                             className="search-field"
                             type="search"
                             placeholder="Search..."
+                            value={query}
+                            onChange={(event) =>
+                                handleSearchInput(event.target.value)
+                            }
                         />
                     </li>
                     <li>
