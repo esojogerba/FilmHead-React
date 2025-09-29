@@ -24,7 +24,11 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a href="" className="media-card-add-btn">
                         <svg className="material-icon" id="card-add-svg">
-                            <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                            <use
+                                xlinkHref={`${
+                                    import.meta.env.BASE_URL
+                                }assets/images/icons.svg#add-icon`}
+                            />
                         </svg>
                     </a>
                 </figure>
@@ -64,7 +68,11 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a href="" className="media-card-add-btn">
                         <svg className="material-icon" id="card-add-svg">
-                            <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                            <use
+                                xlinkHref={`${
+                                    import.meta.env.BASE_URL
+                                }assets/images/icons.svg#add-icon`}
+                            />
                         </svg>
                     </a>
                 </figure>
@@ -104,7 +112,11 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a href="" className="grid-card-add-btn">
                         <svg className="material-icon" id="card-add-svg">
-                            <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                            <use
+                                xlinkHref={`${
+                                    import.meta.env.BASE_URL
+                                }assets/images/icons.svg#add-icon`}
+                            />
                         </svg>
                     </a>
                 </figure>
@@ -141,7 +153,11 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a href="" className="grid-card-add-btn">
                         <svg className="material-icon" id="card-add-svg">
-                            <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                            <use
+                                xlinkHref={`${
+                                    import.meta.env.BASE_URL
+                                }assets/images/icons.svg#add-icon`}
+                            />
                         </svg>
                     </a>
                 </figure>
@@ -174,7 +190,11 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a href="" className="media-card-add-btn">
                         <svg className="material-icon" id="card-add-svg">
-                            <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                            <use
+                                xlinkHref={`${
+                                    import.meta.env.BASE_URL
+                                }assets/images/icons.svg#add-icon`}
+                            />
                         </svg>
                     </a>
                 </figure>
