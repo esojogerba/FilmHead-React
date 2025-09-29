@@ -51,7 +51,11 @@ const MediaHeroSliderItem = ({
                             id="banner-add-btn"
                         >
                             <svg className="material-icon" id="add-svg">
-                                <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                                <use
+                                    xlinkHref={`${
+                                        import.meta.env.BASE_URL
+                                    }assets/images/icons.svg#add-icon`}
+                                />
                             </svg>
                         </a>
                     </div>
@@ -97,7 +101,11 @@ const MediaHeroSliderItem = ({
                             id="banner-add-btn"
                         >
                             <svg className="material-icon" id="add-svg">
-                                <use xlinkHref="./assets/images/icons.svg#add-icon" />
+                                <use
+                                    xlinkHref={`${
+                                        import.meta.env.BASE_URL
+                                    }assets/images/icons.svg#add-icon`}
+                                />
                             </svg>
                         </a>
                     </div>

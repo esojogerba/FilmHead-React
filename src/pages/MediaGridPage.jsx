@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
+import { API_KEY } from "../utils/api";
 import LoadingOverlay from "../components/LoadingOverlay";
 import GridHeader from "../components/GridHeader";
 import GridList from "../components/GridList";
@@ -20,16 +20,12 @@ const MediaGridPage = () => {
         );
     });
 
-    // Variables for media list page.
-    let currentPage = 1;
-    let totalPages = 0;
-
-    // URL
-    let apiUrl = "";
-
     // Media list
     const [mediaList, setMediaList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(null);
 
     useEffect(() => {
         if (location.state) {
@@ -39,6 +35,9 @@ const MediaGridPage = () => {
                 JSON.stringify(location.state)
             );
             setConfig(location.state);
+            setCurrentPage(1);
+            setMediaList([]);
+            setTotalPages(null);
         }
     }, [location.state]);
 
@@ -46,44 +45,93 @@ const MediaGridPage = () => {
         return <p>No data found for this grid.</p>;
     }
 
-    console.log(config);
+    const buildApiUrl = (pageNumber) => {
+        const discoverType = config.mediaType === "movie" ? "movie" : "tv";
 
-    // set typeMedia to work with API call
-    let typeMedia = "";
-    if (config.mediaType === "movie") {
-        typeMedia = "movie";
-    } else if (config.mediaType === "show") {
-        typeMedia = "tv";
-    }
+        if (config.listType === "genre") {
+            return `https://api.themoviedb.org/3/discover/${discoverType}?api_key=${API_KEY}&sort_by=popularity.desc&include_adult=false&page=${pageNumber}&${config.urlParam}`;
+        }
 
-    // Set API URL according to list type
-    if (config.listType == "genre") {
-        apiUrl = `https://api.themoviedb.org/3/discover/${typeMedia}?api_key=${API_KEY}&sort_by=popularity.desc&include_adult=false&page=${currentPage}&${config.urlParam}`;
-    } else if (config.listType == "list") {
-        apiUrl = `https://api.themoviedb.org/3${config.urlParam}?api_key=${API_KEY}&page=${currentPage}`;
-    }
+        return `https://api.themoviedb.org/3${config.urlParam}?api_key=${API_KEY}&page=${pageNumber}`;
+    };
 
-    // Media grid movies
     useEffect(() => {
+        if (!config) {
+            return undefined;
+        }
+
+        let isCancelled = false;
+        const controller = new AbortController();
+
         const fetchMediaList = async () => {
             try {
-                setLoading(true);
-                const res = await fetch(apiUrl);
-                const data = await res.json();
-                setMediaList(data.results);
+                if (currentPage === 1) {
+                    setLoading(true);
+                } else {
+                    setIsLoadingMore(true);
+                }
+
+                const response = await fetch(buildApiUrl(currentPage), {
+                    signal: controller.signal,
+                });
+
+                if (!response.ok) {
+                    throw new Error(
+                        `Failed to fetch media list: ${response.status}`
+                    );
+                }
+
+                const data = await response.json();
+
+                if (isCancelled) {
+                    return;
+                }
+
+                setTotalPages(data.total_pages || 0);
+                setMediaList((prevMedia) => {
+                    const newResults = data.results || [];
+                    if (currentPage === 1) {
+                        return newResults;
+                    }
+
+                    return [...prevMedia, ...newResults];
+                });
             } catch (error) {
-                console.log("Error fetching data", error);
+                if (error.name !== "AbortError") {
+                    console.error("Error fetching data", error);
+                }
             } finally {
-                setLoading(false);
+                if (isCancelled) {
+                    return;
+                }
+
+                if (currentPage === 1) {
+                    setLoading(false);
+                } else {
+                    setIsLoadingMore(false);
+                }
             }
         };
 
-        if (apiUrl) {
-            fetchMediaList();
-        }
-    }, [apiUrl]);
+        fetchMediaList();
 
-    console.log(mediaList);
+        return () => {
+            isCancelled = true;
+            controller.abort();
+        };
+    }, [config, currentPage]);
+
+    const handleLoadMore = () => {
+        if (isLoadingMore) {
+            return;
+        }
+
+        if (totalPages !== null && currentPage >= totalPages) {
+            return;
+        }
+
+        setCurrentPage((prevPage) => prevPage + 1);
+    };
 
     return (
         <main>
@@ -103,6 +151,17 @@ const MediaGridPage = () => {
                             mediaList={mediaList}
                             type={config.mediaType}
                         />
+                        {mediaList.length > 0 &&
+                            totalPages !== null &&
+                            currentPage < totalPages && (
+                                <button
+                                    className="btn load-more"
+                                    onClick={handleLoadMore}
+                                    disabled={isLoadingMore}
+                                >
+                                    {isLoadingMore ? "Loading..." : "Load More"}
+                                </button>
+                            )}
                     </section>
                 </article>
             )}

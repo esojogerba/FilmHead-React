@@ -27,7 +27,7 @@ const Footer = () => {
                                 id="github-icon-svg"
                                 height="30px"
                             >
-                                <use xlinkHref="./assets/images/icons.svg#github-logo" />
+                                <use xlinkHref="/assets/images/icons.svg#github-logo" />
                             </svg>
                         </Link>
                         <p>© 2023 FilmHead. All rights reserved.</p>

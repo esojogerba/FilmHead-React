@@ -16,8 +16,6 @@ const GridList = ({ mediaList, type }) => {
                         />
                     ))}
                 </div>
-
-                <button className="btn load-more">Load More</button>
             </>
         );
     }

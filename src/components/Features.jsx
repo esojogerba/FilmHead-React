@@ -19,7 +19,11 @@ const Features = () => {
                                         className="material-icon"
                                         id="movies&shows-svg"
                                     >
-                                        <use xlinkHref="./assets/images/icons.svg#shows" />
+                                        <use
+                                            xlinkHref={`${
+                                                import.meta.env.BASE_URL
+                                            }assets/images/icons.svg#shows`}
+                                        />
                                     </svg>
                                 </div>
                                 <h3 className="features-card-title">
@@ -36,7 +40,11 @@ const Features = () => {
                                         className="material-icon"
                                         id="folders-svg"
                                     >
-                                        <use xlinkHref="./assets/images/icons.svg#folders" />
+                                        <use
+                                            xlinkHref={`${
+                                                import.meta.env.BASE_URL
+                                            }assets/images/icons.svg#folders`}
+                                        />
                                     </svg>
                                 </div>
                                 <h3 className="features-card-title">Folders</h3>
@@ -53,7 +61,11 @@ const Features = () => {
                                         className="material-icon"
                                         id="store-svg"
                                     >
-                                        <use xlinkHref="./assets/images/icons.svg#store" />
+                                        <use
+                                            xlinkHref={`${
+                                                import.meta.env.BASE_URL
+                                            }assets/images/icons.svg#store`}
+                                        />
                                     </svg>
                                 </div>
                                 <h3 className="features-card-title">Store</h3>
@@ -68,7 +80,11 @@ const Features = () => {
                                         className="material-icon"
                                         id="watch-svg"
                                     >
-                                        <use xlinkHref="./assets/images/icons.svg#watch" />
+                                        <use
+                                            xlinkHref={`${
+                                                import.meta.env.BASE_URL
+                                            }assets/images/icons.svg#watch`}
+                                        />
                                     </svg>
                                 </div>
                                 <h3 className="features-card-title">Watch</h3>

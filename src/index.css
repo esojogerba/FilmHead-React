@@ -746,6 +746,12 @@ h4 {
     .nav-links {
         max-height: calc(100vh - 4.4rem);
         overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .nav-links::-webkit-scrollbar {
+        display: none;
     }
 }
 
