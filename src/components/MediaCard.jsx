@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 
-// TODO: implement movie details link route
-// TODO: make cards for shows, grid-movie, and grid-tv
 // TODO: implement the add btn
 
 const MediaCard = ({ mediaData, type, genres }) => {
