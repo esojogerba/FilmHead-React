@@ -1,6 +1,6 @@
 import React from "react";
 
-const BacklogHeader = () => {
+const BacklogHeader = ({ onAddToFolder }) => {
     return (
         <>
             <div className="backlog-header">
@@ -20,7 +20,11 @@ const BacklogHeader = () => {
                     type="search"
                     placeholder="Search..."
                 />
-                <a className="btn-icon" onClick={null} id="backlog-add-btn">
+                <a
+                    className="btn-icon"
+                    onClick={onAddToFolder}
+                    id="backlog-add-btn"
+                >
                     <svg className="material-icon" id="add-svg">
                         <use
                             xlinkHref={`${
