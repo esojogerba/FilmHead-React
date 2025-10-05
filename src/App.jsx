@@ -14,6 +14,7 @@ import SignUpPage from "./pages/SignUpPage";
 import LogInPage from "./pages/LogInPage";
 import MediaGridPage from "./pages/MediaGridPage";
 import BacklogPage from "./pages/BacklogPage";
+import { PopupProvider } from "./contexts/PopupContext";
 
 const App = () => {
     const basename = import.meta.env.PROD ? "/FilmHead-React" : "/";
@@ -37,7 +38,11 @@ const App = () => {
         { basename }
     );
 
-    return <RouterProvider router={router} />;
+    return (
+        <PopupProvider>
+            <RouterProvider router={router} />
+        </PopupProvider>
+    );
 };
 
 export default App;
