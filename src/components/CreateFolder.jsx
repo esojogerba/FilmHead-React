@@ -1,14 +1,22 @@
 import React from "react";
 import closeIcon from "../assets/images/icon-close.svg";
+import { usePopup } from "../contexts/PopupContext";
 
 const CreateFolder = () => {
+    const { activePopup, closePopup } = usePopup();
+
+    if (activePopup !== "createFolder") return null;
+
     return (
         <>
-            <div className="pop-up-overlay second-overlay active"></div>
+            <div
+                className="pop-up-overlay second-overlay active"
+                onClick={closePopup}
+            ></div>
 
             <div className="create-folder active">
                 <div className="create-folder-header">
-                    <a className="pop-up-close-btn" onClick={null}>
+                    <a className="pop-up-close-btn" onClick={closePopup}>
                         <img
                             id="pop-up-close-img"
                             src={closeIcon}
@@ -36,7 +44,7 @@ const CreateFolder = () => {
                     autoComplete="off"
                 />
 
-                <a className="btn" onClick={null}>
+                <a className="btn" onClick={closePopup}>
                     Done
                 </a>
             </div>
