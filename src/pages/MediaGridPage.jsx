@@ -4,6 +4,8 @@ import { API_KEY } from "../utils/api";
 import LoadingOverlay from "../components/LoadingOverlay";
 import GridHeader from "../components/GridHeader";
 import GridList from "../components/GridList";
+import AddToFolder from "../components/AddToFolder";
+import CreateFolder from "../components/CreateFolder";
 
 // TODO: Create a card for each movie in the list (inside grid-list)
 // TODO: Create a grid card for both movies and shows (inside MediaCard)
@@ -165,6 +167,9 @@ const MediaGridPage = () => {
                     </section>
                 </article>
             )}
+
+            <AddToFolder />
+            <CreateFolder />
         </main>
     );
 };
