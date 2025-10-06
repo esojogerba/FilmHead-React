@@ -1,9 +1,10 @@
 import React from "react";
-import bannerImg from "../assets/images/Blade Runner Banner.png";
-import posterImg from "../assets/images/Blade Runner Poster.png";
+import { usePopup } from "../contexts/PopupContext";
 import starIcon from "../assets/images/star-icon.svg";
 
 const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
+    const { activePopup, openPopup, closePopup } = usePopup();
+
     // Calculates hours in runtime.
     const calcRuntimeHours = function (runtime) {
         const hours = Math.floor(parseInt(runtime) / 60);
@@ -103,8 +104,7 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
                         </figure>
                         <a
                             className="btn btn-text-icon"
-                            href=""
-                            onClick={() => null}
+                            onClick={() => openPopup("addToFolder")}
                         >
                             <span>Add to Folder</span>
                             <svg className="material-icon" id="details-add-svg">
@@ -195,8 +195,7 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
                         </figure>
                         <a
                             className="btn btn-text-icon"
-                            href=""
-                            onClick={() => null}
+                            onClick={() => openPopup("addToFolder")}
                         >
                             <span>Add to Folder</span>
                             <svg className="material-icon" id="details-add-svg">
