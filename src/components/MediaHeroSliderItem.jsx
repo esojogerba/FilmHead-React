@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { usePopup } from "../contexts/PopupContext";
 
 // TODO: Implement details button
 // TODO: Implement add button
@@ -12,6 +13,7 @@ const MediaHeroSliderItem = ({
     isActive,
     type,
 }) => {
+    const { activePopup, openPopup, closePopup } = usePopup();
     if (type === "movie") {
         return (
             <div
@@ -46,8 +48,7 @@ const MediaHeroSliderItem = ({
                         </Link>
                         <a
                             className="btn-icon"
-                            href=""
-                            onClick={() => null}
+                            onClick={() => openPopup("addToFolder")}
                             id="banner-add-btn"
                         >
                             <svg className="material-icon" id="add-svg">
@@ -96,8 +97,7 @@ const MediaHeroSliderItem = ({
                         </Link>
                         <a
                             className="btn-icon"
-                            href=""
-                            onClick={() => null}
+                            onClick={() => openPopup("addToFolder")}
                             id="banner-add-btn"
                         >
                             <svg className="material-icon" id="add-svg">
