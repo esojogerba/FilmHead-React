@@ -1,7 +1,10 @@
 import React from "react";
+import { usePopup } from "../contexts/PopupContext";
 import posterImg from "../assets/images/Blade Runner Poster.png";
 
 const Folder = () => {
+    const { activePopup, openPopup, closePopup } = usePopup();
+
     return (
         <div className="folder">
             <div className="folder-posters">
@@ -34,7 +37,11 @@ const Folder = () => {
                 <h3 className="folder-title">Folder Name</h3>
                 <p className="folder-entry-count">15 Entries</p>
             </div>
-            <a className="btn-icon" onClick={null} id="backlog-trash-btn">
+            <a
+                className="btn-icon"
+                onClick={() => openPopup("deleteFolder")}
+                id="backlog-trash-btn"
+            >
                 <svg className="material-icon" id="trash-svg">
                     <use
                         xlinkHref={`${
