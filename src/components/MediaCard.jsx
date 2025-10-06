@@ -1,10 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
+import { usePopup } from "../contexts/PopupContext";
 
 // TODO: implement the add btn
 
 const MediaCard = ({ mediaData, type, genres }) => {
+    const { activePopup, openPopup, closePopup } = usePopup();
+
     if (type === "movie") {
         return (
             <div className="media-card">
@@ -20,7 +23,10 @@ const MediaCard = ({ mediaData, type, genres }) => {
                         loading="lazy"
                         onError={(e) => (e.target.style.display = "none")}
                     />
-                    <a href="" className="media-card-add-btn">
+                    <a
+                        className="media-card-add-btn"
+                        onClick={() => openPopup("addToFolder")}
+                    >
                         <svg className="material-icon" id="card-add-svg">
                             <use
                                 xlinkHref={`${
@@ -64,7 +70,10 @@ const MediaCard = ({ mediaData, type, genres }) => {
                         loading="lazy"
                         onError={(e) => (e.target.style.display = "none")}
                     />
-                    <a href="" className="media-card-add-btn">
+                    <a
+                        className="media-card-add-btn"
+                        onClick={() => openPopup("addToFolder")}
+                    >
                         <svg className="material-icon" id="card-add-svg">
                             <use
                                 xlinkHref={`${
@@ -108,7 +117,10 @@ const MediaCard = ({ mediaData, type, genres }) => {
                         loading="lazy"
                         onError={(e) => (e.target.style.display = "none")}
                     />
-                    <a href="" className="grid-card-add-btn">
+                    <a
+                        className="grid-card-add-btn"
+                        onClick={() => openPopup("addToFolder")}
+                    >
                         <svg className="material-icon" id="card-add-svg">
                             <use
                                 xlinkHref={`${
@@ -149,7 +161,10 @@ const MediaCard = ({ mediaData, type, genres }) => {
                         loading="lazy"
                         onError={(e) => (e.target.style.display = "none")}
                     />
-                    <a href="" className="grid-card-add-btn">
+                    <a
+                        className="grid-card-add-btn"
+                        onClick={() => openPopup("addToFolder")}
+                    >
                         <svg className="material-icon" id="card-add-svg">
                             <use
                                 xlinkHref={`${
