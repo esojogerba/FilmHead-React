@@ -3,6 +3,8 @@ import screening from "../assets/images/screening.svg";
 import bgCircle1 from "../assets/images/bg-circle-1.png";
 import bgCircle2 from "../assets/images/bg-circle-2.png";
 import LoadingOverlay from "../components/LoadingOverlay";
+import AddToFolder from "../components/AddToFolder";
+import CreateFolder from "../components/CreateFolder";
 
 const LogInPage = () => {
     const [loading, setLoading] = useState(true);
@@ -103,8 +105,9 @@ const LogInPage = () => {
                     />
                 </div>
             </section>
-            <div className="pop-up-overlay" />
-            <div className="pop-up-overlay second-overlay" />
+
+            <AddToFolder />
+            <CreateFolder />
         </main>
     );
 };
