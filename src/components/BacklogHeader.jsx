@@ -25,7 +25,7 @@ const BacklogHeader = () => {
                 />
                 <a
                     className="btn-icon"
-                    onClick={() => openPopup("addToFolder")}
+                    onClick={() => openPopup("createFolder")}
                     id="backlog-add-btn"
                 >
                     <svg className="material-icon" id="add-svg">
