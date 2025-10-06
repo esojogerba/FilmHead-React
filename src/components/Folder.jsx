@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { usePopup } from "../contexts/PopupContext";
 import posterImg from "../assets/images/Blade Runner Poster.png";
 
@@ -50,7 +51,12 @@ const Folder = () => {
                     />
                 </svg>
             </a>
-            <a href="#" className="folder-btn" title="" onClick={null} />
+            <Link
+                className="folder-btn"
+                title="Folder Name"
+                to={`/folder/${"001"}`}
+                onClick={() => null}
+            ></Link>
         </div>
     );
 };
