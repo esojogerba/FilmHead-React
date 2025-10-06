@@ -1,6 +1,8 @@
 import React from "react";
 import FolderHeader from "../components/FolderHeader";
 import FolderGrid from "../components/FolderGrid";
+import AddToFolder from "../components/AddToFolder";
+import CreateFolder from "../components/CreateFolder";
 
 const FolderPage = () => {
     return (
@@ -12,6 +14,9 @@ const FolderPage = () => {
                     <FolderGrid />
                 </section>
             </article>
+
+            <AddToFolder />
+            <CreateFolder />
         </main>
     );
 };
