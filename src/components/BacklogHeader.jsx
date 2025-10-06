@@ -1,6 +1,9 @@
 import React from "react";
+import { usePopup } from "../contexts/PopupContext";
 
-const BacklogHeader = ({ onAddToFolder }) => {
+const BacklogHeader = () => {
+    const { activePopup, openPopup, closePopup } = usePopup();
+
     return (
         <>
             <div className="backlog-header">
@@ -22,7 +25,7 @@ const BacklogHeader = ({ onAddToFolder }) => {
                 />
                 <a
                     className="btn-icon"
-                    onClick={onAddToFolder}
+                    onClick={() => openPopup("addToFolder")}
                     id="backlog-add-btn"
                 >
                     <svg className="material-icon" id="add-svg">
