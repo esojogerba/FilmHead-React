@@ -14,6 +14,7 @@ import SignUpPage from "./pages/SignUpPage";
 import LogInPage from "./pages/LogInPage";
 import MediaGridPage from "./pages/MediaGridPage";
 import BacklogPage from "./pages/BacklogPage";
+import FolderPage from "./pages/FolderPage";
 import { PopupProvider } from "./contexts/PopupContext";
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
                 <Route path="movies" element={<MoviesPage />} />
                 <Route path="shows" element={<ShowsPage />} />
                 <Route path="backlog" element={<BacklogPage />} />
+                <Route path="folder/:id" element={<FolderPage />} />
                 <Route path="details/:type/:id" element={<DetailsPage />} />
                 <Route path="sign-up" element={<SignUpPage />} />
                 <Route path="log-in" element={<LogInPage />} />
