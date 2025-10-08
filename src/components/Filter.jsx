@@ -4,19 +4,37 @@ import { usePopup } from "../contexts/PopupContext";
 import closeIcon from "../assets/images/icon-close.svg";
 import dropdownArrow from "../assets/images/dropdown-arrow.png";
 
+const createInitialSearchQueries = () => ({
+    movieGenres: "",
+    showGenres: "",
+    streaming: "",
+});
+
+const filterList = (items = [], query = "", getLabel = (item) => item) => {
+    const normalizedQuery = query.trim().toLowerCase();
+    if (!normalizedQuery) return items;
+    return items.filter((item) =>
+        getLabel(item).toLowerCase().includes(normalizedQuery)
+    );
+};
+
 const Filter = () => {
     const { activePopup, closePopup } = usePopup();
     const [openDropdowns, setOpenDropdowns] = useState({});
+    const [searchQueries, setSearchQueries] = useState(
+        createInitialSearchQueries
+    );
     const [movieGenres, setMovieGenres] = useState([]);
     const [tvGenres, setTvGenres] = useState([]);
     const [providers, setProviders] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [fetchError, setFetchError] = useState("");
 
-    // Reset dropdowns when the popup opens or closes
+    // Reset when popup closes
     useEffect(() => {
         if (activePopup !== "filter") {
             setOpenDropdowns({});
+            setSearchQueries(createInitialSearchQueries());
             setMovieGenres([]);
             setTvGenres([]);
             setProviders([]);
@@ -25,11 +43,11 @@ const Filter = () => {
         }
     }, [activePopup]);
 
+    // Fetch TMDB data
     useEffect(() => {
         if (activePopup !== "filter") return;
 
         const controller = new AbortController();
-
         const fetchDropdownData = async () => {
             setIsLoading(true);
             setFetchError("");
@@ -59,9 +77,7 @@ const Filter = () => {
                         language: "en-US",
                         watch_region: "US",
                     })}`,
-                    {
-                        signal: controller.signal,
-                    }
+                    { signal: controller.signal }
                 ),
             ];
 
@@ -97,10 +113,7 @@ const Filter = () => {
         };
 
         fetchDropdownData();
-
-        return () => {
-            controller.abort();
-        };
+        return () => controller.abort();
     }, [activePopup]);
 
     if (activePopup !== "filter") return null;
@@ -111,6 +124,30 @@ const Filter = () => {
             [name]: !prev[name],
         }));
     };
+
+    const handleSearchChange = (key) => (event) => {
+        const { value } = event.target;
+        setSearchQueries((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+    };
+
+    const filteredMovieGenres = filterList(
+        movieGenres,
+        searchQueries.movieGenres,
+        (genre) => genre.name ?? ""
+    );
+    const filteredShowGenres = filterList(
+        tvGenres,
+        searchQueries.showGenres,
+        (genre) => genre.name ?? ""
+    );
+    const filteredStreamingServices = filterList(
+        providers,
+        searchQueries.streaming,
+        (provider) => provider.provider_name ?? ""
+    );
 
     return (
         <>
@@ -196,6 +233,14 @@ const Filter = () => {
                             openDropdowns["filter-movie-genres"] ? "active" : ""
                         }`}
                     >
+                        <input
+                            type="search"
+                            className="filter-dropdown-search"
+                            aria-label="Search movie genres"
+                            placeholder="Search"
+                            value={searchQueries.movieGenres}
+                            onChange={handleSearchChange("movieGenres")}
+                        />
                         {isLoading ? (
                             <div className="filter-by-scroll-item">
                                 <span>Loading...</span>
@@ -204,8 +249,8 @@ const Filter = () => {
                             <div className="filter-by-scroll-item">
                                 <span>{fetchError}</span>
                             </div>
-                        ) : movieGenres.length ? (
-                            movieGenres.map((genre) => (
+                        ) : filteredMovieGenres.length ? (
+                            filteredMovieGenres.map((genre) => (
                                 <div
                                     className="filter-by-scroll-item"
                                     key={genre.id}
@@ -219,7 +264,7 @@ const Filter = () => {
                             ))
                         ) : (
                             <div className="filter-by-scroll-item">
-                                <span>No genres available.</span>
+                                <span>No matching movie genres.</span>
                             </div>
                         )}
                     </div>
@@ -238,6 +283,14 @@ const Filter = () => {
                             openDropdowns["filter-show-genres"] ? "active" : ""
                         }`}
                     >
+                        <input
+                            type="search"
+                            className="filter-dropdown-search"
+                            aria-label="Search show genres"
+                            placeholder="Search"
+                            value={searchQueries.showGenres}
+                            onChange={handleSearchChange("showGenres")}
+                        />
                         {isLoading ? (
                             <div className="filter-by-scroll-item">
                                 <span>Loading...</span>
@@ -246,8 +299,8 @@ const Filter = () => {
                             <div className="filter-by-scroll-item">
                                 <span>{fetchError}</span>
                             </div>
-                        ) : tvGenres.length ? (
-                            tvGenres.map((genre) => (
+                        ) : filteredShowGenres.length ? (
+                            filteredShowGenres.map((genre) => (
                                 <div
                                     className="filter-by-scroll-item"
                                     key={genre.id}
@@ -261,7 +314,7 @@ const Filter = () => {
                             ))
                         ) : (
                             <div className="filter-by-scroll-item">
-                                <span>No genres available.</span>
+                                <span>No matching show genres.</span>
                             </div>
                         )}
                     </div>
@@ -280,6 +333,14 @@ const Filter = () => {
                             openDropdowns["filter-streaming"] ? "active" : ""
                         }`}
                     >
+                        <input
+                            type="search"
+                            className="filter-dropdown-search"
+                            aria-label="Search streaming platforms"
+                            placeholder="Search"
+                            value={searchQueries.streaming}
+                            onChange={handleSearchChange("streaming")}
+                        />
                         {isLoading ? (
                             <div className="filter-by-scroll-item">
                                 <span>Loading...</span>
@@ -288,22 +349,22 @@ const Filter = () => {
                             <div className="filter-by-scroll-item">
                                 <span>{fetchError}</span>
                             </div>
-                        ) : providers.length ? (
-                            providers.map((provider) => (
+                        ) : filteredStreamingServices.length ? (
+                            filteredStreamingServices.map((service) => (
                                 <div
                                     className="filter-by-scroll-item"
-                                    key={provider.provider_id}
+                                    key={service.provider_id}
                                 >
                                     <a
                                         className="add-to-folder-scroll-btn"
                                         href="#"
                                     ></a>
-                                    <span>{provider.provider_name}</span>
+                                    <span>{service.provider_name}</span>
                                 </div>
                             ))
                         ) : (
                             <div className="filter-by-scroll-item">
-                                <span>No providers available.</span>
+                                <span>No matching streaming platforms.</span>
                             </div>
                         )}
                     </div>
