@@ -3,6 +3,8 @@ import FolderHeader from "../components/FolderHeader";
 import FolderGrid from "../components/FolderGrid";
 import AddToFolder from "../components/AddToFolder";
 import CreateFolder from "../components/CreateFolder";
+import DeleteFolderItem from "../components/DeleteFolderItem";
+import Filter from "../components/Filter";
 
 const FolderPage = () => {
     return (
@@ -17,6 +19,8 @@ const FolderPage = () => {
 
             <AddToFolder />
             <CreateFolder />
+            <DeleteFolderItem />
+            <Filter />
         </main>
     );
 };
