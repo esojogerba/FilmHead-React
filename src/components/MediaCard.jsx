@@ -190,6 +190,94 @@ const MediaCard = ({ mediaData, type, genres }) => {
                 ></Link>
             </div>
         );
+    } else if (type === "folder-movie") {
+        return (
+            <div className="grid-card">
+                <figure className="poster-box grid-card-poster">
+                    <img
+                        src={
+                            mediaData.poster_path != null
+                                ? imageBaseURL + "w342" + mediaData.poster_path
+                                : "#"
+                        }
+                        alt={mediaData.title}
+                        className="img-cover"
+                        loading="lazy"
+                        onError={(e) => (e.target.style.display = "none")}
+                    />
+                    <a
+                        className="grid-card-trash-btn"
+                        onClick={() => openPopup("deleteItem")}
+                    >
+                        <svg className="material-icon" id="grid-card-trash-svg">
+                            <use
+                                xlinkHref={`${
+                                    import.meta.env.BASE_URL
+                                }assets/images/icons.svg#trash`}
+                            />
+                        </svg>
+                    </a>
+                </figure>
+                <h4 className="media-card-title">{mediaData.title}</h4>
+                <div className="meta-list media-card-meta">
+                    <div className="meta-list">
+                        <div className="meta-item">
+                            {mediaData.release_date.split("-")[0]}
+                        </div>
+                    </div>
+                </div>
+                <Link
+                    to={`/details/movie/${mediaData.id}`}
+                    className="card-btn"
+                    title=""
+                    onClick={() => null}
+                ></Link>
+            </div>
+        );
+    } else if (type === "folder-show") {
+        return (
+            <div className="grid-card">
+                <figure className="poster-box grid-card-poster">
+                    <img
+                        src={
+                            mediaData.poster_path != null
+                                ? imageBaseURL + "w342" + mediaData.poster_path
+                                : "#"
+                        }
+                        alt={mediaData.name}
+                        className="img-cover"
+                        loading="lazy"
+                        onError={(e) => (e.target.style.display = "none")}
+                    />
+                    <a
+                        className="grid-card-trash-btn"
+                        onClick={() => openPopup("deleteItem")}
+                    >
+                        <svg className="material-icon" id="grid-card-trash-svg">
+                            <use
+                                xlinkHref={`${
+                                    import.meta.env.BASE_URL
+                                }assets/images/icons.svg#trash`}
+                            />
+                        </svg>
+                    </a>
+                </figure>
+                <h4 className="media-card-title">{mediaData.name}</h4>
+                <div className="meta-list media-card-meta">
+                    <div className="meta-list">
+                        <div className="meta-item">
+                            {mediaData.first_air_date.split("-")[0]}
+                        </div>
+                    </div>
+                </div>
+                <Link
+                    to={`/details/show/${mediaData.id}`}
+                    className="card-btn"
+                    title=""
+                    onClick={() => null}
+                ></Link>
+            </div>
+        );
     } else {
         return (
             <div className="media-card">
