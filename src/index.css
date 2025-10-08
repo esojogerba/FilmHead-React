@@ -2992,6 +2992,43 @@ h4 {
     padding: 1rem;
 }
 
+.filter-dropdown-search {
+    display: block;
+    width: calc(100% - 2rem);
+    margin: 0.75rem 1rem;
+    padding: 0.75rem 1rem 0.75rem calc(1rem + 2em);
+    background-color: var(--clr-black-700);
+    background-image: url("assets/images/search-icon-white.svg");
+    background-repeat: no-repeat;
+    background-position: 1rem center;
+    background-size: 1em;
+    color: var(--clr-white-900);
+    font-size: var(--fs-body);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: border-color var(--transition-short),
+        box-shadow var(--transition-short);
+}
+
+.filter-dropdown-search::placeholder {
+    color: hsl(0, 0%, 80%);
+}
+
+.filter-dropdown-search:focus {
+    outline: none;
+    border-color: var(--clr-primary);
+    box-shadow: 0 0 0 2px hsl(242, 76%, 63%, 0.25);
+}
+
+@media (max-width: 28rem) {
+    .filter-dropdown-search {
+        width: calc(100% - 1.5rem);
+        margin: 0.5rem 0.75rem;
+        padding: 0.5rem 0.75rem 0.5rem calc(0.75rem + 2em);
+        font-size: var(--fs-16);
+    }
+}
+
 .show-genres-scroll::-webkit-scrollbar-thumb,
 .show-genres-scroll::-webkit-scrollbar-thumb,
 .streaming-scroll::-webkit-scrollbar-thumb {
