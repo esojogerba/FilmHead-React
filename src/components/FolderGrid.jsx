@@ -1,7 +1,10 @@
 import React from "react";
+import { usePopup } from "../contexts/PopupContext";
 import posterImg from "../assets/images/Blade Runner Poster.png";
 
 const FolderGrid = () => {
+    const { activePopup, openPopup, closePopup } = usePopup();
+
     return (
         <div className="grid-list folder-grid">
             <div className="grid-card">
@@ -12,7 +15,10 @@ const FolderGrid = () => {
                         className="img-cover"
                         loading="lazy"
                     />
-                    <a className="grid-card-trash-btn" onClick={null}>
+                    <a
+                        className="grid-card-trash-btn"
+                        onClick={() => openPopup("deleteItem")}
+                    >
                         <svg className="material-icon" id="grid-card-trash-svg">
                             <use
                                 xlinkHref={`${
@@ -39,7 +45,10 @@ const FolderGrid = () => {
                         className="img-cover"
                         loading="lazy"
                     />
-                    <a className="grid-card-trash-btn" onClick={null}>
+                    <a
+                        className="grid-card-trash-btn"
+                        onClick={() => openPopup("deleteItem")}
+                    >
                         <svg className="material-icon" id="grid-card-trash-svg">
                             <use
                                 xlinkHref={`${
@@ -66,7 +75,10 @@ const FolderGrid = () => {
                         className="img-cover"
                         loading="lazy"
                     />
-                    <a className="grid-card-trash-btn" onClick={null}>
+                    <a
+                        className="grid-card-trash-btn"
+                        onClick={() => openPopup("deleteItem")}
+                    >
                         <svg className="material-icon" id="grid-card-trash-svg">
                             <use
                                 xlinkHref={`${
@@ -93,7 +105,10 @@ const FolderGrid = () => {
                         className="img-cover"
                         loading="lazy"
                     />
-                    <a className="grid-card-trash-btn" onClick={null}>
+                    <a
+                        className="grid-card-trash-btn"
+                        onClick={() => openPopup("deleteItem")}
+                    >
                         <svg className="material-icon" id="grid-card-trash-svg">
                             <use
                                 xlinkHref={`${
@@ -120,7 +135,10 @@ const FolderGrid = () => {
                         className="img-cover"
                         loading="lazy"
                     />
-                    <a className="grid-card-trash-btn" onClick={null}>
+                    <a
+                        className="grid-card-trash-btn"
+                        onClick={() => openPopup("deleteItem")}
+                    >
                         <svg className="material-icon" id="grid-card-trash-svg">
                             <use
                                 xlinkHref={`${
