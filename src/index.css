@@ -20,8 +20,8 @@
     --clr-white-900: hsl(240, 100%, 98%);
 
     /* Gradients */
-    --banner-overlay: 0deg, hsl(0, 0%, 8%, 1), hsl(0, 0%, 8%, 0.75);
-    --details-overlay: 180deg, hsl(0, 0%, 8%, 0.75), hsl(0, 0%, 8%, 1);
+    --banner-overlay: 0deg, hsl(0, 0%, 8%, 1), hsl(0, 0%, 8%, 0.6);
+    --details-overlay: 180deg, hsl(0, 0%, 8%, 0.65), hsl(0, 0%, 8%, 1);
 
     /* 
     Typography 
