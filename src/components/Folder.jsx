@@ -31,6 +31,7 @@ const Folder = () => {
                         alt="Blade Runner"
                         className="img-cover"
                         loading="lazy"
+                        style={{ display: "none" }}
                     />
                 </figure>
             </div>
