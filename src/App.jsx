@@ -16,6 +16,7 @@ import MediaGridPage from "./pages/MediaGridPage";
 import BacklogPage from "./pages/BacklogPage";
 import FolderPage from "./pages/FolderPage";
 import { PopupProvider } from "./contexts/PopupContext";
+import { BacklogProvider } from "./contexts/BacklogContext";
 
 const App = () => {
     const basename = import.meta.env.PROD ? "/FilmHead-React" : "/";
@@ -42,7 +43,9 @@ const App = () => {
 
     return (
         <PopupProvider>
-            <RouterProvider router={router} />
+            <BacklogProvider>
+                <RouterProvider router={router} />
+            </BacklogProvider>
         </PopupProvider>
     );
 };
