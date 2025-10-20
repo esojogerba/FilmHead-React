@@ -460,6 +460,36 @@ ul {
     pointer-events: none;
 } */
 
+/* Toast */
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background-color: var(--clr-primary-dark);
+    color: #fff;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 10000; /* above popups */
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 600px) {
+    .toast {
+        bottom: 15px;
+        font-size: 0.9rem;
+    }
+}
+
 /* =======================
   Typography
  ======================= */
