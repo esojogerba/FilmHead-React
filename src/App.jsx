@@ -15,6 +15,7 @@ import LogInPage from "./pages/LogInPage";
 import MediaGridPage from "./pages/MediaGridPage";
 import BacklogPage from "./pages/BacklogPage";
 import FolderPage from "./pages/FolderPage";
+import { ToastProvider } from "./contexts/ToastContext";
 import { PopupProvider } from "./contexts/PopupContext";
 import { BacklogProvider } from "./contexts/BacklogContext";
 
@@ -42,11 +43,13 @@ const App = () => {
     );
 
     return (
-        <PopupProvider>
-            <BacklogProvider>
-                <RouterProvider router={router} />
-            </BacklogProvider>
-        </PopupProvider>
+        <ToastProvider>
+            <PopupProvider>
+                <BacklogProvider>
+                    <RouterProvider router={router} />
+                </BacklogProvider>
+            </PopupProvider>
+        </ToastProvider>
     );
 };
 
