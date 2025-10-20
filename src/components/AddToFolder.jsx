@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import closeIcon from "../assets/images/icon-close.svg";
 import { usePopup } from "../contexts/PopupContext";
+import { useBacklog } from "../contexts/BacklogContext";
 
 const AddToFolder = () => {
     const { activePopup, openPopup, closePopup } = usePopup();
+    const { getFolders } = useBacklog();
+    const [folders, setFolders] = useState([]);
+
+    // Load folders each time popup opens
+    useEffect(() => {
+        if (activePopup === "addToFolder") {
+            const allFolders = getFolders();
+            setFolders(allFolders);
+        }
+    }, [activePopup, getFolders]);
 
     if (activePopup !== "addToFolder") return null; // only show when active
 
@@ -42,12 +53,27 @@ const AddToFolder = () => {
                     </a>
                 </div>
 
+                {/* Scrollable Folder List */}
                 <div className="add-to-folder-scroll">
-                    <div className="add-to-folder-scroll-item">
-                        <span>Folder</span>
-                        <a className="add-to-folder-scroll-btn" href=""></a>
-                    </div>
-                    {/* Repeat... */}
+                    {folders.length > 0 ? (
+                        folders.map((folder) => (
+                            <div
+                                key={folder.id}
+                                className="add-to-folder-scroll-item"
+                            >
+                                <span>{folder.title}</span>
+                                <a
+                                    className="add-to-folder-scroll-btn"
+                                    href="#"
+                                    onClick={(e) => e.preventDefault()}
+                                ></a>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="add-to-folder-scroll-item">
+                            <span>No folders created yet</span>
+                        </div>
+                    )}
                 </div>
 
                 <div className="add-to-folder-footer">
