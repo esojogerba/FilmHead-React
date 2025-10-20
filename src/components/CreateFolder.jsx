@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import closeIcon from "../assets/images/icon-close.svg";
 import { usePopup } from "../contexts/PopupContext";
 import { useBacklog } from "../contexts/BacklogContext";
+import { useToast } from "../contexts/ToastContext";
 
 const CreateFolder = () => {
     const { activePopup, closePopup } = usePopup();
     const { createFolder, validateFolderTitle } = useBacklog();
+    const { showToast } = useToast();
 
     const [folderName, setFolderName] = useState("");
     const [emptyError, setEmptyError] = useState(false);
@@ -52,6 +54,7 @@ const CreateFolder = () => {
             setDuplicateError(false);
 
             closePopup();
+            showToast("New Folder Created");
         } catch (err) {
             // Defensive fallback (shouldn't normally happen)
             if (err.message.includes("empty")) setEmptyError(true);
