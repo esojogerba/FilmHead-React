@@ -1,8 +1,8 @@
 import React from "react";
 import { usePopup } from "../contexts/PopupContext";
 
-const BacklogHeader = () => {
-    const { activePopup, openPopup, closePopup } = usePopup();
+const BacklogHeader = ({ searchTerm, setSearchTerm }) => {
+    const { openPopup } = usePopup();
 
     return (
         <>
@@ -22,6 +22,8 @@ const BacklogHeader = () => {
                     className="backlog-search-field"
                     type="search"
                     placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <a
                     className="btn-icon"
