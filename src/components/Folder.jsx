@@ -23,7 +23,7 @@ const Folder = ({ folder }) => {
                     const hasPoster = posterPath && posterPath !== "";
                     const src = hasPoster
                         ? imageBaseURL + "w342" + posterPath
-                        : "";
+                        : null;
                     return (
                         <figure className="poster-box folder-poster" key={i}>
                             <img
