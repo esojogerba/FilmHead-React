@@ -1,24 +1,24 @@
 import React from "react";
-import { useBacklog } from "../contexts/BacklogContext";
 import Folder from "./Folder";
+import LoadingOverlay from "./LoadingOverlay";
 
-const BacklogGrid = () => {
-    const { folders } = useBacklog();
-
-    // Sort folders from most recently modified
-    const sortedFolders = [...folders].sort(
-        (a, b) => new Date(b.lastModified) - new Date(a.lastModified)
-    );
+const BacklogGrid = ({ folders, loading, searchLoading }) => {
+    const isLoading = loading || searchLoading;
 
     return (
-        <div className="backlog-grid">
-            {sortedFolders.length > 0 ? (
-                sortedFolders.map((folder) => (
-                    <Folder key={folder.id} folder={folder} />
-                ))
-            ) : (
-                <p className="empty-backlog-message">No folders yet.</p>
-            )}
+        <div className="backlog-grid-wrapper" style={{ position: "relative" }}>
+            {/* Use section-level overlay when grid is loading */}
+            {isLoading && <LoadingOverlay variant="section" />}
+
+            <div className={`backlog-grid ${isLoading ? "blurred" : ""}`}>
+                {folders.length > 0
+                    ? folders.map((folder) => (
+                          <Folder key={folder.id} folder={folder} />
+                      ))
+                    : !isLoading && (
+                          <p className="empty-message">No folders found.</p>
+                      )}
+            </div>
         </div>
     );
 };
