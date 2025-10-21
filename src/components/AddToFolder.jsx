@@ -31,16 +31,21 @@ const AddToFolder = () => {
                             alt="Close"
                         />
                     </a>
+
                     <h3 className="header-title">Save To Folder</h3>
+
                     <input
                         className="add-to-folder-search"
                         type="search"
                         placeholder="Search..."
                     />
+
                     <a
                         className="btn btn-text-icon"
                         id="add-new-folder-btn"
-                        onClick={() => openPopup("createFolder")}
+                        onClick={() =>
+                            openPopup("createFolder", { from: "addToFolder" })
+                        }
                     >
                         <svg className="material-icon" id="add-to-folder-svg">
                             <use

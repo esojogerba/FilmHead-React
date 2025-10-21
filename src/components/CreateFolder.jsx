@@ -5,7 +5,7 @@ import { useBacklog } from "../contexts/BacklogContext";
 import { useToast } from "../contexts/ToastContext";
 
 const CreateFolder = () => {
-    const { activePopup, closePopup } = usePopup();
+    const { activePopup, popupData, openPopup, closePopup } = usePopup();
     const { createFolder, validateFolderTitle } = useBacklog();
     const { showToast } = useToast();
 
@@ -14,6 +14,16 @@ const CreateFolder = () => {
     const [duplicateError, setDuplicateError] = useState(false);
 
     if (activePopup !== "createFolder") return null;
+
+    // Helper: close this popup & reopen addToFolder if needed
+    const closeAndReopenIfNeeded = () => {
+        const fromAddToFolder = popupData?.from === "addToFolder";
+        closePopup();
+        if (fromAddToFolder) {
+            // reopen AddToFolder after slight delay for smoother transition
+            setTimeout(() => openPopup("addToFolder"), 100);
+        }
+    };
 
     // Handle input typing
     const handleChange = (e) => {
@@ -32,49 +42,48 @@ const CreateFolder = () => {
         if (!trimmedName) {
             setEmptyError(true);
             setDuplicateError(false);
-            return; // don't close popup
+            return;
         }
 
-        // Validate duplicates using the context
+        // Validate duplicates
         const { valid, error } = validateFolderTitle(trimmedName);
         if (!valid && error === "Folder name already exists") {
             setDuplicateError(true);
             setEmptyError(false);
-            return; // don't close popup
+            return;
         }
 
         try {
-            // Create the folder
             const newFolder = createFolder(trimmedName);
             console.log("Created folder:", newFolder);
 
-            // Clear input and errors before closing
             setFolderName("");
             setEmptyError(false);
             setDuplicateError(false);
 
-            closePopup();
             showToast("New Folder Created");
+
+            closeAndReopenIfNeeded(); // ✅ close & reopen AddToFolder if needed
         } catch (err) {
-            // Defensive fallback (shouldn't normally happen)
             if (err.message.includes("empty")) setEmptyError(true);
             else if (err.message.includes("exists")) setDuplicateError(true);
         }
     };
 
-    // Disable button when empty
+    const handleClose = () => closeAndReopenIfNeeded();
+
     const isDisabled = !folderName.trim();
 
     return (
         <>
             <div
                 className="pop-up-overlay second-overlay active"
-                onClick={closePopup}
+                onClick={handleClose}
             ></div>
 
             <div className="create-folder active">
                 <div className="create-folder-header">
-                    <a className="pop-up-close-btn" onClick={closePopup}>
+                    <a className="pop-up-close-btn" onClick={handleClose}>
                         <img
                             id="pop-up-close-img"
                             src={closeIcon}
@@ -91,7 +100,6 @@ const CreateFolder = () => {
                     <h3 className="header-title">Create Folder</h3>
                 </div>
 
-                {/* --- ERROR MESSAGES --- */}
                 <h4
                     className={`folder-name-error ${
                         duplicateError ? "active" : ""
@@ -108,7 +116,6 @@ const CreateFolder = () => {
                     Invalid folder name
                 </h4>
 
-                {/* --- INPUT FIELD --- */}
                 <input
                     className="create-folder-input"
                     type="text"
@@ -118,7 +125,6 @@ const CreateFolder = () => {
                     onChange={handleChange}
                 />
 
-                {/* --- DONE BUTTON --- */}
                 <a
                     className={`btn ${isDisabled ? "disabled" : ""}`}
                     onClick={!isDisabled ? handleCreateFolder : undefined}
