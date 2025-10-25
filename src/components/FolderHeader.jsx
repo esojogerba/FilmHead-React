@@ -1,8 +1,8 @@
 import React from "react";
 import { usePopup } from "../contexts/PopupContext";
 
-const FolderHeader = () => {
-    const { activePopup, openPopup, closePopup } = usePopup();
+const FolderHeader = ({ folderName }) => {
+    const { openPopup } = usePopup();
 
     return (
         <>
@@ -14,7 +14,7 @@ const FolderHeader = () => {
                         }assets/images/icons.svg#folder`}
                     />
                 </svg>
-                <h1 className="folder-title">Creature Feature</h1>
+                <h1 className="folder-title">{folderName}</h1>
             </div>
 
             <div className="backlog-menu">
