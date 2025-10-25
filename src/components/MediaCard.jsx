@@ -5,7 +5,7 @@ import { usePopup } from "../contexts/PopupContext";
 
 // TODO: implement the add btn
 
-const MediaCard = ({ mediaData, type, genres }) => {
+const MediaCard = ({ mediaData, type, genres, folderId }) => {
     const { activePopup, openPopup, closePopup } = usePopup();
 
     // Helper: convert genre IDs to array of names
@@ -263,7 +263,12 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a
                         className="grid-card-trash-btn"
-                        onClick={() => openPopup("deleteItem")}
+                        onClick={() =>
+                            openPopup("deleteItem", {
+                                folderId,
+                                itemId: mediaData.id,
+                            })
+                        }
                     >
                         <svg className="material-icon" id="grid-card-trash-svg">
                             <use
@@ -307,7 +312,12 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a
                         className="grid-card-trash-btn"
-                        onClick={() => openPopup("deleteItem")}
+                        onClick={() =>
+                            openPopup("deleteItem", {
+                                folderId,
+                                itemId: mediaData.id,
+                            })
+                        }
                     >
                         <svg className="material-icon" id="grid-card-trash-svg">
                             <use
