@@ -41,7 +41,7 @@ const FolderPage = () => {
                     <FolderHeader folderName={folder.title} />
 
                     {folder.items.length > 0 ? (
-                        <FolderGrid mediaList={folder.items} />
+                        <FolderGrid mediaList={folder.items} folderId={id} />
                     ) : (
                         <p>No items in this folder yet.</p>
                     )}
