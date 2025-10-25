@@ -1,10 +1,32 @@
 import React from "react";
 import { usePopup } from "../contexts/PopupContext";
+import { useBacklog } from "../contexts/BacklogContext";
+import { useToast } from "../contexts/ToastContext";
 
 const DeleteFolderItem = () => {
-    const { activePopup, openPopup, closePopup } = usePopup();
+    const { activePopup, popupData, closePopup } = usePopup();
+    const { removeItemFromFolder } = useBacklog();
+    const { showToast } = useToast();
 
-    if (activePopup !== "deleteItem") return null;
+    if (activePopup !== "deleteItem" || !popupData) return null;
+
+    const handleConfirm = () => {
+        const { folderId, itemId } = popupData;
+
+        try {
+            if (folderId && itemId) {
+                removeItemFromFolder(folderId, itemId);
+                showToast("Item deleted");
+            } else {
+                showToast("Failed to delete item");
+            }
+        } catch (err) {
+            console.error("Failed to delete item:", err);
+            showToast("Error deleting item");
+        } finally {
+            closePopup();
+        }
+    };
 
     return (
         <>
@@ -27,7 +49,7 @@ const DeleteFolderItem = () => {
                 </p>
 
                 <div className="confirm-cancel-btns">
-                    <a className="btn" onClick={null}>
+                    <a className="btn" onClick={handleConfirm}>
                         Confirm
                     </a>
                     <a className="btn" onClick={closePopup}>
