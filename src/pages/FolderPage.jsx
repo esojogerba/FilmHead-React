@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
+import { useParams } from "react-router-dom";
+import { useBacklog } from "../contexts/BacklogContext";
 import LoadingOverlay from "../components/LoadingOverlay";
 import FolderHeader from "../components/FolderHeader";
 import FolderGrid from "../components/FolderGrid";
@@ -9,53 +10,48 @@ import DeleteFolderItem from "../components/DeleteFolderItem";
 import Filter from "../components/Filter";
 
 const FolderPage = () => {
-    const [mediaList, setMediaList] = useState([]);
+    const { id } = useParams();
+    const { getFolderById } = useBacklog();
+    const [folder, setFolder] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Folder movies
     useEffect(() => {
-        const fetchMediaList = async () => {
-            setLoading(true);
-            const results = [];
+        setLoading(true);
+        const foundFolder = getFolderById(id);
+        setFolder(foundFolder);
+        setLoading(false);
+    }, [id, getFolderById]);
 
-            try {
-                const res = await fetch(
-                    `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=pokemon&include_adult=false&language=en-US&page=1`
-                );
-                const data = await res.json();
+    if (loading) return <LoadingOverlay variant="page" />;
 
-                setMediaList(data.results);
-            } catch (error) {
-                console.error("Error fetching data", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchMediaList();
-    }, []);
+    if (!folder) {
+        return (
+            <main>
+                <section className="container">
+                    <h2>Folder not found</h2>
+                </section>
+            </main>
+        );
+    }
 
     return (
         <main>
-            {loading && <LoadingOverlay />}
+            <article page-content="">
+                <section className="container">
+                    <FolderHeader folderName={folder.title} />
 
-            {!loading && (
-                <>
-                    <article page-content="">
-                        <section className="container">
-                            <FolderHeader />
-                            {mediaList.length > 0 && (
-                                <FolderGrid mediaList={mediaList} />
-                            )}
-                        </section>
-                    </article>
+                    {folder.items.length > 0 ? (
+                        <FolderGrid mediaList={folder.items} />
+                    ) : (
+                        <p>No items in this folder yet.</p>
+                    )}
+                </section>
+            </article>
 
-                    <AddToFolder />
-                    <CreateFolder />
-                    <DeleteFolderItem />
-                    <Filter />
-                </>
-            )}
+            <AddToFolder />
+            <CreateFolder />
+            <DeleteFolderItem />
+            <Filter />
         </main>
     );
 };
