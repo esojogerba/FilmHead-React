@@ -8,25 +8,30 @@ import React, {
 } from "react";
 
 /**
- * Backlog context (folders-only)
- *
- * Provides persistent storage (localStorage) for folders and exposes:
- * - folders (array)
- * - createFolder(title) -> creates folder or throws Error on invalid input
- * - deleteFolder(folderId)
- * - getFolderById(folderId)
- * - getFolders() -> array
- * - validateFolderTitle(title) -> { valid: boolean, error: string | null }
+ * Backlog context — supports folders and media items.
  *
  * Folder shape:
  * {
  *   id: string,
  *   title: string,
  *   createdAt: ISOString,
- *   posters: string[] (max 3) - poster paths of first up to 3 items,
- *   items: [] (not used yet),
- *   count: number (items.length),
- *   lastModified: ISOString
+ *   items: MediaItem[],
+ *   count: number,
+ *   lastModified: ISOString,
+ * }
+ *
+ * MediaItem shape:
+ * {
+ *   folderItemId: string,
+ *   apiId: string | number,
+ *   mediaType: "movie" | "show",
+ *   title: string,
+ *   posterPath: string | null,
+ *   year: string | number,
+ *   addedAt: ISOString,
+ *   genres: string[],
+ *   providers: string[],
+ *   watched: boolean
  * }
  */
 
@@ -41,29 +46,25 @@ const generateId = () => {
     if (typeof crypto !== "undefined" && crypto.randomUUID) {
         return crypto.randomUUID();
     }
-    return `folder-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+    return `id-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
 };
 
-/**
- * Ensure a folder object has the fields we expect.
- * This helps when loading older persisted data and keeps the app stable.
- */
+// For individual media items inside folders
+const generateItemId = () => `item-${generateId()}`;
+
+// Clean up folder structure for stability
 const sanitizeFolder = (raw = {}) => {
     const id = raw.id || generateId();
     const title = typeof raw.title === "string" ? raw.title : "Untitled";
-    const createdAt = raw.createdAt || raw.addedAt || new Date().toISOString();
-    // posters should be an array (only keep up to 3)
-    const posters = Array.isArray(raw.posters) ? raw.posters.slice(0, 3) : [];
+    const createdAt = raw.createdAt || new Date().toISOString();
     const items = Array.isArray(raw.items) ? raw.items : [];
-    const count =
-        typeof raw.count === "number" ? raw.count : items ? items.length : 0;
-    const lastModified = raw.lastModified || raw.updatedAt || createdAt;
+    const count = items.length;
+    const lastModified = raw.lastModified || createdAt;
 
     return {
         id,
         title,
         createdAt,
-        posters,
         items,
         count,
         lastModified,
@@ -111,19 +112,14 @@ const persistBacklog = (backlog) => {
 /* --- Provider --- */
 
 export const BacklogProvider = ({ children }) => {
-    // Load once on mount
     const [backlog, setBacklog] = useState(() => loadBacklog());
 
-    // Persist whenever the backlog changes
     useEffect(() => {
         persistBacklog(backlog);
     }, [backlog]);
 
-    /**
-     * validateFolderTitle(title)
-     * quick client-side validation you can use to enable/disable Done button
-     * Returns { valid: boolean, error: string | null }
-     */
+    /* ------------------ Folder Functions ------------------ */
+
     const validateFolderTitle = useCallback(
         (title) => {
             const trimmed = (title || "").trim();
@@ -141,20 +137,9 @@ export const BacklogProvider = ({ children }) => {
         [backlog.folders]
     );
 
-    /**
-     * createFolder(title)
-     * - throws Error("Folder name cannot be empty") if empty
-     * - throws Error("Folder name already exists") if duplicate (case-insensitive)
-     * - returns the created folder object on success
-     *
-     * Implementation note: we use the functional setState and capture a duplicate flag
-     * to avoid races if multiple callers attempt to create at the same time.
-     */
     const createFolder = useCallback((title) => {
         const trimmed = (title || "").trim();
-        if (!trimmed) {
-            throw new Error("Folder name cannot be empty");
-        }
+        if (!trimmed) throw new Error("Folder name cannot be empty");
 
         let duplicate = false;
         let createdFolder = null;
@@ -173,43 +158,110 @@ export const BacklogProvider = ({ children }) => {
                 id: generateId(),
                 title: trimmed,
                 createdAt: new Date().toISOString(),
-                posters: [], // initially empty; will hold up to 3 poster paths later
-                items: [], // items are not implemented yet
+                items: [],
                 count: 0,
                 lastModified: new Date().toISOString(),
             };
 
-            return {
-                folders: [...prev.folders, createdFolder],
-            };
+            return { folders: [...prev.folders, createdFolder] };
         });
 
-        if (duplicate) {
-            throw new Error("Folder name already exists");
-        }
-
+        if (duplicate) throw new Error("Folder name already exists");
         return createdFolder;
     }, []);
 
-    /**
-     * deleteFolder(folderId)
-     * - removes folder by id
-     */
     const deleteFolder = useCallback((folderId) => {
         setBacklog((prev) => ({
             folders: prev.folders.filter((folder) => folder.id !== folderId),
         }));
     }, []);
 
-    /**
-     * getFolderById(id) and getFolders()
-     */
     const getFolderById = useCallback(
         (id) => backlog.folders.find((f) => f.id === id) || null,
         [backlog.folders]
     );
 
     const getFolders = useCallback(() => backlog.folders, [backlog.folders]);
+
+    /* ------------------ Item Functions ------------------ */
+
+    const addItemsToFolders = useCallback((itemData, folderIds) => {
+        if (!itemData || !Array.isArray(folderIds) || folderIds.length === 0)
+            return { added: 0, skipped: 0 };
+
+        const newItem = {
+            folderItemId: generateItemId(),
+            apiId: itemData.apiId,
+            mediaType: itemData.mediaType || "movie",
+            title: itemData.title || "Untitled",
+            posterPath: itemData.posterPath || null,
+            year: itemData.year || "",
+            addedAt: new Date().toISOString(),
+            genres: Array.isArray(itemData.genres) ? itemData.genres : [],
+            providers: Array.isArray(itemData.providers)
+                ? itemData.providers
+                : [],
+            watched: false,
+        };
+
+        let addedCount = 0;
+        let skippedCount = 0;
+
+        setBacklog((prev) => {
+            const updatedFolders = prev.folders.map((folder) => {
+                if (!folderIds.includes(folder.id)) return folder;
+
+                // Check if the item already exists (by API ID)
+                const alreadyExists = folder.items.some(
+                    (it) => it.apiId === newItem.apiId
+                );
+                if (alreadyExists) {
+                    skippedCount++;
+                    return folder;
+                }
+
+                const updatedItems = [...folder.items, newItem];
+                addedCount++;
+
+                return {
+                    ...folder,
+                    items: updatedItems,
+                    count: updatedItems.length,
+                    lastModified: new Date().toISOString(),
+                };
+            });
+
+            return { folders: updatedFolders };
+        });
+
+        // Return info about how many were added vs skipped
+        return { added: addedCount, skipped: skippedCount };
+    }, []);
+
+    const removeItemFromFolder = useCallback((folderId, identifier) => {
+        setBacklog((prev) => {
+            const updatedFolders = prev.folders.map((folder) => {
+                if (folder.id !== folderId) return folder;
+
+                const filtered = folder.items.filter(
+                    (it) =>
+                        it.apiId !== identifier &&
+                        it.folderItemId !== identifier
+                );
+
+                return {
+                    ...folder,
+                    items: filtered,
+                    count: filtered.length,
+                    lastModified: new Date().toISOString(),
+                };
+            });
+
+            return { folders: updatedFolders };
+        });
+    }, []);
+
+    /* ------------------ Value ------------------ */
 
     const value = useMemo(
         () => ({
@@ -219,6 +271,8 @@ export const BacklogProvider = ({ children }) => {
             getFolderById,
             getFolders,
             validateFolderTitle,
+            addItemsToFolders,
+            removeItemFromFolder,
         }),
         [
             backlog.folders,
@@ -227,6 +281,8 @@ export const BacklogProvider = ({ children }) => {
             getFolderById,
             getFolders,
             validateFolderTitle,
+            addItemsToFolders,
+            removeItemFromFolder,
         ]
     );
 
@@ -237,9 +293,7 @@ export const BacklogProvider = ({ children }) => {
     );
 };
 
-/**
- * useBacklog()
- */
+/* --- Hook --- */
 export const useBacklog = () => {
     const ctx = useContext(BacklogContext);
     if (!ctx) {
