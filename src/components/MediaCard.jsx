@@ -8,6 +8,14 @@ import { usePopup } from "../contexts/PopupContext";
 const MediaCard = ({ mediaData, type, genres }) => {
     const { activePopup, openPopup, closePopup } = usePopup();
 
+    // Helper: convert genre IDs to array of names
+    const getGenreNames = (genreIds, genresDict) => {
+        if (!Array.isArray(genreIds) || !genresDict) return [];
+        return genreIds
+            .map((id) => genresDict[id]) // lookup name by ID
+            .filter(Boolean); // remove undefined values
+    };
+
     if (type === "movie") {
         return (
             <div className="media-card">
@@ -25,7 +33,19 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a
                         className="media-card-add-btn"
-                        onClick={() => openPopup("addToFolder")}
+                        onClick={() =>
+                            openPopup("addToFolder", {
+                                apiId: mediaData.id,
+                                mediaType: "movie",
+                                title: mediaData.title,
+                                posterPath: mediaData.poster_path,
+                                year: mediaData.release_date?.split("-")[0],
+                                genres: getGenreNames(
+                                    mediaData.genre_ids,
+                                    genres
+                                ),
+                            })
+                        }
                     >
                         <svg className="material-icon" id="card-add-svg">
                             <use
@@ -72,7 +92,19 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a
                         className="media-card-add-btn"
-                        onClick={() => openPopup("addToFolder")}
+                        onClick={() =>
+                            openPopup("addToFolder", {
+                                apiId: mediaData.id,
+                                mediaType: "show",
+                                title: mediaData.name,
+                                posterPath: mediaData.poster_path,
+                                year: mediaData.first_air_date?.split("-")[0],
+                                genres: getGenreNames(
+                                    mediaData.genre_ids,
+                                    genres
+                                ),
+                            })
+                        }
                     >
                         <svg className="material-icon" id="card-add-svg">
                             <use
@@ -119,7 +151,19 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a
                         className="grid-card-add-btn"
-                        onClick={() => openPopup("addToFolder")}
+                        onClick={() =>
+                            openPopup("addToFolder", {
+                                apiId: mediaData.id,
+                                mediaType: "movie",
+                                title: mediaData.title,
+                                posterPath: mediaData.poster_path,
+                                year: mediaData.release_date?.split("-")[0],
+                                genres: getGenreNames(
+                                    mediaData.genre_ids,
+                                    genres
+                                ),
+                            })
+                        }
                     >
                         <svg className="material-icon" id="card-add-svg">
                             <use
@@ -163,7 +207,19 @@ const MediaCard = ({ mediaData, type, genres }) => {
                     />
                     <a
                         className="grid-card-add-btn"
-                        onClick={() => openPopup("addToFolder")}
+                        onClick={() =>
+                            openPopup("addToFolder", {
+                                apiId: mediaData.id,
+                                mediaType: "show",
+                                title: mediaData.name,
+                                posterPath: mediaData.poster_path,
+                                year: mediaData.first_air_date?.split("-")[0],
+                                genres: getGenreNames(
+                                    mediaData.genre_ids,
+                                    genres
+                                ),
+                            })
+                        }
                     >
                         <svg className="material-icon" id="card-add-svg">
                             <use
