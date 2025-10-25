@@ -1,7 +1,7 @@
 import React from "react";
 import MediaCard from "../components/MediaCard";
 
-const FolderGrid = ({ mediaList }) => {
+const FolderGrid = ({ mediaList, folderId }) => {
     if (!mediaList || mediaList.length === 0) return null;
 
     return (
@@ -18,6 +18,7 @@ const FolderGrid = ({ mediaList }) => {
                         first_air_date: item.year?.toString() || "",
                     }}
                     type={`folder-${item.mediaType}`}
+                    folderId={folderId}
                 />
             ))}
         </div>
