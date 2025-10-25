@@ -2,12 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { imageBaseURL } from "../utils/api";
 import { usePopup } from "../contexts/PopupContext";
-import posterPlaceholder from "../assets/images/Blade Runner Poster.png";
 
 const Folder = ({ folder }) => {
     const { openPopup } = usePopup();
 
-    const posters = folder.posters || [];
+    // Get up to 3 poster paths directly from the first 3 items
+    const posters =
+        folder.items
+            ?.map((item) => item.posterPath)
+            .filter(Boolean)
+            .slice(0, 3) || [];
 
     const handleDeleteClick = (e) => {
         e.stopPropagation();
@@ -24,6 +28,7 @@ const Folder = ({ folder }) => {
                     const src = hasPoster
                         ? imageBaseURL + "w342" + posterPath
                         : null;
+
                     return (
                         <figure className="poster-box folder-poster" key={i}>
                             <img
@@ -35,15 +40,6 @@ const Folder = ({ folder }) => {
                                     display: hasPoster ? "block" : "none",
                                 }}
                             />
-                            {!hasPoster && (
-                                <img
-                                    src={posterPlaceholder}
-                                    alt="Empty"
-                                    className="img-cover"
-                                    loading="lazy"
-                                    style={{ display: "none" }}
-                                />
-                            )}
                         </figure>
                     );
                 })}
