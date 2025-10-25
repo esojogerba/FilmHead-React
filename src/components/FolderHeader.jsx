@@ -1,7 +1,7 @@
 import React from "react";
 import { usePopup } from "../contexts/PopupContext";
 
-const FolderHeader = ({ folderName }) => {
+const FolderHeader = ({ folderName, searchTerm, setSearchTerm }) => {
     const { openPopup } = usePopup();
 
     return (
@@ -22,6 +22,8 @@ const FolderHeader = ({ folderName }) => {
                     className="backlog-search-field"
                     type="search"
                     placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
 
                 <a
