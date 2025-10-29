@@ -20,34 +20,53 @@ const filterList = (items = [], query = "", getLabel = (item) => item) => {
 
 const Filter = () => {
     const { activePopup, closePopup } = usePopup();
+
     const [openDropdowns, setOpenDropdowns] = useState({});
     const [searchQueries, setSearchQueries] = useState(
-        createInitialSearchQueries
+        createInitialSearchQueries()
     );
+
+    // Data fetched from TMDB
     const [movieGenres, setMovieGenres] = useState([]);
     const [tvGenres, setTvGenres] = useState([]);
     const [providers, setProviders] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [fetchError, setFetchError] = useState("");
 
-    // Reset when popup closes
+    // Current selections (persist while user stays on folder page)
+    const [selectedMovieGenres, setSelectedMovieGenres] = useState([]);
+    const [selectedShowGenres, setSelectedShowGenres] = useState([]);
+    const [selectedProviders, setSelectedProviders] = useState([]);
+    const [selectedSort, setSelectedSort] = useState("");
+    const [hasAppliedFilters, setHasAppliedFilters] = useState(false); // activates clear btn
+
+    // Reset completely when popup closes OR user leaves folder page
     useEffect(() => {
         if (activePopup !== "filter") {
             setOpenDropdowns({});
             setSearchQueries(createInitialSearchQueries());
-            setMovieGenres([]);
-            setTvGenres([]);
-            setProviders([]);
             setIsLoading(false);
             setFetchError("");
         }
     }, [activePopup]);
 
-    // Fetch TMDB data
+    // Reset all selections when the user refreshes or changes pages
+    useEffect(() => {
+        return () => {
+            // Cleanup on page change/unmount
+            setSelectedMovieGenres([]);
+            setSelectedShowGenres([]);
+            setSelectedProviders([]);
+            setSelectedSort("");
+            setHasAppliedFilters(false);
+        };
+    }, []);
+
+    // Fetch dropdown data
     useEffect(() => {
         if (activePopup !== "filter") return;
-
         const controller = new AbortController();
+
         const fetchDropdownData = async () => {
             setIsLoading(true);
             setFetchError("");
@@ -64,31 +83,28 @@ const Filter = () => {
                 language: "en-US",
             });
 
-            const requests = [
-                fetch(`${baseUrl}/genre/movie/list?${params}`, {
-                    signal: controller.signal,
-                }),
-                fetch(`${baseUrl}/genre/tv/list?${params}`, {
-                    signal: controller.signal,
-                }),
-                fetch(
-                    `${baseUrl}/watch/providers/movie?${new URLSearchParams({
-                        api_key: API_KEY,
-                        language: "en-US",
-                        watch_region: "US",
-                    })}`,
-                    { signal: controller.signal }
-                ),
-            ];
-
             try {
-                const [movieRes, tvRes, providerRes] = await Promise.all(
-                    requests
-                );
+                const [movieRes, tvRes, providerRes] = await Promise.all([
+                    fetch(`${baseUrl}/genre/movie/list?${params}`, {
+                        signal: controller.signal,
+                    }),
+                    fetch(`${baseUrl}/genre/tv/list?${params}`, {
+                        signal: controller.signal,
+                    }),
+                    fetch(
+                        `${baseUrl}/watch/providers/movie?${new URLSearchParams(
+                            {
+                                api_key: API_KEY,
+                                language: "en-US",
+                                watch_region: "US",
+                            }
+                        )}`,
+                        { signal: controller.signal }
+                    ),
+                ]);
 
-                if (!movieRes.ok || !tvRes.ok || !providerRes.ok) {
-                    throw new Error("Failed to load filter options");
-                }
+                if (!movieRes.ok || !tvRes.ok || !providerRes.ok)
+                    throw new Error();
 
                 const [movieData, tvData, providerData] = await Promise.all([
                     movieRes.json(),
@@ -99,14 +115,11 @@ const Filter = () => {
                 setMovieGenres(movieData?.genres ?? []);
                 setTvGenres(tvData?.genres ?? []);
                 setProviders(providerData?.results ?? []);
-            } catch (error) {
-                if (error.name !== "AbortError") {
-                    console.error("Failed to load filter data", error);
-                    setFetchError("Unable to load filter options.");
-                    setMovieGenres([]);
-                    setTvGenres([]);
-                    setProviders([]);
-                }
+            } catch {
+                setFetchError("Unable to load filter options.");
+                setMovieGenres([]);
+                setTvGenres([]);
+                setProviders([]);
             } finally {
                 setIsLoading(false);
             }
@@ -118,35 +131,80 @@ const Filter = () => {
 
     if (activePopup !== "filter") return null;
 
+    // ---- handlers ----
     const toggleDropdown = (name) => {
-        setOpenDropdowns((prev) => ({
-            ...prev,
-            [name]: !prev[name],
-        }));
+        setOpenDropdowns((prev) => ({ ...prev, [name]: !prev[name] }));
     };
 
-    const handleSearchChange = (key) => (event) => {
-        const { value } = event.target;
-        setSearchQueries((prev) => ({
-            ...prev,
-            [key]: value,
-        }));
+    const handleSearchChange = (key) => (e) => {
+        setSearchQueries((prev) => ({ ...prev, [key]: e.target.value }));
+    };
+
+    const toggleMultiSelect = (value, setter, list) => {
+        if (list.includes(value)) setter(list.filter((v) => v !== value));
+        else setter([...list, value]);
+    };
+
+    const handleSortSelect = (value) => {
+        setSelectedSort((prev) => (prev === value ? "" : value));
+    };
+
+    const handleDone = () => {
+        const payload = {
+            movieGenres: selectedMovieGenres,
+            showGenres: selectedShowGenres,
+            providers: selectedProviders,
+            sortBy: selectedSort,
+        };
+
+        window.dispatchEvent(
+            new CustomEvent("folderFiltersApplied", { detail: payload })
+        );
+        setHasAppliedFilters(
+            selectedMovieGenres.length > 0 ||
+                selectedShowGenres.length > 0 ||
+                selectedProviders.length > 0 ||
+                selectedSort !== ""
+        );
+        closePopup();
+    };
+
+    const handleClear = () => {
+        if (!hasAppliedFilters) return;
+        setSelectedMovieGenres([]);
+        setSelectedShowGenres([]);
+        setSelectedProviders([]);
+        setSelectedSort("");
+        setHasAppliedFilters(false);
+
+        // reset folder view
+        window.dispatchEvent(
+            new CustomEvent("folderFiltersApplied", {
+                detail: {
+                    movieGenres: [],
+                    showGenres: [],
+                    providers: [],
+                    sortBy: "",
+                },
+            })
+        );
+        closePopup();
     };
 
     const filteredMovieGenres = filterList(
         movieGenres,
         searchQueries.movieGenres,
-        (genre) => genre.name ?? ""
+        (g) => g.name
     );
     const filteredShowGenres = filterList(
         tvGenres,
         searchQueries.showGenres,
-        (genre) => genre.name ?? ""
+        (g) => g.name
     );
-    const filteredStreamingServices = filterList(
+    const filteredProviders = filterList(
         providers,
         searchQueries.streaming,
-        (provider) => provider.provider_name ?? ""
+        (p) => p.provider_name
     );
 
     return (
@@ -154,14 +212,9 @@ const Filter = () => {
             <div className="pop-up-overlay active" onClick={closePopup}></div>
 
             <div className="filter-pop-up active">
-                {/* Header */}
                 <div className="filter-header">
                     <a className="pop-up-close-btn" onClick={closePopup}>
-                        <img
-                            id="pop-up-close-img"
-                            src={closeIcon}
-                            alt="close"
-                        />
+                        <img src={closeIcon} alt="close" />
                     </a>
                     <svg className="material-icon" id="filter-pop-up-svg">
                         <use
@@ -187,22 +240,26 @@ const Filter = () => {
                         openDropdowns["sort-by"] ? "active" : ""
                     }`}
                 >
-                    <div className="sort-by-scroll-item">
-                        <a className="add-to-folder-scroll-btn" href="#"></a>
-                        <span>Name (A to Z)</span>
-                    </div>
-                    <div className="sort-by-scroll-item">
-                        <a className="add-to-folder-scroll-btn" href="#"></a>
-                        <span>Name (Z to A)</span>
-                    </div>
-                    <div className="sort-by-scroll-item">
-                        <a className="add-to-folder-scroll-btn" href="#"></a>
-                        <span>Date Added (New to Old)</span>
-                    </div>
-                    <div className="sort-by-scroll-item">
-                        <a className="add-to-folder-scroll-btn" href="#"></a>
-                        <span>Date Added (Old to New)</span>
-                    </div>
+                    {[
+                        ["name-asc", "Name (A to Z)"],
+                        ["name-desc", "Name (Z to A)"],
+                        ["date-desc", "Date Added (New to Old)"],
+                        ["date-asc", "Date Added (Old to New)"],
+                    ].map(([val, label]) => (
+                        <div
+                            key={val}
+                            className={`sort-by-scroll-item filter-by-scroll-item ${
+                                selectedSort === val ? "filter-selected" : ""
+                            }`}
+                            onClick={() => handleSortSelect(val)}
+                        >
+                            <a
+                                className="add-to-folder-scroll-btn"
+                                href="#"
+                            ></a>
+                            <span>{label}</span>
+                        </div>
+                    ))}
                 </div>
 
                 {/* FILTER BY */}
@@ -221,16 +278,16 @@ const Filter = () => {
                 >
                     {/* MOVIE GENRES */}
                     <a
-                        onClick={() => toggleDropdown("filter-movie-genres")}
+                        onClick={() => toggleDropdown("movie-genres")}
                         className="filter-dropdown-btn"
-                        id="filter-movie-genres"
+                        id="movie-genres"
                     >
                         <span>Movie Genres</span>
                         <img src={dropdownArrow} alt="toggle" />
                     </a>
                     <div
                         className={`movie-genres-scroll ${
-                            openDropdowns["filter-movie-genres"] ? "active" : ""
+                            openDropdowns["movie-genres"] ? "active" : ""
                         }`}
                     >
                         <input
@@ -250,18 +307,33 @@ const Filter = () => {
                                 <span>{fetchError}</span>
                             </div>
                         ) : filteredMovieGenres.length ? (
-                            filteredMovieGenres.map((genre) => (
-                                <div
-                                    className="filter-by-scroll-item"
-                                    key={genre.id}
-                                >
-                                    <a
-                                        className="add-to-folder-scroll-btn"
-                                        href="#"
-                                    ></a>
-                                    <span>{genre.name}</span>
-                                </div>
-                            ))
+                            filteredMovieGenres.map((g) => {
+                                const selected = selectedMovieGenres.includes(
+                                    g.name
+                                );
+                                return (
+                                    <div
+                                        key={`movie-${g.id}`}
+                                        className={`filter-by-scroll-item ${
+                                            selected ? "filter-selected" : ""
+                                        }`}
+                                        onClick={() =>
+                                            toggleMultiSelect(
+                                                g.name,
+                                                setSelectedMovieGenres,
+                                                selectedMovieGenres
+                                            )
+                                        }
+                                    >
+                                        <a
+                                            className="add-to-folder-scroll-btn"
+                                            href="#"
+                                            onClick={(e) => e.preventDefault()}
+                                        ></a>
+                                        <span>{g.name}</span>
+                                    </div>
+                                );
+                            })
                         ) : (
                             <div className="filter-by-scroll-item">
                                 <span>No matching movie genres.</span>
@@ -271,16 +343,16 @@ const Filter = () => {
 
                     {/* SHOW GENRES */}
                     <a
-                        onClick={() => toggleDropdown("filter-show-genres")}
+                        onClick={() => toggleDropdown("show-genres")}
                         className="filter-dropdown-btn"
-                        id="filter-show-genres"
+                        id="show-genres"
                     >
                         <span>Show Genres</span>
                         <img src={dropdownArrow} alt="toggle" />
                     </a>
                     <div
                         className={`show-genres-scroll ${
-                            openDropdowns["filter-show-genres"] ? "active" : ""
+                            openDropdowns["show-genres"] ? "active" : ""
                         }`}
                     >
                         <input
@@ -300,18 +372,33 @@ const Filter = () => {
                                 <span>{fetchError}</span>
                             </div>
                         ) : filteredShowGenres.length ? (
-                            filteredShowGenres.map((genre) => (
-                                <div
-                                    className="filter-by-scroll-item"
-                                    key={genre.id}
-                                >
-                                    <a
-                                        className="add-to-folder-scroll-btn"
-                                        href="#"
-                                    ></a>
-                                    <span>{genre.name}</span>
-                                </div>
-                            ))
+                            filteredShowGenres.map((g) => {
+                                const selected = selectedShowGenres.includes(
+                                    g.name
+                                );
+                                return (
+                                    <div
+                                        key={`show-${g.id}`}
+                                        className={`filter-by-scroll-item ${
+                                            selected ? "filter-selected" : ""
+                                        }`}
+                                        onClick={() =>
+                                            toggleMultiSelect(
+                                                g.name,
+                                                setSelectedShowGenres,
+                                                selectedShowGenres
+                                            )
+                                        }
+                                    >
+                                        <a
+                                            className="add-to-folder-scroll-btn"
+                                            href="#"
+                                            onClick={(e) => e.preventDefault()}
+                                        ></a>
+                                        <span>{g.name}</span>
+                                    </div>
+                                );
+                            })
                         ) : (
                             <div className="filter-by-scroll-item">
                                 <span>No matching show genres.</span>
@@ -321,16 +408,16 @@ const Filter = () => {
 
                     {/* STREAMING PLATFORMS */}
                     <a
-                        onClick={() => toggleDropdown("filter-streaming")}
+                        onClick={() => toggleDropdown("streaming")}
                         className="filter-dropdown-btn"
-                        id="filter-streaming"
+                        id="streaming"
                     >
                         <span>Streaming Platforms</span>
                         <img src={dropdownArrow} alt="toggle" />
                     </a>
                     <div
                         className={`streaming-scroll ${
-                            openDropdowns["filter-streaming"] ? "active" : ""
+                            openDropdowns["streaming"] ? "active" : ""
                         }`}
                     >
                         <input
@@ -349,19 +436,34 @@ const Filter = () => {
                             <div className="filter-by-scroll-item">
                                 <span>{fetchError}</span>
                             </div>
-                        ) : filteredStreamingServices.length ? (
-                            filteredStreamingServices.map((service) => (
-                                <div
-                                    className="filter-by-scroll-item"
-                                    key={service.provider_id}
-                                >
-                                    <a
-                                        className="add-to-folder-scroll-btn"
-                                        href="#"
-                                    ></a>
-                                    <span>{service.provider_name}</span>
-                                </div>
-                            ))
+                        ) : filteredProviders.length ? (
+                            filteredProviders.map((p) => {
+                                const selected = selectedProviders.includes(
+                                    p.provider_name
+                                );
+                                return (
+                                    <div
+                                        key={`provider-${p.provider_id}`}
+                                        className={`filter-by-scroll-item ${
+                                            selected ? "filter-selected" : ""
+                                        }`}
+                                        onClick={() =>
+                                            toggleMultiSelect(
+                                                p.provider_name,
+                                                setSelectedProviders,
+                                                selectedProviders
+                                            )
+                                        }
+                                    >
+                                        <a
+                                            className="add-to-folder-scroll-btn"
+                                            href="#"
+                                            onClick={(e) => e.preventDefault()}
+                                        ></a>
+                                        <span>{p.provider_name}</span>
+                                    </div>
+                                );
+                            })
                         ) : (
                             <div className="filter-by-scroll-item">
                                 <span>No matching streaming platforms.</span>
@@ -370,11 +472,17 @@ const Filter = () => {
                     </div>
                 </div>
 
+                {/* BUTTONS */}
                 <div className="filter-buttons">
-                    <a className="btn" onClick={closePopup}>
+                    <a
+                        className={`btn ${
+                            !hasAppliedFilters ? "disabled" : ""
+                        }`}
+                        onClick={handleClear}
+                    >
                         Clear
                     </a>
-                    <a className="btn" onClick={closePopup}>
+                    <a className="btn" onClick={handleDone}>
                         Done
                     </a>
                 </div>
