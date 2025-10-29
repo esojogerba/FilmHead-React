@@ -2,8 +2,14 @@ import React from "react";
 import MediaCard from "../components/MediaCard";
 import LoadingOverlay from "../components/LoadingOverlay";
 
-const FolderGrid = ({ mediaList, folderId, loading, searchLoading }) => {
-    const isLoading = loading || searchLoading;
+const FolderGrid = ({
+    mediaList,
+    folderId,
+    loading,
+    searchLoading,
+    filterLoading,
+}) => {
+    const isLoading = loading || searchLoading || filterLoading;
 
     if (!mediaList || mediaList.length === 0) {
         return !isLoading ? <p>No items found.</p> : null;
