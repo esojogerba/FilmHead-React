@@ -370,9 +370,14 @@ const Filter = () => {
                     </div>
                 </div>
 
-                <a className="btn" onClick={closePopup}>
-                    Done
-                </a>
+                <div className="filter-buttons">
+                    <a className="btn" onClick={closePopup}>
+                        Clear
+                    </a>
+                    <a className="btn" onClick={closePopup}>
+                        Done
+                    </a>
+                </div>
             </div>
         </>
     );

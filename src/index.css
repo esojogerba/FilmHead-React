@@ -3129,6 +3129,13 @@ h4 {
     background-color: var(--clr-primary);
 }
 
+.filter-buttons {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    gap: 1rem;
+}
+
 @media (max-width: 37.5rem) {
     .filter-pop-up.active {
         top: 50%; /* Keep vertical centering */
@@ -3164,6 +3171,10 @@ h4 {
     .show-genres-scroll.active,
     .streaming-scroll.active {
         max-height: 180px; /* Limit height */
+    }
+
+    .filter-buttons a {
+        font-size: var(--fs-18);
     }
 }
 
