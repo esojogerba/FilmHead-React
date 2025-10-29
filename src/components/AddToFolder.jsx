@@ -215,9 +215,9 @@ const AddToFolder = () => {
                                     );
                                 })
                             ) : (
-                                <div className="add-to-folder-scroll-item">
-                                    <span>No folders created yet</span>
-                                </div>
+                                <span className="add-to-folder-empty">
+                                    No folders found.
+                                </span>
                             )}
                         </div>
 
