@@ -3136,6 +3136,22 @@ h4 {
     gap: 1rem;
 }
 
+.filter-buttons .btn.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+}
+
+.filter-by-scroll-item.filter-selected,
+.sort-by-scroll-item.filter-selected {
+    background-color: var(--clr-primary);
+}
+
+.filter-by-scroll-item.filter-selected .add-to-folder-scroll-btn,
+.sort-by-scroll-item.filter-selected .add-to-folder-scroll-btn {
+    background-color: var(--clr-white-900);
+}
+
 @media (max-width: 37.5rem) {
     .filter-pop-up.active {
         top: 50%; /* Keep vertical centering */
