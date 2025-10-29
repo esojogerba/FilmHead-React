@@ -467,8 +467,8 @@ ul {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
-    background-color: var(--clr-primary-dark);
-    color: #fff;
+    background-color: var(--clr-white-900);
+    color: var(--clr-black-700);
     font-size: 0.95rem;
     padding: 0.75rem 1.25rem;
     border-radius: 12px;
@@ -2548,6 +2548,12 @@ h4 {
 
 .add-to-folder-scroll-item.selected .add-to-folder-scroll-btn {
     background-color: var(--clr-white-900);
+}
+
+.add-to-folder-empty {
+    margin: 5rem auto;
+    display: block;
+    text-align: center;
 }
 
 .add-to-folder-footer {
