@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 import { usePopup } from "../contexts/PopupContext";
@@ -7,6 +7,45 @@ import { usePopup } from "../contexts/PopupContext";
 
 const MediaCard = ({ mediaData, type, genres, folderId }) => {
     const { activePopup, openPopup, closePopup } = usePopup();
+
+    const [gridGenres, setGridGenres] = useState({});
+
+    useEffect(() => {
+        if (type !== "grid-movie" && type !== "grid-show") return;
+
+        const fetchGenres = async () => {
+            try {
+                const genreUrl =
+                    type === "grid-movie"
+                        ? `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+                        : `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`;
+
+                const res = await fetch(genreUrl);
+                const data = await res.json();
+
+                // Convert array to dictionary + add asString method
+                const genreList = {
+                    asString(genreIdList) {
+                        let newGenreList = [];
+                        for (const genreId of genreIdList) {
+                            this[genreId] && newGenreList.push(this[genreId]);
+                        }
+                        return newGenreList.join(" · ");
+                    },
+                };
+
+                data.genres?.forEach((g) => {
+                    genreList[g.id] = g.name;
+                });
+
+                setGridGenres(genreList);
+            } catch (err) {
+                console.error("Failed to load genres for grid card:", err);
+            }
+        };
+
+        fetchGenres();
+    }, [type]);
 
     // Helper: convert genre IDs to array of names
     const getGenreNames = (genreIds, genresDict) => {
@@ -160,7 +199,7 @@ const MediaCard = ({ mediaData, type, genres, folderId }) => {
                                 year: mediaData.release_date?.split("-")[0],
                                 genres: getGenreNames(
                                     mediaData.genre_ids,
-                                    genres
+                                    gridGenres
                                 ),
                             })
                         }
@@ -216,7 +255,7 @@ const MediaCard = ({ mediaData, type, genres, folderId }) => {
                                 year: mediaData.first_air_date?.split("-")[0],
                                 genres: getGenreNames(
                                     mediaData.genre_ids,
-                                    genres
+                                    gridGenres
                                 ),
                             })
                         }
