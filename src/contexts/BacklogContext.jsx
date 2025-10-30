@@ -60,6 +60,7 @@ const sanitizeFolder = (raw = {}) => {
     const items = Array.isArray(raw.items) ? raw.items : [];
     const count = items.length;
     const lastModified = raw.lastModified || createdAt;
+    const lastProviderUpdate = raw.lastProviderUpdate || null;
 
     return {
         id,
@@ -68,6 +69,7 @@ const sanitizeFolder = (raw = {}) => {
         items,
         count,
         lastModified,
+        lastProviderUpdate,
     };
 };
 
@@ -113,6 +115,51 @@ const persistBacklog = (backlog) => {
 
 export const BacklogProvider = ({ children }) => {
     const [backlog, setBacklog] = useState(() => loadBacklog());
+
+    // One-time migration to add new fields if missing
+    useEffect(() => {
+        setBacklog((prev) => {
+            let updated = false;
+
+            const migratedFolders = prev.folders.map((folder) => {
+                let folderChanged = false;
+
+                // Add missing folder-level field
+                if (folder.lastProviderUpdate === undefined) {
+                    folder.lastProviderUpdate = null;
+                    folderChanged = true;
+                }
+
+                // Add missing fields for items (future-proofing)
+                const migratedItems = folder.items.map((item) => {
+                    let itemChanged = false;
+                    if (item.watched === undefined) {
+                        item.watched = false;
+                        itemChanged = true;
+                    }
+                    if (item.providers === undefined) {
+                        item.providers = [];
+                        itemChanged = true;
+                    }
+                    if (itemChanged) updated = true;
+                    return item;
+                });
+
+                if (folderChanged) updated = true;
+
+                return { ...folder, items: migratedItems };
+            });
+
+            if (updated) {
+                console.log(
+                    "🔧 Migrated existing backlog structure to new format"
+                );
+                return { folders: migratedFolders };
+            }
+
+            return prev; // no changes
+        });
+    }, []);
 
     useEffect(() => {
         persistBacklog(backlog);
@@ -161,6 +208,7 @@ export const BacklogProvider = ({ children }) => {
                 items: [],
                 count: 0,
                 lastModified: new Date().toISOString(),
+                lastProviderUpdate: null,
             };
 
             return { folders: [...prev.folders, createdFolder] };
@@ -174,6 +222,15 @@ export const BacklogProvider = ({ children }) => {
         setBacklog((prev) => ({
             folders: prev.folders.filter((folder) => folder.id !== folderId),
         }));
+    }, []);
+
+    const updateFolder = useCallback((updatedFolder) => {
+        setBacklog((prev) => {
+            const updatedFolders = prev.folders.map((f) =>
+                f.id === updatedFolder.id ? { ...f, ...updatedFolder } : f
+            );
+            return { folders: updatedFolders };
+        });
     }, []);
 
     const getFolderById = useCallback(
@@ -273,6 +330,7 @@ export const BacklogProvider = ({ children }) => {
             validateFolderTitle,
             addItemsToFolders,
             removeItemFromFolder,
+            updateFolder,
         }),
         [
             backlog.folders,
@@ -283,6 +341,7 @@ export const BacklogProvider = ({ children }) => {
             validateFolderTitle,
             addItemsToFolders,
             removeItemFromFolder,
+            updateFolder,
         ]
     );
 
