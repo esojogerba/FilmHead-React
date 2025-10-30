@@ -18,10 +18,12 @@ const CreateFolder = () => {
     // Helper: close this popup & reopen addToFolder if needed
     const closeAndReopenIfNeeded = () => {
         const fromAddToFolder = popupData?.from === "addToFolder";
+        const originalAddData = popupData?.addToFolderData || null;
+
         closePopup();
-        if (fromAddToFolder) {
-            // reopen AddToFolder after slight delay for smoother transition
-            setTimeout(() => openPopup("addToFolder"), 100);
+
+        if (fromAddToFolder && originalAddData) {
+            setTimeout(() => openPopup("addToFolder", originalAddData), 100);
         }
     };
 

@@ -152,6 +152,7 @@ const AddToFolder = () => {
                                 onClick={() =>
                                     openPopup("createFolder", {
                                         from: "addToFolder",
+                                        addToFolderData: popupData,
                                     })
                                 }
                             >
