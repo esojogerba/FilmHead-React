@@ -93,7 +93,7 @@ const DetailsPage = () => {
     }, [type, id]);
 
     return (
-        <main>
+        <main className="media-page">
             {loading && <LoadingOverlay />}
             <div className="page-motion">
                 {media && !loading && (

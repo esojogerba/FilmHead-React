@@ -117,7 +117,7 @@ const MoviesPage = () => {
     }, [genres]);
 
     return (
-        <main>
+        <main className="media-page">
             {loading && <LoadingOverlay />}
             <div className="page-motion">
                 {!loading && (
