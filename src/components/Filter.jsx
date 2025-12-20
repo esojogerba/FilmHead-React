@@ -475,7 +475,7 @@ const Filter = () => {
                 {/* BUTTONS */}
                 <div className="filter-buttons">
                     <a
-                        className={`btn ${
+                        className={`btn btn-secondary ${
                             !hasAppliedFilters ? "disabled" : ""
                         }`}
                         onClick={handleClear}

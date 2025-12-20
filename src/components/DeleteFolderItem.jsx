@@ -49,10 +49,10 @@ const DeleteFolderItem = () => {
                 </p>
 
                 <div className="confirm-cancel-btns">
-                    <a className="btn" onClick={handleConfirm}>
+                    <a className="btn btn-destructive" onClick={handleConfirm}>
                         Confirm
                     </a>
-                    <a className="btn" onClick={closePopup}>
+                    <a className="btn btn-secondary" onClick={closePopup}>
                         Cancel
                     </a>
                 </div>

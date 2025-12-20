@@ -449,6 +449,29 @@ ul {
     }
 }
 
+.btn-secondary {
+    background-color: transparent;
+    color: var(--clr-white-900);
+    border: 1px solid var(--border-subtle);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background-color: var(--surface-2);
+    color: var(--clr-white-900);
+}
+
+.btn-destructive {
+    background-color: hsl(351, 74%, 46%);
+    color: var(--clr-white-900);
+}
+
+.btn-destructive:hover,
+.btn-destructive:focus {
+    background-color: hsl(351, 74%, 40%);
+    color: var(--clr-white-900);
+}
+
 .btn:focus-visible,
 .btn-icon:focus-visible,
 .media-card-add-btn:focus-visible,
@@ -474,6 +497,7 @@ ul {
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    gap: 0.6rem;
 }
 
 /* Dropdown */
