@@ -136,33 +136,35 @@ const MediaGridPage = () => {
 
     return (
         <main>
-            <article page-content="">
-                <section className="media-grid container">
-                    {mediaList.length > 0 && (
-                        <GridHeader
-                            title={config.title}
-                            type={config.mediaType}
-                        />
-                    )}
-
-                    <GridList
-                        mediaList={mediaList}
-                        type={config.mediaType}
-                        isLoading={loading}
-                    />
-                    {mediaList.length > 0 &&
-                        totalPages !== null &&
-                        currentPage < totalPages && (
-                            <button
-                                className="btn load-more"
-                                onClick={handleLoadMore}
-                                disabled={isLoadingMore}
-                            >
-                                {isLoadingMore ? "Loading..." : "Load More"}
-                            </button>
+            <div className="page-motion">
+                <article page-content="">
+                    <section className="media-grid container">
+                        {mediaList.length > 0 && (
+                            <GridHeader
+                                title={config.title}
+                                type={config.mediaType}
+                            />
                         )}
-                </section>
-            </article>
+
+                        <GridList
+                            mediaList={mediaList}
+                            type={config.mediaType}
+                            isLoading={loading}
+                        />
+                        {mediaList.length > 0 &&
+                            totalPages !== null &&
+                            currentPage < totalPages && (
+                                <button
+                                    className="btn load-more"
+                                    onClick={handleLoadMore}
+                                    disabled={isLoadingMore}
+                                >
+                                    {isLoadingMore ? "Loading..." : "Load More"}
+                                </button>
+                            )}
+                    </section>
+                </article>
+            </div>
 
             <AddToFolder />
             <CreateFolder />

@@ -119,60 +119,64 @@ const MoviesPage = () => {
     return (
         <main>
             {loading && <LoadingOverlay />}
-            {!loading && (
-                <article page-content="">
-                    <MediaHeroSlider
-                        genres={genres}
-                        mediaList={heroMovies}
-                        type="movie"
-                    />
-                    <article className="container">
-                        <MediaPageHeader
-                            title="Movies"
+            <div className="page-motion">
+                {!loading && (
+                    <article page-content="">
+                        <MediaHeroSlider
                             genres={genres}
+                            mediaList={heroMovies}
                             type="movie"
                         />
-                        <MediaScroll
-                            key={100}
-                            title="Upcoming"
-                            media={upcomingMovies}
-                            genres={genres}
-                            type="movie"
-                            urlParam={"/movie/upcoming"}
-                            listType={"list"}
-                        />
-                        <MediaScroll
-                            key={200}
-                            title="Trending This Week"
-                            media={trendingMovies}
-                            genres={genres}
-                            type="movie"
-                            urlParam={"/trending/movie/week"}
-                            listType={"list"}
-                        />
-                        <MediaScroll
-                            key={300}
-                            title="Top Rated"
-                            media={topMovies}
-                            genres={genres}
-                            type="movie"
-                            urlParam={"/movie/top_rated"}
-                            listType={"list"}
-                        />
-                        {genreMovies.map(({ genreId, genreName, movies }) => (
-                            <MediaScroll
-                                key={genreId}
-                                title={genreName}
-                                media={movies}
+                        <article className="container">
+                            <MediaPageHeader
+                                title="Movies"
                                 genres={genres}
                                 type="movie"
-                                urlParam={`with_genres=${genreId}`}
-                                listType="genre"
                             />
-                        ))}
+                            <MediaScroll
+                                key={100}
+                                title="Upcoming"
+                                media={upcomingMovies}
+                                genres={genres}
+                                type="movie"
+                                urlParam={"/movie/upcoming"}
+                                listType={"list"}
+                            />
+                            <MediaScroll
+                                key={200}
+                                title="Trending This Week"
+                                media={trendingMovies}
+                                genres={genres}
+                                type="movie"
+                                urlParam={"/trending/movie/week"}
+                                listType={"list"}
+                            />
+                            <MediaScroll
+                                key={300}
+                                title="Top Rated"
+                                media={topMovies}
+                                genres={genres}
+                                type="movie"
+                                urlParam={"/movie/top_rated"}
+                                listType={"list"}
+                            />
+                            {genreMovies.map(
+                                ({ genreId, genreName, movies }) => (
+                                    <MediaScroll
+                                        key={genreId}
+                                        title={genreName}
+                                        media={movies}
+                                        genres={genres}
+                                        type="movie"
+                                        urlParam={`with_genres=${genreId}`}
+                                        listType="genre"
+                                    />
+                                )
+                            )}
+                        </article>
                     </article>
-                </article>
-            )}
+                )}
+            </div>
 
             <AddToFolder />
             <CreateFolder />

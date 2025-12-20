@@ -73,19 +73,21 @@ const BacklogPage = () => {
             {/* Full-page loading spinner (initial load only) */}
             {loading && <LoadingOverlay variant="page" />}
 
-            <article page-content="">
-                <section className="container">
-                    <BacklogHeader
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                    />
-                    <BacklogGrid
-                        folders={folders}
-                        loading={loading}
-                        searchLoading={searchLoading}
-                    />
-                </section>
-            </article>
+            <div className="page-motion">
+                <article page-content="">
+                    <section className="container">
+                        <BacklogHeader
+                            searchTerm={searchTerm}
+                            setSearchTerm={setSearchTerm}
+                        />
+                        <BacklogGrid
+                            folders={folders}
+                            loading={loading}
+                            searchLoading={searchLoading}
+                        />
+                    </section>
+                </article>
+            </div>
 
             <AddToFolder />
             <CreateFolder />

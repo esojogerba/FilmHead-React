@@ -92,40 +92,41 @@ const DetailsPage = () => {
         fetchData();
     }, [type, id]);
 
-    if (loading) return <LoadingOverlay />;
-
     return (
         <main>
-            {media && (
-                <article page-content="">
-                    {/* Details Banner */}
-                    <DetailsBanner
-                        type={type}
-                        genres={genres}
-                        media={media}
-                        imageBaseURL={imageBaseURL}
-                    />
-
-                    {/* Trailers & Clips */}
-                    <DetailsTrailers media={media} />
-
-                    {/* Available On */}
-                    <AvailableOn
-                        availableOn={availableOn}
-                        imageBaseURL={imageBaseURL}
-                    />
-
-                    {/* Suggestions */}
-                    <div className="container">
-                        <MediaScroll
-                            title="You May Also Like"
-                            media={suggestions}
-                            genres={genres}
+            {loading && <LoadingOverlay />}
+            <div className="page-motion">
+                {media && !loading && (
+                    <article page-content="">
+                        {/* Details Banner */}
+                        <DetailsBanner
                             type={type}
+                            genres={genres}
+                            media={media}
+                            imageBaseURL={imageBaseURL}
                         />
-                    </div>
-                </article>
-            )}
+
+                        {/* Trailers & Clips */}
+                        <DetailsTrailers media={media} />
+
+                        {/* Available On */}
+                        <AvailableOn
+                            availableOn={availableOn}
+                            imageBaseURL={imageBaseURL}
+                        />
+
+                        {/* Suggestions */}
+                        <div className="container">
+                            <MediaScroll
+                                title="You May Also Like"
+                                media={suggestions}
+                                genres={genres}
+                                type={type}
+                            />
+                        </div>
+                    </article>
+                )}
+            </div>
 
             <AddToFolder />
             <CreateFolder />

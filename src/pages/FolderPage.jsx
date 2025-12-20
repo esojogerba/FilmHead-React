@@ -233,41 +233,38 @@ const FolderPage = () => {
             window.removeEventListener("folderFiltersApplied", handler);
     }, [folder]);
 
-    if (loading) return <LoadingOverlay variant="page" />;
-
-    if (!folder) {
-        return (
-            <main>
-                <section className="container">
-                    <h2>Folder not found</h2>
-                </section>
-            </main>
-        );
-    }
-
     return (
         <main>
-            <article page-content="">
-                <section className="container">
-                    <FolderHeader
-                        folderName={folder.title}
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                    />
+            {loading && <LoadingOverlay variant="page" />}
+            <div className="page-motion">
+                {!loading && !folder ? (
+                    <section className="container">
+                        <h2>Folder not found</h2>
+                    </section>
+                ) : (
+                    <article page-content="">
+                        <section className="container">
+                            <FolderHeader
+                                folderName={folder?.title || ""}
+                                searchTerm={searchTerm}
+                                setSearchTerm={setSearchTerm}
+                            />
 
-                    {displayedItems.length > 0 ? (
-                        <FolderGrid
-                            mediaList={displayedItems}
-                            folderId={id}
-                            loading={loading}
-                            searchLoading={searchLoading}
-                            filterLoading={filterLoading}
-                        />
-                    ) : !searchLoading && !filterLoading ? (
-                        <p>No items found.</p>
-                    ) : null}
-                </section>
-            </article>
+                            {displayedItems.length > 0 ? (
+                                <FolderGrid
+                                    mediaList={displayedItems}
+                                    folderId={id}
+                                    loading={loading}
+                                    searchLoading={searchLoading}
+                                    filterLoading={filterLoading}
+                                />
+                            ) : !searchLoading && !filterLoading ? (
+                                <p>No items found.</p>
+                            ) : null}
+                        </section>
+                    </article>
+                )}
+            </div>
 
             <AddToFolder />
             <CreateFolder />

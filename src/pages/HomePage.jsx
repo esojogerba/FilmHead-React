@@ -45,10 +45,12 @@ const HomePage = () => {
     return (
         <main>
             {loading && <LoadingOverlay />}
-            <CallToAction />
-            <Features />
-            <div className="pop-up-overlay" />
-            <div className="pop-up-overlay second-overlay" />
+            <div className="page-motion">
+                <CallToAction />
+                <Features />
+                <div className="pop-up-overlay" />
+                <div className="pop-up-overlay second-overlay" />
+            </div>
 
             <AddToFolder />
             <CreateFolder />

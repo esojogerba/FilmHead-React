@@ -223,7 +223,7 @@ ul {
 }
 
 .page-shell {
-    will-change: opacity, transform;
+    will-change: opacity;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -231,15 +231,23 @@ ul {
 
 .page-shell--loading {
     opacity: 0;
-    transform: translateY(6px);
     pointer-events: none;
+}
+
+.page-motion {
+    will-change: opacity, transform;
+}
+
+.page-shell--loading .page-motion {
+    opacity: 0;
+    transform: translateY(6px);
 }
 
 .page-shell > main {
     flex: 1;
 }
 
-.page-shell--ready {
+.page-shell--ready .page-motion {
     animation: page-enter 240ms ease-out;
     animation-fill-mode: both;
 }
