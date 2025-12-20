@@ -42,10 +42,9 @@ const HomePage = () => {
         };
     }, []);
 
-    if (loading) return <LoadingOverlay />;
-
     return (
         <main>
+            {loading && <LoadingOverlay />}
             <CallToAction />
             <Features />
             <div className="pop-up-overlay" />

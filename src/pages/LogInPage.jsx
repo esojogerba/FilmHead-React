@@ -42,10 +42,9 @@ const LogInPage = () => {
         };
     }, []);
 
-    if (loading) return <LoadingOverlay />;
-
     return (
         <main className="mobile-bg-img | padding-bottom-900-mobile">
+            {loading && <LoadingOverlay />}
             <section className="account-page text-center-sm-only margin-bottom-500">
                 <div className="container account-form-bg-circles">
                     <div className="account-form-columns">
