@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { API_KEY } from "../utils/api";
-import LoadingOverlay from "../components/LoadingOverlay";
 import GridHeader from "../components/GridHeader";
 import GridList from "../components/GridList";
 import AddToFolder from "../components/AddToFolder";
@@ -137,36 +136,33 @@ const MediaGridPage = () => {
 
     return (
         <main>
-            {loading && <LoadingOverlay />}
-
-            {!loading && (
-                <article page-content="">
-                    <section className="media-grid container">
-                        {mediaList.length > 0 && (
-                            <GridHeader
-                                title={config.title}
-                                type={config.mediaType}
-                            />
-                        )}
-
-                        <GridList
-                            mediaList={mediaList}
+            <article page-content="">
+                <section className="media-grid container">
+                    {mediaList.length > 0 && (
+                        <GridHeader
+                            title={config.title}
                             type={config.mediaType}
                         />
-                        {mediaList.length > 0 &&
-                            totalPages !== null &&
-                            currentPage < totalPages && (
-                                <button
-                                    className="btn load-more"
-                                    onClick={handleLoadMore}
-                                    disabled={isLoadingMore}
-                                >
-                                    {isLoadingMore ? "Loading..." : "Load More"}
-                                </button>
-                            )}
-                    </section>
-                </article>
-            )}
+                    )}
+
+                    <GridList
+                        mediaList={mediaList}
+                        type={config.mediaType}
+                        isLoading={loading}
+                    />
+                    {mediaList.length > 0 &&
+                        totalPages !== null &&
+                        currentPage < totalPages && (
+                            <button
+                                className="btn load-more"
+                                onClick={handleLoadMore}
+                                disabled={isLoadingMore}
+                            >
+                                {isLoadingMore ? "Loading..." : "Load More"}
+                            </button>
+                        )}
+                </section>
+            </article>
 
             <AddToFolder />
             <CreateFolder />

@@ -27,6 +27,7 @@
     --border-subtle: hsl(240, 100%, 98%, 0.08);
     --shadow-1: 0 6px 18px rgba(0, 0, 0, 0.35);
     --shadow-2: 0 14px 30px rgba(0, 0, 0, 0.45);
+    --focus-ring: 0 0 0 3px hsl(242, 76%, 63%, 0.35);
 
     /* Gradients */
     --banner-overlay: 0deg, hsl(0, 0%, 8%, 1), hsl(0, 0%, 8%, 0.6);
@@ -393,6 +394,17 @@ ul {
     #details-add-svg {
         fill: var(--clr-primary);
     }
+}
+
+.btn:focus-visible,
+.btn-icon:focus-visible,
+.media-card-add-btn:focus-visible,
+.grid-card-add-btn:focus-visible,
+.grid-card-trash-btn:focus-visible,
+#backlog-trash-btn:focus-visible,
+.view-more-link:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
 }
 
 .btn-icon {
@@ -1693,6 +1705,8 @@ h4 {
     border-radius: 8px;
     box-shadow: var(--shadow-1);
     padding-bottom: 0.75rem;
+    transition: transform 180ms ease, box-shadow 180ms ease,
+        border-color 180ms ease;
 }
 
 .card-poster {
@@ -1770,6 +1784,19 @@ h4 {
     z-index: 2;
 }
 
+.media-card:hover,
+.media-card:focus-within {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-2);
+    border-color: hsl(240, 100%, 98%, 0.16);
+}
+
+.card-btn:focus-visible {
+    outline: 3px solid hsl(242, 76%, 63%, 0.55);
+    outline-offset: 4px;
+    border-radius: 8px;
+}
+
 @media (max-width: 35rem) {
     .media-card .card-poster {
         width: 170px;
@@ -1799,6 +1826,22 @@ h4 {
     .media-card-meta,
     .media-card-genres {
         padding-inline: 0.5rem;
+    }
+
+    .skeleton-line {
+        margin-inline: 0.5rem;
+    }
+
+    .skeleton-line-lg {
+        width: 85%;
+    }
+
+    .skeleton-line-md {
+        width: 75%;
+    }
+
+    .skeleton-line-sm {
+        width: 55%;
     }
 }
 
@@ -2007,6 +2050,79 @@ h4 {
     border-radius: 8px;
     box-shadow: var(--shadow-1);
     padding-bottom: 0.75rem;
+    transition: transform 180ms ease, box-shadow 180ms ease,
+        border-color 180ms ease;
+}
+
+.skeleton-grid {
+    align-items: stretch;
+}
+
+.skeleton-card {
+    background-color: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    box-shadow: var(--shadow-1);
+    overflow: hidden;
+}
+
+.skeleton-block,
+.skeleton-poster,
+.skeleton-line {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+        120deg,
+        var(--surface-2) 0%,
+        var(--surface-3) 45%,
+        var(--surface-2) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton-poster {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border-radius: 6px;
+}
+
+.skeleton-line {
+    height: 0.85rem;
+    margin: 0.6rem 0.75rem 0;
+    border-radius: 999px;
+}
+
+.skeleton-line-lg {
+    height: 1.1rem;
+    width: 80%;
+}
+
+.skeleton-line-md {
+    width: 70%;
+}
+
+.skeleton-line-sm {
+    width: 45%;
+}
+
+.skeleton-poster-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.skeleton-poster-row .skeleton-poster {
+    flex: 1 1 0;
+}
+
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }
 
 .grid-card-poster {
@@ -2050,6 +2166,13 @@ h4 {
 
 :is(.genre-list, .search-modal) :is(.grid-card, .grid-card-poster) {
     width: 100%;
+}
+
+.grid-card:hover,
+.grid-card:focus-within {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-2);
+    border-color: hsl(240, 100%, 98%, 0.16);
 }
 
 .load-more {
@@ -2264,12 +2387,27 @@ h4 {
     box-shadow: var(--shadow-1);
     border-radius: 6px;
     padding: 2rem;
+    transition: transform 180ms ease, box-shadow 180ms ease,
+        border-color 180ms ease;
 }
 
 .folder-btn {
     position: absolute;
     inset: 0;
     z-index: 2;
+}
+
+.folder:hover,
+.folder:focus-within {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-2);
+    border-color: hsl(240, 100%, 98%, 0.16);
+}
+
+.folder-btn:focus-visible {
+    outline: 3px solid hsl(242, 76%, 63%, 0.55);
+    outline-offset: 4px;
+    border-radius: 6px;
 }
 
 .folder-posters {
