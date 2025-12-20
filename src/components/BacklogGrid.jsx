@@ -31,9 +31,7 @@ const BacklogGrid = ({ folders, loading, searchLoading }) => {
                             <Folder key={folder.id} folder={folder} />
                         ))
                       : !isLoading && (
-                            <p className="empty-message">
-                                No folders found.
-                            </p>
+                            <p className="empty-message">No folders yet.</p>
                         )}
             </div>
         </div>

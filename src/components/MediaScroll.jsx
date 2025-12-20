@@ -24,7 +24,7 @@ const MediaScroll = ({ title, media, genres, type, urlParam, listType }) => {
             <div className="media-scroll-title-wrapper">
                 <h3 className="media-scroll-title">{title}</h3>
                 <a href="" className="view-more-link" onClick={handleViewMore}>
-                    View More
+                    View more
                 </a>
             </div>
             <div className="media-slider-list">

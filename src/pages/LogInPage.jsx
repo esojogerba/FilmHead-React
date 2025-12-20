@@ -52,7 +52,7 @@ const LogInPage = () => {
                             <div className="account-form-col-left">
                                 <div className="account-form div-center-sm-only">
                                     <h1 className="account-form-header">
-                                        Log In
+                                        Log in
                                     </h1>
                                     <form
                                         action=""
@@ -82,7 +82,7 @@ const LogInPage = () => {
                                         </div>
                                     </form>
                                     <button className="btn account-form-btn">
-                                        Let's Go
+                                        Continue
                                     </button>
                                 </div>
                             </div>

@@ -27,7 +27,7 @@ const FolderGrid = ({
     }
 
     if (!mediaList || mediaList.length === 0) {
-        return !isLoading ? <p>No items found.</p> : null;
+        return !isLoading ? <p>No items yet.</p> : null;
     }
 
     return (

@@ -259,7 +259,7 @@ const FolderPage = () => {
                                     filterLoading={filterLoading}
                                 />
                             ) : !searchLoading && !filterLoading ? (
-                                <p>No items found.</p>
+                                <p>No items yet.</p>
                             ) : null}
                         </section>
                     </article>

@@ -109,12 +109,12 @@ const Navbar = () => {
                     </li>
                     <li>
                         <Link to="sign-up" id="nav-link-sign-up">
-                            Sign Up
+                            Sign up
                         </Link>
                     </li>
                     <li>
                         <NavLink to="log-in" className={linkClass}>
-                            Log In
+                            Log in
                         </NavLink>
                     </li>
                 </ul>

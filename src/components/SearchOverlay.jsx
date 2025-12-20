@@ -53,7 +53,7 @@ const SearchOverlay = () => {
                 </div>
 
                 {!isLoading && trimmedQuery && results.length === 0 && (
-                    <p className="grid-empty">No results found.</p>
+                    <p className="grid-empty">No results.</p>
                 )}
             </section>
         </div>

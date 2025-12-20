@@ -34,12 +34,12 @@ const DeleteFolder = () => {
                             }assets/images/icons.svg#trash`}
                         />
                     </svg>
-                    <h3 className="header-title">Delete Folder?</h3>
+                    <h3 className="header-title">Delete folder?</h3>
                 </div>
 
                 <p className="pop-up-body">
-                    Are you sure you want to permanently delete{" "}
-                    <strong>{popupData.title}</strong>?
+                    Delete <strong>{popupData.title}</strong>? This can't be
+                    undone.
                 </p>
 
                 <div className="confirm-cancel-btns">

@@ -13,7 +13,7 @@ const CallToAction = () => {
                 something to scratch your entertainment itch.
             </p>
             <Link to="sign-up" className="btn cta-btn" id="new-account-btn">
-                Create An Account
+                Create an account
             </Link>
         </section>
     );

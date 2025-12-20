@@ -122,7 +122,7 @@ const AddToFolder = () => {
 
                     <div
                         className="add-to-folder active"
-                        aria-label="Add To Folder"
+                        aria-label="Save to folder"
                     >
                         <div className="add-to-folder-header">
                             <a
@@ -136,7 +136,7 @@ const AddToFolder = () => {
                                 />
                             </a>
 
-                            <h3 className="header-title">Save To Folder</h3>
+                            <h3 className="header-title">Save to folder</h3>
 
                             <input
                                 className="add-to-folder-search"
@@ -166,7 +166,7 @@ const AddToFolder = () => {
                                         }assets/images/icons.svg#add-icon`}
                                     />
                                 </svg>
-                                <span>New Folder</span>
+                                <span>New folder</span>
                             </a>
                         </div>
 
@@ -217,7 +217,7 @@ const AddToFolder = () => {
                                 })
                             ) : (
                                 <span className="add-to-folder-empty">
-                                    No folders found.
+                                    No folders yet.
                                 </span>
                             )}
                         </div>
@@ -252,7 +252,7 @@ const AddToFolder = () => {
                                         }assets/images/icons.svg#add-icon`}
                                     />
                                 </svg>
-                                <span>Add</span>
+                                <span>Save</span>
                             </a>
                         </div>
                     </div>

@@ -41,11 +41,11 @@ const DeleteFolderItem = () => {
                             }assets/images/icons.svg#trash`}
                         />
                     </svg>
-                    <h3 className="header-title">Remove from folder?</h3>
+                    <h3 className="header-title">Remove item?</h3>
                 </div>
 
                 <p className="pop-up-body">
-                    Are you sure you want to remove this entry from the folder?
+                    Remove this item from the folder?
                 </p>
 
                 <div className="confirm-cancel-btns">

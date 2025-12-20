@@ -83,7 +83,7 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
                             className="btn btn-text-icon"
                             onClick={handleAddToFolder}
                         >
-                            <span>Add to Folder</span>
+                            <span>Save</span>
                             <svg className="material-icon" id="details-add-svg">
                                 <use
                                     xlinkHref={`${
@@ -177,7 +177,7 @@ const DetailsBanner = ({ type, genres, media, imageBaseURL }) => {
                             className="btn btn-text-icon"
                             onClick={handleAddToFolder}
                         >
-                            <span>Add to Folder</span>
+                            <span>Save</span>
                             <svg className="material-icon" id="details-add-svg">
                                 <use
                                     xlinkHref={`${

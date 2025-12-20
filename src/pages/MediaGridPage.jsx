@@ -43,7 +43,7 @@ const MediaGridPage = () => {
     }, [location.state]);
 
     if (!config) {
-        return <p>No data found for this grid.</p>;
+        return <p>No results.</p>;
     }
 
     const buildApiUrl = (pageNumber) => {

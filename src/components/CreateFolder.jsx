@@ -63,7 +63,7 @@ const CreateFolder = () => {
             setEmptyError(false);
             setDuplicateError(false);
 
-            showToast("New Folder Created");
+            showToast("Folder created");
 
             closeAndReopenIfNeeded(); // ✅ close & reopen AddToFolder if needed
         } catch (err) {
@@ -99,7 +99,7 @@ const CreateFolder = () => {
                             }assets/images/icons.svg#folder`}
                         />
                     </svg>
-                    <h3 className="header-title">Create Folder</h3>
+                    <h3 className="header-title">New folder</h3>
                 </div>
 
                 <h4
