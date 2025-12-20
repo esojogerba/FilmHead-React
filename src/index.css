@@ -28,6 +28,7 @@
     --shadow-1: 0 6px 18px rgba(0, 0, 0, 0.35);
     --shadow-2: 0 14px 30px rgba(0, 0, 0, 0.45);
     --focus-ring: 0 0 0 3px hsl(242, 76%, 63%, 0.35);
+    --poster-fallback-bg: hsl(242, 66%, 27%, 0.35);
 
     /* Gradients */
     --banner-overlay: 0deg, hsl(0, 0%, 8%, 1), hsl(0, 0%, 8%, 0.6);
@@ -223,12 +224,19 @@ ul {
 
 .page-shell {
     will-change: opacity, transform;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .page-shell--loading {
     opacity: 0;
     transform: translateY(6px);
     pointer-events: none;
+}
+
+.page-shell > main {
+    flex: 1;
 }
 
 .page-shell--ready {
@@ -342,9 +350,19 @@ ul {
 .video-card {
     background-repeat: no-repeat;
     background-position: center;
-    background-color: var(--clr-primary-dark);
+    background-color: var(--clr-black-500);
     border-radius: 6px;
     overflow: hidden;
+}
+
+.poster-box {
+    background-color: var(--poster-fallback-bg);
+}
+
+@media (max-width: 26.5625rem) {
+    .poster-box {
+        background-size: 32px;
+    }
 }
 
 /* Meta List */
@@ -2085,6 +2103,14 @@ h4 {
     width: 100%;
     aspect-ratio: 2 / 3;
     border-radius: 6px;
+}
+
+.skeleton-poster-overlay {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
 }
 
 .skeleton-line {

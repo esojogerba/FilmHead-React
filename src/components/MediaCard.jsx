@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { imageBaseURL, API_KEY, fetchDataFromAPI } from "../utils/api";
 import { usePopup } from "../contexts/PopupContext";
 
 // TODO: implement the add btn
 
+const POSTER_FALLBACK_TIMEOUT_MS = 2000;
+
 const MediaCard = ({ mediaData, type, genres, folderId }) => {
     const { activePopup, openPopup, closePopup } = usePopup();
 
     const [gridGenres, setGridGenres] = useState({});
+    const posterRef = useRef(null);
 
     useEffect(() => {
         if (type !== "grid-movie" && type !== "grid-show") return;
@@ -55,21 +58,63 @@ const MediaCard = ({ mediaData, type, genres, folderId }) => {
             .filter(Boolean); // remove undefined values
     };
 
+    const posterSrc = mediaData?.poster_path
+        ? imageBaseURL + "w342" + mediaData.poster_path
+        : null;
+    const posterAlt = mediaData?.title || mediaData?.name || "";
+    const [posterLoaded, setPosterLoaded] = useState(!posterSrc);
+    const [posterFailed, setPosterFailed] = useState(false);
+
+    useEffect(() => {
+        setPosterLoaded(!posterSrc);
+        setPosterFailed(false);
+    }, [posterSrc]);
+
+    useEffect(() => {
+        if (!posterSrc) return undefined;
+
+        const img = posterRef.current;
+        if (img && img.complete && img.naturalWidth > 0) {
+            setPosterLoaded(true);
+            return undefined;
+        }
+
+        const timeoutId = window.setTimeout(() => {
+            setPosterLoaded(true);
+        }, POSTER_FALLBACK_TIMEOUT_MS);
+
+        return () => clearTimeout(timeoutId);
+    }, [posterSrc]);
+
+    const handlePosterLoad = () => setPosterLoaded(true);
+    const handlePosterError = (event) => {
+        setPosterFailed(true);
+        setPosterLoaded(true);
+        if (event?.target) {
+            event.target.style.display = "none";
+        }
+    };
+
+    const showPosterSkeleton = posterSrc && !posterLoaded && !posterFailed;
+
     if (type === "movie") {
         return (
             <div className="media-card">
                 <figure className="poster-box card-poster">
-                    <img
-                        src={
-                            mediaData.poster_path != null
-                                ? imageBaseURL + "w342" + mediaData.poster_path
-                                : "#"
-                        }
-                        alt={mediaData.title}
-                        className="img-cover"
-                        loading="lazy"
-                        onError={(e) => (e.target.style.display = "none")}
-                    />
+                    {showPosterSkeleton && (
+                        <div className="skeleton-poster skeleton-poster-overlay"></div>
+                    )}
+                    {posterSrc && (
+                        <img
+                            src={posterSrc}
+                            alt={posterAlt}
+                            className="img-cover"
+                            loading="lazy"
+                            ref={posterRef}
+                            onLoad={handlePosterLoad}
+                            onError={handlePosterError}
+                        />
+                    )}
                     <a
                         className="media-card-add-btn"
                         onClick={() =>
@@ -118,17 +163,20 @@ const MediaCard = ({ mediaData, type, genres, folderId }) => {
         return (
             <div className="media-card">
                 <figure className="poster-box card-poster">
-                    <img
-                        src={
-                            mediaData.poster_path != null
-                                ? imageBaseURL + "w342" + mediaData.poster_path
-                                : "#"
-                        }
-                        alt={mediaData.name}
-                        className="img-cover"
-                        loading="lazy"
-                        onError={(e) => (e.target.style.display = "none")}
-                    />
+                    {showPosterSkeleton && (
+                        <div className="skeleton-poster skeleton-poster-overlay"></div>
+                    )}
+                    {posterSrc && (
+                        <img
+                            src={posterSrc}
+                            alt={posterAlt}
+                            className="img-cover"
+                            loading="lazy"
+                            ref={posterRef}
+                            onLoad={handlePosterLoad}
+                            onError={handlePosterError}
+                        />
+                    )}
                     <a
                         className="media-card-add-btn"
                         onClick={() =>
@@ -177,17 +225,20 @@ const MediaCard = ({ mediaData, type, genres, folderId }) => {
         return (
             <div className="grid-card">
                 <figure className="poster-box grid-card-poster">
-                    <img
-                        src={
-                            mediaData.poster_path != null
-                                ? imageBaseURL + "w342" + mediaData.poster_path
-                                : "#"
-                        }
-                        alt={mediaData.title}
-                        className="img-cover"
-                        loading="lazy"
-                        onError={(e) => (e.target.style.display = "none")}
-                    />
+                    {showPosterSkeleton && (
+                        <div className="skeleton-poster skeleton-poster-overlay"></div>
+                    )}
+                    {posterSrc && (
+                        <img
+                            src={posterSrc}
+                            alt={posterAlt}
+                            className="img-cover"
+                            loading="lazy"
+                            ref={posterRef}
+                            onLoad={handlePosterLoad}
+                            onError={handlePosterError}
+                        />
+                    )}
                     <a
                         className="grid-card-add-btn"
                         onClick={() =>
@@ -233,17 +284,20 @@ const MediaCard = ({ mediaData, type, genres, folderId }) => {
         return (
             <div className="grid-card">
                 <figure className="poster-box grid-card-poster">
-                    <img
-                        src={
-                            mediaData.poster_path != null
-                                ? imageBaseURL + "w342" + mediaData.poster_path
-                                : "#"
-                        }
-                        alt={mediaData.name}
-                        className="img-cover"
-                        loading="lazy"
-                        onError={(e) => (e.target.style.display = "none")}
-                    />
+                    {showPosterSkeleton && (
+                        <div className="skeleton-poster skeleton-poster-overlay"></div>
+                    )}
+                    {posterSrc && (
+                        <img
+                            src={posterSrc}
+                            alt={posterAlt}
+                            className="img-cover"
+                            loading="lazy"
+                            ref={posterRef}
+                            onLoad={handlePosterLoad}
+                            onError={handlePosterError}
+                        />
+                    )}
                     <a
                         className="grid-card-add-btn"
                         onClick={() =>
@@ -289,17 +343,20 @@ const MediaCard = ({ mediaData, type, genres, folderId }) => {
         return (
             <div className="grid-card">
                 <figure className="poster-box grid-card-poster">
-                    <img
-                        src={
-                            mediaData.poster_path != null
-                                ? imageBaseURL + "w342" + mediaData.poster_path
-                                : "#"
-                        }
-                        alt={mediaData.title}
-                        className="img-cover"
-                        loading="lazy"
-                        onError={(e) => (e.target.style.display = "none")}
-                    />
+                    {showPosterSkeleton && (
+                        <div className="skeleton-poster skeleton-poster-overlay"></div>
+                    )}
+                    {posterSrc && (
+                        <img
+                            src={posterSrc}
+                            alt={posterAlt}
+                            className="img-cover"
+                            loading="lazy"
+                            ref={posterRef}
+                            onLoad={handlePosterLoad}
+                            onError={handlePosterError}
+                        />
+                    )}
                     <a
                         className="grid-card-trash-btn"
                         onClick={() =>
@@ -338,17 +395,20 @@ const MediaCard = ({ mediaData, type, genres, folderId }) => {
         return (
             <div className="grid-card">
                 <figure className="poster-box grid-card-poster">
-                    <img
-                        src={
-                            mediaData.poster_path != null
-                                ? imageBaseURL + "w342" + mediaData.poster_path
-                                : "#"
-                        }
-                        alt={mediaData.name}
-                        className="img-cover"
-                        loading="lazy"
-                        onError={(e) => (e.target.style.display = "none")}
-                    />
+                    {showPosterSkeleton && (
+                        <div className="skeleton-poster skeleton-poster-overlay"></div>
+                    )}
+                    {posterSrc && (
+                        <img
+                            src={posterSrc}
+                            alt={posterAlt}
+                            className="img-cover"
+                            loading="lazy"
+                            ref={posterRef}
+                            onLoad={handlePosterLoad}
+                            onError={handlePosterError}
+                        />
+                    )}
                     <a
                         className="grid-card-trash-btn"
                         onClick={() =>
