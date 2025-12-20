@@ -28,10 +28,12 @@
     */
 
     /* Font Family */
-    --ff-primary: "Inter", sans-serif;
+    --ff-primary: "Manrope", sans-serif;
+
+    --ff-display: "Space Grotesk", sans-serif;
 
     --ff-body: var(--ff-primary);
-    --ff-heading: var(--ff-primary);
+    --ff-heading: var(--ff-display);
 
     /* Font weights */
     --fw-light: 300;
@@ -53,12 +55,12 @@
     --fs-52: 3.25rem;
     --fs-60: 3.75rem;
 
-    --fs-body: var(--fs-24);
-    --fs-nav: var(--fs-18);
-    --fs-btn: var(--fs-20);
-    --fs-h1: var(--fs-60);
-    --fs-h2: var(--fs-52);
-    --fs-h3: var(--fs-44);
+    --fs-body: var(--fs-18);
+    --fs-nav: var(--fs-16);
+    --fs-btn: var(--fs-18);
+    --fs-h1: var(--fs-52);
+    --fs-h2: var(--fs-44);
+    --fs-h3: var(--fs-36);
     --fs-footer: var(--fs-14);
 
     /* Transitions */
@@ -162,8 +164,10 @@ body {
     min-height: 100%;
     background-color: var(--clr-black-900);
     color: var(--clr-white-900);
-    font-family: "Inter", sans-serif;
+    font-family: var(--ff-body);
     font-size: var(--fs-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
 }
 
@@ -494,6 +498,14 @@ ul {
 /* =======================
   Typography
  ======================= */
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--ff-heading);
+    letter-spacing: -0.01em;
+}
 
 h1 {
     font-size: var(--fs-h1);
