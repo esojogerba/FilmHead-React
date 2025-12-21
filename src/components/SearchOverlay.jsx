@@ -24,7 +24,9 @@ const SearchOverlay = () => {
                     <h1 className="grid-title">{trimmedQuery}</h1>
                 </div>
 
-                <div className={`grid-list ${isLoading ? "skeleton-grid" : ""}`}>
+                <div
+                    className={`grid-list ${isLoading ? "skeleton-grid" : ""}`}
+                >
                     {isLoading && results.length === 0
                         ? Array.from({ length: 12 }).map((_, index) => (
                               <div

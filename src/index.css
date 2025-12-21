@@ -2381,12 +2381,11 @@ h4 {
     display: block;
 }
 
-.search-modal.grid-header {
+.search-modal .grid-header {
     align-items: center;
-    padding-block: 1rem;
 }
 
-.search-modal.grid-header.grid-title {
+.search-modal .grid-header .grid-title {
     line-height: 1;
 }
 
@@ -2398,6 +2397,7 @@ h4 {
 
     .search-modal .grid-header {
         gap: 0.75rem;
+        padding: 0 0 2rem 0;
     }
 }
 
