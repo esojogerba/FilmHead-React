@@ -84,6 +84,7 @@ const BacklogPage = () => {
                             folders={folders}
                             loading={loading}
                             searchLoading={searchLoading}
+                            searchTerm={searchTerm}
                         />
                     </section>
                 </article>

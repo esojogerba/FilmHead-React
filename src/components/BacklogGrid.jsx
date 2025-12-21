@@ -1,7 +1,11 @@
 import React from "react";
 import Folder from "./Folder";
-const BacklogGrid = ({ folders, loading, searchLoading }) => {
+
+const ICON_SPRITE_PATH = `${import.meta.env.BASE_URL}assets/images/icons.svg`;
+
+const BacklogGrid = ({ folders, loading, searchLoading, searchTerm }) => {
     const isLoading = loading || searchLoading;
+    const hasSearchTerm = searchTerm?.trim().length > 0;
 
     return (
         <div className="backlog-grid-wrapper" style={{ position: "relative" }}>
@@ -31,7 +35,21 @@ const BacklogGrid = ({ folders, loading, searchLoading }) => {
                             <Folder key={folder.id} folder={folder} />
                         ))
                       : !isLoading && (
-                            <p className="empty-message">No folders yet.</p>
+                            <div className="empty-state">
+                                <svg
+                                    className="empty-state__icon"
+                                    aria-hidden="true"
+                                >
+                                    <use
+                                        xlinkHref={`${ICON_SPRITE_PATH}#folder`}
+                                    />
+                                </svg>
+                                <p className="empty-state__text">
+                                    {hasSearchTerm
+                                        ? "No folders found."
+                                        : "No folders yet."}
+                                </p>
+                            </div>
                         )}
             </div>
         </div>

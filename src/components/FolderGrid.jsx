@@ -1,13 +1,18 @@
 import React from "react";
 import MediaCard from "../components/MediaCard";
+
+const ICON_SPRITE_PATH = `${import.meta.env.BASE_URL}assets/images/icons.svg`;
+
 const FolderGrid = ({
     mediaList,
     folderId,
     loading,
     searchLoading,
     filterLoading,
+    searchTerm,
 }) => {
     const isLoading = loading || searchLoading || filterLoading;
+    const hasSearchTerm = searchTerm?.trim().length > 0;
 
     if (isLoading) {
         return (
@@ -27,7 +32,16 @@ const FolderGrid = ({
     }
 
     if (!mediaList || mediaList.length === 0) {
-        return !isLoading ? <p>No items yet.</p> : null;
+        return !isLoading ? (
+            <div className="empty-state">
+                <svg className="empty-state__icon" aria-hidden="true">
+                    <use xlinkHref={`${ICON_SPRITE_PATH}#folder`} />
+                </svg>
+                <p className="empty-state__text">
+                    {hasSearchTerm ? "No items found." : "No items yet."}
+                </p>
+            </div>
+        ) : null;
     }
 
     return (

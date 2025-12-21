@@ -8,6 +8,8 @@ import AddToFolder from "../components/AddToFolder";
 import CreateFolder from "../components/CreateFolder";
 import DeleteFolderItem from "../components/DeleteFolderItem";
 import Filter from "../components/Filter";
+
+const ICON_SPRITE_PATH = `${import.meta.env.BASE_URL}assets/images/icons.svg`;
 import { API_KEY } from "../utils/api";
 
 const FolderPage = () => {
@@ -257,9 +259,24 @@ const FolderPage = () => {
                                     loading={loading}
                                     searchLoading={searchLoading}
                                     filterLoading={filterLoading}
+                                    searchTerm={searchTerm}
                                 />
                             ) : !searchLoading && !filterLoading ? (
-                                <p>No items yet.</p>
+                                <div className="empty-state">
+                                    <svg
+                                        className="empty-state__icon"
+                                        aria-hidden="true"
+                                    >
+                                        <use
+                                            xlinkHref={`${ICON_SPRITE_PATH}#folder`}
+                                        />
+                                    </svg>
+                                    <p className="empty-state__text">
+                                        {searchTerm.trim()
+                                            ? "No items found."
+                                            : "No items yet."}
+                                    </p>
+                                </div>
                             ) : null}
                         </section>
                     </article>
