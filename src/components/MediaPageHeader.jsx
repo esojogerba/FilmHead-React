@@ -35,7 +35,12 @@ const MediaPageHeader = ({ title, genres, type }) => {
         <section className="media-page-header">
             <h1 className="media-page-title">{title}</h1>
             <div className="genre-dropdown" ref={dropdownRef}>
-                <button onClick={toggleDropdown} className="dropdown-btn">
+                <button
+                    onClick={toggleDropdown}
+                    className={`dropdown-btn ${isOpen ? "is-open" : ""}`}
+                    aria-expanded={isOpen}
+                    aria-haspopup="listbox"
+                >
                     <span>Genres</span>
                     <img src={dropdownArrow} alt="Dropdown Arrow" />
                 </button>

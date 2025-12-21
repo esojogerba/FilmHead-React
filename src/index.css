@@ -513,6 +513,7 @@ ul {
     justify-content: space-between;
     align-items: center;
     min-width: 213px;
+    width: 100%;
     background-color: var(--clr-primary);
     color: var(--clr-white-900);
     border-radius: 6px;
@@ -521,15 +522,37 @@ ul {
     cursor: pointer;
 }
 
+.dropdown-btn img {
+    transition: transform var(--transition-short),
+        filter var(--transition-short);
+}
+
 .dropdown-btn span,
 .dropdown-btn img {
     pointer-events: none; /* Prevents span and img from blocking the button's click */
 }
 
 .dropdown-btn:hover,
-.dropdown-btn:focus {
+.dropdown-btn:focus-visible {
     background-color: var(--clr-white-900);
     color: var(--clr-primary);
+}
+
+.dropdown-btn:hover img,
+.dropdown-btn:focus-visible img {
+    filter: brightness(0) saturate(100%) invert(35%) sepia(71%)
+        saturate(1895%) hue-rotate(230deg) brightness(96%) contrast(98%);
+}
+
+.dropdown-btn.is-open {
+    background-color: var(--clr-white-900);
+    color: var(--clr-primary);
+}
+
+.dropdown-btn.is-open img {
+    transform: rotate(180deg);
+    filter: brightness(0) saturate(100%) invert(35%) sepia(71%)
+        saturate(1895%) hue-rotate(230deg) brightness(96%) contrast(98%);
 }
 
 .dropdown-menu {
@@ -539,7 +562,8 @@ ul {
     position: absolute;
     top: 110%;
     background-color: var(--clr-primary);
-    min-width: 145px;
+    left: 0;
+    width: 100%;
     max-height: 300px;
     border-radius: 6px;
     overflow: overlay;
