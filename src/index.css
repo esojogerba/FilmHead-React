@@ -1721,8 +1721,13 @@ h4 {
     margin-bottom: 3rem;
 }
 
+.media-scroll-viewport {
+    position: relative;
+}
+
 .media-slider-list {
     overflow-x: overlay;
+    scroll-behavior: smooth;
 }
 
 .media-slider-list::-webkit-scrollbar-thumb {
@@ -1762,6 +1767,58 @@ h4 {
 .view-more-link:focus {
     color: var(--clr-black-200);
     background-color: var(--clr-primary);
+}
+
+.media-scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid var(--border-subtle);
+    background-color: hsl(0, 0%, 8%, 0.55);
+    color: var(--clr-white-900);
+    box-shadow: var(--shadow-1);
+    opacity: 0;
+    transition: opacity var(--transition-short),
+        transform var(--transition-short);
+    pointer-events: none;
+    z-index: 3;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-scroll-arrow-left {
+    left: 8px;
+}
+
+.media-scroll-arrow-right {
+    right: 8px;
+}
+
+.media-scroll-arrow-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.media-scroll-arrow:hover,
+.media-scroll-arrow:focus-visible {
+    background-color: hsl(0, 0%, 12%, 0.7);
+    transform: translateY(-50%) scale(1.04);
+}
+
+@media (min-width: 48rem) {
+    .media-scroll-arrow {
+        display: inline-flex;
+    }
+
+    .media-scroll-viewport:hover .media-scroll-arrow,
+    .media-scroll-viewport:focus-within .media-scroll-arrow {
+        opacity: 1;
+        pointer-events: auto;
+    }
 }
 
 @media (max-width: 38rem) {
