@@ -4,9 +4,17 @@
   <img src="src/assets/images/FilmHead-logo.png" alt="FilmHead logo" width="180">
 </p>
 
+<br>
+<br>
+
 <p align="center">
-  <a href="https://esojogerba.github.io/FilmHead-React/">Live Demo</a>
+  <a href="https://esojogerba.github.io/FilmHead-React/">
+    <img alt="Live Demo" src="https://img.shields.io/badge/Live%20Demo-Open-2ea44f?style=for-the-badge&logo=github&logoColor=white">
+  </a>
 </p>
+
+<br>
+<br>
 
 <p align="center">
   <img alt="Vite" src="https://img.shields.io/badge/Vite-6.x-646CFF?logo=vite&logoColor=white">
