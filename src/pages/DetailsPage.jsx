@@ -122,6 +122,12 @@ const DetailsPage = () => {
                                 media={suggestions}
                                 genres={genres}
                                 type={type}
+                                listType="list"
+                                urlParam={
+                                    type === "movie"
+                                        ? `/movie/${id}/recommendations`
+                                        : `/tv/${id}/recommendations`
+                                }
                             />
                         </div>
                     </article>
