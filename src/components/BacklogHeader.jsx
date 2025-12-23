@@ -20,7 +20,7 @@ const BacklogHeader = ({ searchTerm, setSearchTerm }) => {
             <div className="backlog-menu">
                 <input
                     className="backlog-search-field"
-                    type="search"
+                    type="text"
                     placeholder="Search..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
