@@ -785,7 +785,7 @@ h4 {
     position: absolute;
     content: "";
     width: 100%;
-    border-bottom: 4px solid var(--clr-primary);
+    border-bottom: 2px solid var(--clr-primary);
     bottom: -6px;
 }
 
@@ -794,7 +794,7 @@ h4 {
     content: "";
     width: 0%;
     height: 1px;
-    border-bottom: 4px solid var(--clr-primary);
+    border-bottom: 2px solid var(--clr-primary);
     bottom: -6px;
     transition: width 0.4s;
 }
@@ -1050,14 +1050,7 @@ h4 {
     .nav-links-left li,
     .nav-links-right li {
         text-align: center;
-        border-bottom: 1px solid var(--border-subtle);
         padding-bottom: 1rem;
-    }
-
-    .nav-links-left li:last-child,
-    .nav-links-right li:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
     }
 
     .nav-links-left li a,
