@@ -182,6 +182,10 @@ body {
     overflow-x: hidden;
 }
 
+body.no-scroll {
+    overflow: hidden;
+}
+
 .media-page {
     position: relative;
 }

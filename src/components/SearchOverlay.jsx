@@ -27,6 +27,13 @@ const SearchOverlay = () => {
         return () => window.clearTimeout(timeoutId);
     }, [isOpen]);
 
+    useEffect(() => {
+        document.body.classList.toggle("no-scroll", isOpen);
+        return () => {
+            document.body.classList.remove("no-scroll");
+        };
+    }, [isOpen]);
+
     if (!shouldRender) {
         return null;
     }
