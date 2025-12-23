@@ -809,7 +809,7 @@ h4 {
     flex: 1 1 240px;
     max-width: 320px;
     min-width: 180px;
-    margin-inline: 0.75rem;
+    margin-left: 2em;
 }
 
 .nav-search-mobile {
@@ -820,7 +820,7 @@ h4 {
     min-width: 0;
     justify-content: flex-end;
     align-self: center;
-    margin-inline: 0.5rem;
+    margin-inline: 0.8rem;
 }
 
 .nav-search-toggle {
@@ -834,7 +834,6 @@ h4 {
     background-color: var(--surface-2);
     color: var(--clr-white-900);
     cursor: pointer;
-    margin-right: 0.3rem;
     transition: border-color var(--transition-short),
         background-color var(--transition-short), color var(--transition-short);
 }
@@ -979,7 +978,6 @@ h4 {
     .nav-search-desktop {
         flex-basis: 180px;
         max-width: 220px;
-        margin-inline: 0.5rem;
     }
 
     .nav-search-input {
