@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MediaCard from "./MediaCard";
 import { useSearch } from "../contexts/SearchContext";
 
@@ -6,16 +6,33 @@ const ICON_SPRITE_PATH = `${
     import.meta.env.BASE_URL
 }assets/images/icons.svg#search-icon`;
 
+const CLOSE_ANIMATION_MS = 200;
+
 const SearchOverlay = () => {
     const { isActive, isLoading, query, results } = useSearch();
     const trimmedQuery = query.trim();
+    const isOpen = isActive || isLoading;
+    const [shouldRender, setShouldRender] = useState(isOpen);
 
-    if (!isActive && !isLoading) {
+    useEffect(() => {
+        if (isOpen) {
+            setShouldRender(true);
+            return undefined;
+        }
+
+        const timeoutId = window.setTimeout(() => {
+            setShouldRender(false);
+        }, CLOSE_ANIMATION_MS);
+
+        return () => window.clearTimeout(timeoutId);
+    }, [isOpen]);
+
+    if (!shouldRender) {
         return null;
     }
 
     return (
-        <div className={`search-modal${isActive ? " active" : ""}`}>
+        <div className={`search-modal${isOpen ? " active" : ""}`}>
             <section className="media-grid container">
                 <div className="grid-header">
                     <svg className="material-icon" id="grid-search-svg">

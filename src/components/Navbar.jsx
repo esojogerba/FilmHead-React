@@ -11,7 +11,7 @@ const Navbar = () => {
     const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
     const mobileSearchRef = useRef(null);
     const location = useLocation();
-    const { query, handleSearchInput } = useSearch();
+    const { query, handleSearchInput, clearSearch } = useSearch();
     const searchIconPath = `${
         import.meta.env.BASE_URL
     }assets/images/icons.svg#search-icon`;
@@ -73,7 +73,7 @@ const Navbar = () => {
                     <input
                         ref={mobileSearchRef}
                         className="nav-search-input"
-                        type="search"
+                        type="text"
                         placeholder="Find movies & shows..."
                         value={query}
                         onChange={(event) =>
@@ -81,6 +81,16 @@ const Navbar = () => {
                         }
                         aria-label="Search"
                     />
+                    {query && (
+                        <button
+                            type="button"
+                            className="nav-search-clear"
+                            onClick={clearSearch}
+                            aria-label="Clear search"
+                        >
+                            &times;
+                        </button>
+                    )}
                 </div>
                 <button
                     className="nav-search-toggle"
@@ -143,14 +153,24 @@ const Navbar = () => {
                             </svg>
                             <input
                                 className="nav-search-input"
-                                type="search"
-                                placeholder="Find movies & shows"
+                                type="text"
+                                placeholder="Find movies & shows..."
                                 value={query}
                                 onChange={(event) =>
                                     handleSearchInput(event.target.value)
                                 }
                                 aria-label="Search"
                             />
+                            {query && (
+                                <button
+                                    type="button"
+                                    className="nav-search-clear"
+                                    onClick={clearSearch}
+                                    aria-label="Clear search"
+                                >
+                                    &times;
+                                </button>
+                            )}
                         </div>
                     </li>
                     <li>

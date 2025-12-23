@@ -736,7 +736,6 @@ h4 {
     align-items: center;
     min-height: 4.4rem;
     padding-block: 0.35rem;
-    gap: 1rem;
     margin-bottom: 2rem;
     z-index: 1000;
 }
@@ -826,11 +825,12 @@ h4 {
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 999px;
+    border-radius: 8px;
     border: 1px solid var(--border-subtle);
     background-color: var(--surface-2);
     color: var(--clr-white-900);
     cursor: pointer;
+    margin-right: 0.3rem;
     transition: border-color var(--transition-short),
         background-color var(--transition-short), color var(--transition-short);
 }
@@ -841,13 +841,13 @@ h4 {
 
 .nav-search-toggle:hover,
 .nav-search-toggle:focus-visible {
-    border-color: hsl(242 76% 63% / 0.5);
-    color: hsl(242 76% 63% / 0.5);
+    border-color: hsl(242 76% 78% / 0.9);
+    color: hsl(242 76% 78% / 0.95);
 }
 
 .nav-search-toggle:focus-visible {
-    box-shadow: 0 0 0 1px hsl(242 76% 63% / 0.35),
-        0 0 12px hsl(242 76% 63% / 0.22);
+    box-shadow: 0 0 0 1px hsl(242 76% 78% / 0.35),
+        0 0 12px hsl(242 76% 78% / 0.22);
 }
 
 .nav-search {
@@ -856,7 +856,7 @@ h4 {
     gap: 0.5rem;
     background-color: var(--surface-2);
     border: 1px solid var(--border-subtle);
-    border-radius: 999px;
+    border-radius: 8px;
     padding: 0.35rem 0.75rem;
     min-height: 36px;
     width: 100%;
@@ -866,9 +866,9 @@ h4 {
 }
 
 .nav-search:focus-within {
-    border-color: hsl(242 76% 63% / 0.35);
-    box-shadow: 0 0 0 1px hsl(242 76% 63% / 0.35),
-        0 0 14px hsl(242 76% 63% / 0.25);
+    border-color: hsl(242 76% 78% / 0.7);
+    box-shadow: 0 0 0 1px hsl(242 76% 78% / 0.35),
+        0 0 14px hsl(242 76% 78% / 0.25);
     background-color: var(--surface-3);
 }
 
@@ -895,6 +895,35 @@ h4 {
 
 .nav-search-input:focus {
     outline: none;
+}
+
+.nav-search-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    border: 1px solid currentColor;
+    background-color: transparent;
+    color: var(--clr-black-200);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    cursor: pointer;
+    transition: color var(--transition-short),
+        border-color var(--transition-short),
+        background-color var(--transition-short);
+}
+
+.nav-search-clear:hover,
+.nav-search-clear:focus-visible {
+    color: hsl(242 76% 78% / 0.95);
+    border-color: hsl(242 76% 78% / 0.45);
+    background-color: hsl(242 76% 63% / 0.12);
 }
 
 #nav-link-sign-up {
@@ -2549,11 +2578,20 @@ h4 {
     margin-top: 3.75rem;
     overflow-y: overlay;
     z-index: 5;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition: opacity 200ms ease, transform 200ms ease,
+        visibility 0s linear 200ms;
 }
 
 .search-modal.active {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition: opacity 200ms ease, transform 200ms ease;
 }
 
 .search-modal .grid-header {
