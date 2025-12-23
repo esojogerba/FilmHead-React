@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import navbarLogo from "../assets/images/filmhead-nav-logo.svg";
 import logo from "../assets/images/FilmHead-logo.png";
-import hamburgerIcon from "../assets/images/icon-hamburger.svg";
-import closeIcon from "../assets/images/icon-close.svg";
 import { useSearch } from "../contexts/SearchContext";
 
 const Navbar = () => {
     const [navVisible, setNavVisible] = useState(false);
     const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
     const mobileSearchRef = useRef(null);
+    const navRef = useRef(null);
+    const navToggleRef = useRef(null);
     const location = useLocation();
     const { query, handleSearchInput, clearSearch } = useSearch();
     const searchIconPath = `${
@@ -42,6 +42,29 @@ const Navbar = () => {
             mobileSearchRef.current.focus();
         }
     }, [isMobileSearchOpen]);
+
+    useEffect(() => {
+        if (!navVisible) return undefined;
+
+        const handleOutsideClick = (event) => {
+            const target = event.target;
+            if (
+                navRef.current?.contains(target) ||
+                navToggleRef.current?.contains(target)
+            ) {
+                return;
+            }
+            setNavVisible(false);
+        };
+
+        document.addEventListener("mousedown", handleOutsideClick);
+        document.addEventListener("touchstart", handleOutsideClick);
+
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+            document.removeEventListener("touchstart", handleOutsideClick);
+        };
+    }, [navVisible]);
 
     return (
         <header className="container primary-header">
@@ -110,24 +133,24 @@ const Navbar = () => {
                 aria-controls="primary-navigation"
                 aria-expanded={navVisible}
                 onClick={toggleNav}
-                style={{
-                    backgroundImage: `url(${
-                        navVisible ? closeIcon : hamburgerIcon
-                    })`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundSize: "contain",
-                    border: "none",
-                    backgroundColor: "transparent",
-                    width: "2rem",
-                    aspectRatio: "1 / 1",
-                    zIndex: 9999,
-                }}
+                ref={navToggleRef}
             >
+                <svg className="mobile-nav-icon" viewBox="0 0 24 24">
+                    {navVisible ? (
+                        <path d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.29 9.17 12 2.88 5.71 4.29 4.29 10.59 10.6 16.89 4.29z" />
+                    ) : (
+                        <path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z" />
+                    )}
+                </svg>
                 <span className="sr-only">Menu</span>
             </button>
 
-            <nav className="nav-links" id="nav-links" data-visible={navVisible}>
+            <nav
+                className="nav-links"
+                id="nav-links"
+                data-visible={navVisible}
+                ref={navRef}
+            >
                 <ul role="list" className="nav-links-left">
                     <li>
                         <NavLink to="movies" className={linkClass}>
