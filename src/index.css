@@ -190,13 +190,13 @@ body.no-scroll {
     position: relative;
 }
 
-.media-page::before {
+.page-shell::before {
     content: "";
     position: fixed;
     top: 60px;
     left: 0;
     right: 0;
-    height: 220px;
+    height: 60px;
     background: linear-gradient(
         180deg,
         rgba(10, 10, 10, 0.72) 0%,
@@ -208,8 +208,8 @@ body.no-scroll {
 }
 
 @media (max-width: 40rem) {
-    .media-page::before {
-        height: 160px;
+    .page-shell::before {
+        height: 60px;
     }
 }
 
@@ -736,7 +736,8 @@ h4 {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: hsl(0, 0%, 8%);
+    background-color: hsl(0, 0%, 10%);
+    border: 1px solid var(--border-subtle);
     align-items: center;
     min-height: 4.4rem;
     padding-block: 0.35rem;
@@ -999,7 +1000,7 @@ h4 {
 
     .mobile-nav-logo {
         display: flex;
-        width: 48px;
+        width: 42px;
     }
 
     .desktop-nav-logo {
