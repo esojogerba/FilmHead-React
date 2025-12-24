@@ -3032,24 +3032,29 @@ h4 {
 }
 
 .add-to-folder.active {
-    display: block;
-    position: fixed;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for element's own size */
-    background-color: var(--surface-3);
+    --nav-offset: calc(4.4rem + 0.7rem);
     display: flex;
+    position: fixed;
+    top: calc(50% + (var(--nav-offset) / 2));
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(
+        180deg,
+        hsl(0, 0%, 12%) 0%,
+        hsl(0, 0%, 9%) 100%
+    );
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    max-width: 400px;
-    width: 100%; /* Ensures responsiveness */
-    min-height: 600px;
+    align-items: stretch;
+    gap: 0;
+    width: min(92vw, 460px);
+    max-width: 460px;
+    min-height: min(520px, calc(100vh - var(--nav-offset) - 2rem));
+    max-height: min(80vh, calc(100vh - var(--nav-offset) - 2rem));
     border: 1px solid var(--border-subtle);
-    border-radius: 6px;
+    border-radius: 16px;
     box-shadow: var(--shadow-2);
-    overflow-y: auto;
-    padding: 1rem;
+    overflow: hidden;
+    padding: 0;
     z-index: 101;
     animation: pop-in 200ms ease-out;
     will-change: transform, opacity;
@@ -3068,52 +3073,144 @@ h4 {
 }
 
 .add-to-folder-header {
+    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    padding: 2rem 2rem 1rem 2rem;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1.5rem 1.5rem 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background-color: hsl(0, 0%, 12%, 0.6);
 }
 
-.pop-up-close-btn {
+.add-to-folder .pop-up-close-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 18px;
+    right: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 10px;
+    border: 1px solid hsl(351 74% 46% / 0.85);
+    background-color: var(--surface-2);
+    color: hsl(351, 74%, 46%);
+    box-shadow: 0 0 10px hsl(351 74% 46% / 0.35);
     cursor: pointer;
+    transition: border-color var(--transition-short),
+        background-color var(--transition-short),
+        box-shadow var(--transition-short), color var(--transition-short);
 }
 
-#pop-up-close-img {
-    width: 20px;
-    aspect-ratio: 1;
+.add-to-folder .pop-up-close-btn:hover,
+.add-to-folder .pop-up-close-btn:focus-visible {
+    border-color: hsl(351 74% 46% / 0.95);
+    background-color: hsl(351 74% 46% / 0.08);
+    box-shadow: 0 0 0 1px hsl(351 74% 46% / 0.35),
+        0 0 14px hsl(351 74% 46% / 0.45);
 }
 
-.add-to-folder-header h3 {
+.add-to-folder .pop-up-close-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    display: block;
+}
+
+.add-to-folder .pop-up-close-icon path {
+    transform: translate(0.5px, 0.5px);
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+.add-to-folder .header-title {
     font-size: var(--fs-24);
     font-weight: var(--fw-semi-bold);
+    text-align: center;
+    letter-spacing: -0.01em;
+}
+
+.add-to-folder-search-wrapper {
+    position: relative;
+    width: 100%;
 }
 
 .add-to-folder-search {
     width: 100%;
-    max-width: 500px;
-    max-height: 45px;
-    background: var(--surface-2) url("assets/images/search-icon-white.svg")
-        no-repeat 20px;
-    background-position: left;
-    background-position-x: 4px;
+    height: 44px;
+    background: var(--surface-1) url("assets/images/search-icon-white.svg")
+        no-repeat 14px center;
+    background-size: 18px;
     color: var(--clr-white-900);
-    font-size: var(--fs-18);
-    border: none;
+    font-size: var(--fs-16);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 0 44px 0 42px;
+    transition: border-color var(--transition-short),
+        box-shadow var(--transition-short);
+}
+
+.add-to-folder-search::placeholder {
+    color: var(--clr-black-300);
+}
+
+.add-to-folder-search:focus {
+    outline: none;
+    border-color: hsl(242 76% 78% / 0.6);
+    box-shadow: 0 0 0 3px hsl(242 76% 63% / 0.2);
+}
+
+.add-to-folder-search-clear {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    aspect-ratio: 1 / 1;
     border-radius: 6px;
-    padding: 4px 8px 4px 34px;
+    border: 1px solid currentColor;
+    background-color: transparent;
+    color: var(--clr-black-200);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    transition: color var(--transition-short),
+        border-color var(--transition-short),
+        background-color var(--transition-short);
+}
+
+.add-to-folder-search-clear:hover,
+.add-to-folder-search-clear:focus-visible {
+    color: hsl(242 76% 78% / 0.95);
+    border-color: hsl(242 76% 78% / 0.45);
+    background-color: hsl(242 76% 63% / 0.12);
 }
 
 .add-to-folder-scroll {
     display: block;
-    background-color: var(--surface-2);
+    background-color: hsl(0, 0%, 12%, 0.5);
     width: 100%;
-    max-height: 300px;
-    min-height: 220px;
-    overflow-y: overlay;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    border: 1px solid var(--border-subtle);
+    scrollbar-width: thin;
+    scrollbar-color: var(--clr-black-500) transparent;
+}
+
+.add-to-folder-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.add-to-folder-scroll::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .add-to-folder-scroll::-webkit-scrollbar-thumb {
@@ -3125,52 +3222,102 @@ h4 {
 }
 
 .add-to-folder-scroll::-webkit-scrollbar-button {
-    width: 1px;
+    width: 0;
+    height: 0;
+}
+
+.add-to-folder-scroll-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
 
 .add-to-folder-scroll-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 0.85rem 1rem;
+
+    transition: background-color var(--transition-short),
+        border-color var(--transition-short);
+}
+
+.add-to-folder-scroll-item + .add-to-folder-scroll-item {
+    border-top: 1px solid var(--border-subtle);
+}
+
+.add-to-folder-scroll-item span {
+    font-size: var(--fs-16);
 }
 
 .add-to-folder-scroll-item:hover,
-.add-to-folder-scroll-item:focus {
-    background-color: var(--clr-primary);
+.add-to-folder-scroll-item:focus-visible {
+    background-color: hsl(242 76% 63% / 0.12);
 }
 
 .add-to-folder-scroll-btn {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--clr-white-900);
-    border-radius: 4px;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--clr-black-200);
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: transparent;
+    transition: border-color var(--transition-short),
+        background-color var(--transition-short);
 }
 
-.add-to-folder-scroll-btn:hover,
-.add-to-folder-scroll-btn:focus {
-    background-color: var(--clr-white-900);
+.add-to-folder-scroll-btn::after {
+    content: "";
+    width: 6px;
+    height: 10px;
+    border-right: 2px solid var(--clr-white-900);
+    border-bottom: 2px solid var(--clr-white-900);
+    transform: rotate(45deg) scale(0);
+    transition: transform var(--transition-short);
 }
 
 .add-to-folder-scroll-item.selected {
-    background-color: var(--clr-primary);
+    background-color: hsl(242 76% 63% / 0.2);
 }
 
 .add-to-folder-scroll-item.selected .add-to-folder-scroll-btn {
-    background-color: var(--clr-white-900);
+    background-color: var(--clr-primary);
+    border-color: var(--clr-primary);
+}
+
+.add-to-folder-scroll-item.selected .add-to-folder-scroll-btn::after {
+    transform: rotate(45deg) scale(1);
 }
 
 .add-to-folder-empty {
-    margin: 5rem auto;
-    display: block;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    min-height: 100%;
     text-align: center;
+    color: var(--clr-black-300);
 }
 
 .add-to-folder-footer {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem 2rem 2rem 2rem;
+    padding: 1rem 1.5rem 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+    background-color: hsl(0, 0%, 10%, 0.7);
+}
+
+.add-to-folder-footer #add-to-folder-btn {
+    width: 100%;
+    justify-content: center;
+    gap: 0.75rem;
 }
 
 #add-to-folder-btn:hover,
@@ -3192,20 +3339,22 @@ h4 {
 #add-new-folder-btn {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
     background-color: var(--surface-2);
-    outline: 2px solid var(--clr-white-900);
+    border: 1px solid var(--border-subtle);
     font-size: var(--fs-14);
-    gap: 1rem;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    transition: border-color var(--transition-short),
+        background-color var(--transition-short);
 }
 
 #add-new-folder-btn:hover,
 #add-new-folder-btn:focus {
-    background-color: var(--clr-white-900);
-
-    #add-to-folder-svg,
-    #add-new-folder-svg {
-        fill: var(--clr-primary);
-    }
+    background-color: var(--poster-fallback-bg);
+    color: var(--clr-white-900);
 }
 
 #add-new-folder-svg {
@@ -3217,29 +3366,35 @@ h4 {
 
 @media (max-width: 43rem) {
     .add-to-folder.active {
-        max-width: 90%; /* Adjust width for small screens */
+        width: min(94vw, 460px);
     }
 }
 
-@media (max-height: 51.5rem) {
+@media (max-width: 31.1875rem) {
     .add-to-folder.active {
-        top: calc(45% + 70px); /* Center vertically */
-        max-height: 80%;
-        min-height: 400px;
+        --mobile-nav-height: calc(4.4rem + 0.3rem);
+        top: var(--mobile-nav-height);
+        left: 0;
+        transform: none;
+        width: 100%;
+        height: calc(100dvh - var(--mobile-nav-height));
+        max-width: none;
+        max-height: none;
+        min-height: 0;
+        border-radius: 12px;
+        animation: add-to-folder-sheet-in 180ms ease-out both;
+    }
+
+    .add-to-folder-header {
+        padding: 1.25rem 1.25rem 1rem;
     }
 
     .add-to-folder-scroll-item {
-        font-size: var(--fs-18);
+        padding-inline: 1.5rem;
     }
 
-    #add-to-folder-btn {
-        font-size: var(--fs-18);
-    }
-}
-
-@media (max-height: 29rem) {
-    .add-to-folder.active {
-        top: calc(50% + 70px);
+    .add-to-folder-footer {
+        padding: 1rem 1.25rem 1.5rem;
     }
 }
 
@@ -3619,6 +3774,17 @@ h4 {
     to {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes add-to-folder-sheet-in {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 

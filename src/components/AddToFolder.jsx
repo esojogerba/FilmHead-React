@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import closeIcon from "../assets/images/icon-close.svg";
 import { usePopup } from "../contexts/PopupContext";
 import { useBacklog } from "../contexts/BacklogContext";
 import { useToast } from "../contexts/ToastContext";
 import LoadingOverlay from "./LoadingOverlay";
 import { API_KEY } from "../utils/api";
+
+const ICON_SPRITE_PATH = `${import.meta.env.BASE_URL}assets/images/icons.svg`;
 
 const AddToFolder = () => {
     const { activePopup, popupData, openPopup, closePopup } = usePopup();
@@ -91,6 +92,7 @@ const AddToFolder = () => {
                 (a, b) => new Date(b.lastModified) - new Date(a.lastModified)
             );
             setFolders(sorted);
+            setSearchLoading(false);
             return;
         }
 
@@ -111,6 +113,17 @@ const AddToFolder = () => {
        but still call hooks safely */
     const isVisible = activePopup === "addToFolder";
 
+    useEffect(() => {
+        if (!isVisible) {
+            return undefined;
+        }
+
+        document.body.classList.add("no-scroll");
+        return () => {
+            document.body.classList.remove("no-scroll");
+        };
+    }, [isVisible]);
+
     return (
         <>
             {isVisible && (
@@ -128,23 +141,42 @@ const AddToFolder = () => {
                             <a
                                 className="pop-up-close-btn"
                                 onClick={closePopup}
+                                aria-label="Close"
                             >
-                                <img
-                                    id="pop-up-close-img"
-                                    src={closeIcon}
-                                    alt="Close"
-                                />
+                                <svg
+                                    className="material-icon pop-up-close-icon"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <g transform="translate(1, 0)">
+                                        <path d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.29 9.17 12 2.88 5.71 4.29 4.29 10.59 10.6 16.89 4.29z" />
+                                    </g>
+                                </svg>
                             </a>
 
                             <h3 className="header-title">Save to folder</h3>
 
-                            <input
-                                className="add-to-folder-search"
-                                type="search"
-                                placeholder="Search..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
+                            <div className="add-to-folder-search-wrapper">
+                                <input
+                                    className="add-to-folder-search"
+                                    type="text"
+                                    placeholder="Search..."
+                                    value={searchTerm}
+                                    onChange={(e) =>
+                                        setSearchTerm(e.target.value)
+                                    }
+                                />
+                                {searchTerm && (
+                                    <button
+                                        type="button"
+                                        className="add-to-folder-search-clear"
+                                        onClick={() => setSearchTerm("")}
+                                        aria-label="Clear search"
+                                    >
+                                        &times;
+                                    </button>
+                                )}
+                            </div>
 
                             <a
                                 className="btn btn-text-icon"
@@ -179,47 +211,68 @@ const AddToFolder = () => {
                                 <LoadingOverlay variant="section" />
                             )}
 
-                            {folders.length > 0 ? (
-                                folders.map((folder) => {
-                                    const isSelected = selectedFolders.includes(
-                                        folder.id
-                                    );
-                                    return (
-                                        <div
-                                            key={folder.id}
-                                            className={`add-to-folder-scroll-item ${
-                                                isSelected ? "selected" : ""
-                                            }`}
-                                            style={{
-                                                backgroundColor: isSelected
-                                                    ? "var(--clr-primary)"
-                                                    : "transparent",
-                                            }}
-                                        >
-                                            <span>{folder.title}</span>
-                                            <a
-                                                className="add-to-folder-scroll-btn"
-                                                href="#"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
+                            <div className="add-to-folder-scroll-content">
+                                {folders.length > 0 ? (
+                                    folders.map((folder) => {
+                                        const isSelected =
+                                            selectedFolders.includes(folder.id);
+                                        return (
+                                            <div
+                                                key={folder.id}
+                                                className={`add-to-folder-scroll-item ${
+                                                    isSelected ? "selected" : ""
+                                                }`}
+                                                role="button"
+                                                tabIndex={0}
+                                                aria-pressed={isSelected}
+                                                onClick={() =>
                                                     toggleFolderSelection(
                                                         folder.id
-                                                    );
+                                                    )
+                                                }
+                                                onKeyDown={(event) => {
+                                                    if (
+                                                        event.key === "Enter" ||
+                                                        event.key === " "
+                                                    ) {
+                                                        event.preventDefault();
+                                                        toggleFolderSelection(
+                                                            folder.id
+                                                        );
+                                                    }
                                                 }}
-                                                style={{
-                                                    backgroundColor: isSelected
-                                                        ? "var(--clr-white-900)"
-                                                        : "transparent",
-                                                }}
-                                            ></a>
-                                        </div>
-                                    );
-                                })
-                            ) : (
-                                <span className="add-to-folder-empty">
-                                    No folders yet.
-                                </span>
-                            )}
+                                            >
+                                                <span>{folder.title}</span>
+                                                <a
+                                                    className="add-to-folder-scroll-btn"
+                                                    href="#"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                        toggleFolderSelection(
+                                                            folder.id
+                                                        );
+                                                    }}
+                                                ></a>
+                                            </div>
+                                        );
+                                    })
+                                ) : (
+                                    <div className="add-to-folder-empty">
+                                        <svg
+                                            className="empty-state__icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                xlinkHref={`${ICON_SPRITE_PATH}#folder`}
+                                            />
+                                        </svg>
+                                        <span className="empty-state__text">
+                                            No folders found.
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         <div className="add-to-folder-footer">
