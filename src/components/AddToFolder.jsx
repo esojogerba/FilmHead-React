@@ -114,13 +114,42 @@ const AddToFolder = () => {
     const isVisible = activePopup === "addToFolder";
 
     useEffect(() => {
-        if (!isVisible) {
-            return undefined;
-        }
+        if (!isVisible) return undefined;
 
-        document.body.classList.add("no-scroll");
+        const scrollY = window.scrollY;
+        const body = document.body;
+        const html = document.documentElement;
+        const previousStyles = {
+            position: body.style.position,
+            top: body.style.top,
+            left: body.style.left,
+            right: body.style.right,
+            width: body.style.width,
+            overflowY: body.style.overflowY,
+        };
+
+        body.classList.add("no-scroll");
+        html.classList.add("no-scroll");
+
+        body.style.position = "fixed";
+        body.style.top = `-${scrollY}px`;
+        body.style.left = "0";
+        body.style.right = "0";
+        body.style.width = "100%";
+        body.style.overflowY = "scroll";
+
         return () => {
-            document.body.classList.remove("no-scroll");
+            body.classList.remove("no-scroll");
+            html.classList.remove("no-scroll");
+
+            body.style.position = previousStyles.position;
+            body.style.top = previousStyles.top;
+            body.style.left = previousStyles.left;
+            body.style.right = previousStyles.right;
+            body.style.width = previousStyles.width;
+            body.style.overflowY = previousStyles.overflowY;
+
+            window.scrollTo(0, scrollY);
         };
     }, [isVisible]);
 
