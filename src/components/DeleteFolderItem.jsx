@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { usePopup } from "../contexts/PopupContext";
 import { useBacklog } from "../contexts/BacklogContext";
 import { useToast } from "../contexts/ToastContext";
@@ -8,7 +8,55 @@ const DeleteFolderItem = () => {
     const { removeItemFromFolder } = useBacklog();
     const { showToast } = useToast();
 
-    if (activePopup !== "deleteItem" || !popupData) return null;
+    const isVisible = activePopup === "deleteItem" && Boolean(popupData);
+
+    useEffect(() => {
+        if (!isVisible) return undefined;
+
+        const scrollY = window.scrollY;
+        const body = document.body;
+        const html = document.documentElement;
+        const hadBodyNoScroll = body.classList.contains("no-scroll");
+        const hadHtmlNoScroll = html.classList.contains("no-scroll");
+        const previousStyles = {
+            position: body.style.position,
+            top: body.style.top,
+            left: body.style.left,
+            right: body.style.right,
+            width: body.style.width,
+            overflowY: body.style.overflowY,
+        };
+
+        body.classList.add("no-scroll");
+        html.classList.add("no-scroll");
+
+        body.style.position = "fixed";
+        body.style.top = `-${scrollY}px`;
+        body.style.left = "0";
+        body.style.right = "0";
+        body.style.width = "100%";
+        body.style.overflowY = "scroll";
+
+        return () => {
+            if (!hadBodyNoScroll) {
+                body.classList.remove("no-scroll");
+            }
+            if (!hadHtmlNoScroll) {
+                html.classList.remove("no-scroll");
+            }
+
+            body.style.position = previousStyles.position;
+            body.style.top = previousStyles.top;
+            body.style.left = previousStyles.left;
+            body.style.right = previousStyles.right;
+            body.style.width = previousStyles.width;
+            body.style.overflowY = previousStyles.overflowY;
+
+            window.scrollTo(0, scrollY);
+        };
+    }, [isVisible]);
+
+    if (!isVisible) return null;
 
     const handleConfirm = () => {
         const { folderId, itemId } = popupData;
