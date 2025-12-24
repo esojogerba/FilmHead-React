@@ -3,6 +3,8 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SearchOverlay from "../components/SearchOverlay";
+import AddToFolder from "../components/AddToFolder";
+import CreateFolder from "../components/CreateFolder";
 import LoadingOverlay from "../components/LoadingOverlay";
 import { SearchProvider } from "../contexts/SearchContext";
 
@@ -155,6 +157,8 @@ const MainLayout = () => {
         <SearchProvider>
             <Navbar />
             <SearchOverlay />
+            <AddToFolder />
+            <CreateFolder />
             {routeLoading && <LoadingOverlay variant="page" role="route" />}
             <div
                 ref={pageRef}

@@ -5,8 +5,6 @@ import LoadingOverlay from "../components/LoadingOverlay";
 import MediaHeroSlider from "../components/MediaHeroSlider";
 import MediaPageHeader from "../components/MediaPageHeader";
 import MediaScroll from "../components/MediaScroll";
-import AddToFolder from "../components/AddToFolder";
-import CreateFolder from "../components/CreateFolder";
 
 const ShowsPage = () => {
     const [genres, setGenres] = useState({});
@@ -216,9 +214,6 @@ const ShowsPage = () => {
                     </article>
                 )}
             </div>
-
-            <AddToFolder />
-            <CreateFolder />
         </main>
     );
 };

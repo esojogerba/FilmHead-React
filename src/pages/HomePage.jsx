@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import CallToAction from "../components/CallToAction";
 import Features from "../components/Features";
 import LoadingOverlay from "../components/LoadingOverlay";
-import AddToFolder from "../components/AddToFolder";
-import CreateFolder from "../components/CreateFolder";
 
 const HomePage = () => {
     const [loading, setLoading] = useState(true);
@@ -51,9 +49,6 @@ const HomePage = () => {
                 <div className="pop-up-overlay" />
                 <div className="pop-up-overlay second-overlay" />
             </div>
-
-            <AddToFolder />
-            <CreateFolder />
         </main>
     );
 };

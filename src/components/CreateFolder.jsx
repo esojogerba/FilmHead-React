@@ -20,6 +20,8 @@ const CreateFolder = () => {
         const scrollY = window.scrollY;
         const body = document.body;
         const html = document.documentElement;
+        const hadBodyNoScroll = body.classList.contains("no-scroll");
+        const hadHtmlNoScroll = html.classList.contains("no-scroll");
         const previousStyles = {
             position: body.style.position,
             top: body.style.top,
@@ -40,8 +42,12 @@ const CreateFolder = () => {
         body.style.overflowY = "scroll";
 
         return () => {
-            body.classList.remove("no-scroll");
-            html.classList.remove("no-scroll");
+            if (!hadBodyNoScroll) {
+                body.classList.remove("no-scroll");
+            }
+            if (!hadHtmlNoScroll) {
+                html.classList.remove("no-scroll");
+            }
 
             body.style.position = previousStyles.position;
             body.style.top = previousStyles.top;

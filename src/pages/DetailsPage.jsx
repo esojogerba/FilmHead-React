@@ -7,8 +7,6 @@ import DetailsBanner from "../components/DetailsBanner";
 import DetailsTrailers from "../components/DetailsTrailers";
 import AvailableOn from "../components/AvailableOn";
 import MediaScroll from "../components/MediaScroll";
-import AddToFolder from "../components/AddToFolder";
-import CreateFolder from "../components/CreateFolder";
 
 const DetailsPage = () => {
     const { type, id } = useParams();
@@ -133,9 +131,6 @@ const DetailsPage = () => {
                     </article>
                 )}
             </div>
-
-            <AddToFolder />
-            <CreateFolder />
         </main>
     );
 };

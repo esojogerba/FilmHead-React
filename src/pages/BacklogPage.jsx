@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BacklogHeader from "../components/BacklogHeader";
 import BacklogGrid from "../components/BacklogGrid";
-import AddToFolder from "../components/AddToFolder";
-import CreateFolder from "../components/CreateFolder";
 import DeleteFolder from "../components/DeleteFolder";
 import { useBacklog } from "../contexts/BacklogContext";
 import LoadingOverlay from "../components/LoadingOverlay";
@@ -89,9 +87,6 @@ const BacklogPage = () => {
                     </section>
                 </article>
             </div>
-
-            <AddToFolder />
-            <CreateFolder />
             <DeleteFolder />
         </main>
     );
