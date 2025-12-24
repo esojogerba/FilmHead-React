@@ -3449,7 +3449,8 @@ h4 {
     text-align: center;
 }
 
-.create-folder .pop-up-close-btn {
+.create-folder .pop-up-close-btn,
+.delete-folder .pop-up-close-btn {
     position: absolute;
     top: 18px;
     right: 18px;
@@ -3471,21 +3472,25 @@ h4 {
 }
 
 .create-folder .pop-up-close-btn:hover,
-.create-folder .pop-up-close-btn:focus-visible {
+.create-folder .pop-up-close-btn:focus-visible,
+.delete-folder .pop-up-close-btn:hover,
+.delete-folder .pop-up-close-btn:focus-visible {
     border-color: hsl(351 74% 46% / 0.95);
     background-color: hsl(351 74% 46% / 0.08);
     box-shadow: 0 0 0 1px hsl(351 74% 46% / 0.35),
         0 0 14px hsl(351 74% 46% / 0.45);
 }
 
-.create-folder .pop-up-close-icon {
+.create-folder .pop-up-close-icon,
+.delete-folder .pop-up-close-icon {
     width: 18px;
     height: 18px;
     fill: currentColor;
     display: block;
 }
 
-.create-folder .pop-up-close-icon path {
+.create-folder .pop-up-close-icon path,
+.delete-folder .pop-up-close-icon path {
     transform: translate(0.5px, 0.5px);
     transform-origin: center;
     transform-box: fill-box;
@@ -3642,47 +3647,92 @@ h4 {
 }
 
 .delete-folder.active {
-    display: block;
     position: fixed;
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Adjust for element's own size */
-    background-color: var(--surface-3);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+    align-items: stretch;
+    gap: 0;
+    background: linear-gradient(
+        180deg,
+        hsl(0, 0%, 12%) 0%,
+        hsl(0, 0%, 9%) 100%
+    );
     border: 1px solid var(--border-subtle);
-    border-radius: 6px;
+    border-radius: 16px;
     box-shadow: var(--shadow-2);
-    padding: 3rem 3rem;
-    max-width: 500px; /* Limit the width to ensure it's manageable */
-    width: 100%; /* Ensure responsiveness */
+    padding: 0;
+    width: min(92vw, 460px);
+    max-width: 460px;
     z-index: 101;
-    overflow-y: auto; /* Handle overflow for large content */
+    overflow: hidden;
+    max-height: 80vh;
     animation: pop-in 200ms ease-out;
     will-change: transform, opacity;
 }
 
 .delete-folder-header {
+    position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 0.75rem;
+    padding: 1.5rem 1.5rem 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background-color: hsl(0, 0%, 12%, 0.6);
+    text-align: center;
 }
 
 .delete-svg {
     width: 30px;
+    height: 30px;
     aspect-ratio: 1;
+    fill: var(--clr-white-900);
 }
 
-.delete-folder-header h3 {
-    font-size: var(--fs-32);
+.delete-folder .delete-svg {
+    width: 36px;
+    height: 36px;
+    aspect-ratio: 1;
+    opacity: 0.9;
+    fill: currentColor;
+    color: hsl(351, 74%, 46%);
+}
+
+.delete-folder .header-title {
+    font-size: var(--fs-24);
     font-weight: var(--fw-semi-bold);
+    letter-spacing: -0.01em;
+}
+
+.delete-folder-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    min-height: 0;
+    overflow-y: auto;
 }
 
 .pop-up-body {
     text-align: center;
+}
+
+.delete-folder .pop-up-body {
+    text-align: center;
+    margin: 0;
+    font-size: var(--fs-16);
+    line-height: 1.45;
+    color: var(--clr-black-200);
+}
+
+.delete-folder .pop-up-body strong {
+    color: var(--clr-white-900);
+}
+
+.delete-folder-footer {
+    padding: 1rem 1.5rem 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+    background-color: hsl(0, 0%, 10%, 0.7);
 }
 
 .confirm-cancel-btns {
@@ -3690,28 +3740,25 @@ h4 {
     gap: 1rem;
 }
 
+.delete-folder .confirm-cancel-btns {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.delete-folder .confirm-cancel-btns .btn {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width: 50rem) {
     .delete-folder.active {
-        padding: 1.5rem 1.5rem; /* Reduce padding for smaller screens */
-        max-width: 90%; /* Adjust width to prevent overflow on medium screens */
+        width: min(94vw, 460px);
     }
 
-    .delete-svg {
-        width: 20px;
-        aspect-ratio: 1;
-    }
-
-    .delete-folder-header h3 {
-        font-size: var(--fs-24);
-        font-weight: var(--fw-semi-bold);
-    }
-
-    .pop-up-body {
-        font-size: var(--fs-16);
-    }
-
-    .confirm-cancel-btns a {
-        font-size: var(--fs-16);
+    .delete-folder .delete-svg {
+        width: 32px;
+        height: 32px;
     }
 }
 
@@ -3720,8 +3767,13 @@ h4 {
         top: 50%; /* Ensure vertical centering */
         left: 50%; /* Ensure horizontal centering */
         transform: translate(-50%, -50%);
-        padding: 1rem 1.5rem; /* Further reduce padding for small screens */
-        max-width: 90%; /* Ensure responsiveness on very small screens */
+        width: min(94vw, 460px);
+    }
+}
+
+@media (max-width: 23rem) {
+    .delete-folder .confirm-cancel-btns {
+        flex-direction: column;
     }
 }
 
