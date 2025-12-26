@@ -20,6 +20,7 @@ const FolderPage = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchLoading, setSearchLoading] = useState(false);
     const [filterLoading, setFilterLoading] = useState(false);
+    const [hasActiveFilters, setHasActiveFilters] = useState(false);
     const [displayedItems, setDisplayedItems] = useState([]);
 
     // Check if more than 7 days since last update
@@ -97,6 +98,10 @@ const FolderPage = () => {
         setLoading(false);
     }, [id, getFolderById]);
 
+    useEffect(() => {
+        setHasActiveFilters(false);
+    }, [id]);
+
     // Search logic
     useEffect(() => {
         if (!folder) return;
@@ -133,8 +138,12 @@ const FolderPage = () => {
             const hasMovieFilters = movieGenres?.length > 0;
             const hasShowFilters = showGenres?.length > 0;
             const hasProviderFilters = providers?.length > 0;
+            const hasTypeFilters = hasMovieFilters || hasShowFilters;
+            const allowMovies = !hasTypeFilters || hasMovieFilters;
+            const allowShows = !hasTypeFilters || hasShowFilters;
 
             const filteredMovies = items.filter((item) => {
+                if (!allowMovies) return false;
                 if (item.mediaType !== "movie") return false;
 
                 let match = true;
@@ -159,6 +168,7 @@ const FolderPage = () => {
             });
 
             const filteredShows = items.filter((item) => {
+                if (!allowShows) return false;
                 const isShow =
                     item.mediaType === "tv" || item.mediaType === "show";
                 if (!isShow) return false;
@@ -185,6 +195,11 @@ const FolderPage = () => {
             });
 
             let result = [...filteredMovies, ...filteredShows];
+            const nextHasActiveFilters =
+                hasMovieFilters ||
+                hasShowFilters ||
+                hasProviderFilters ||
+                Boolean(sortBy);
 
             if (!hasMovieFilters && !hasShowFilters && !hasProviderFilters) {
                 result = [...items].sort(
@@ -225,6 +240,7 @@ const FolderPage = () => {
             }
 
             setDisplayedItems(result);
+            setHasActiveFilters(nextHasActiveFilters);
             setFilterLoading(false);
         };
 
@@ -270,7 +286,7 @@ const FolderPage = () => {
                                         />
                                     </svg>
                                     <p className="empty-state__text">
-                                        {searchTerm.trim()
+                                        {searchTerm.trim() || hasActiveFilters
                                             ? "No items found."
                                             : "No items yet."}
                                     </p>
