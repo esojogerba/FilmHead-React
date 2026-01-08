@@ -775,6 +775,14 @@ h4 {
     margin-left: 2em;
 }
 
+.nav-links-right li:not(.nav-search-desktop) {
+    flex-shrink: 0;
+}
+
+.nav-links-right li a {
+    white-space: nowrap;
+}
+
 .nav-links-left li a:hover,
 .nav-links-left li a:focus-visible,
 .nav-links-right li a:hover,
